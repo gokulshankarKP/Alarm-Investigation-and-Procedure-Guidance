@@ -18,6 +18,7 @@ import json
 import logging
 import time
 import uuid
+from collections.abc import Callable
 from contextlib import AsyncExitStack, asynccontextmanager, suppress
 from datetime import UTC, datetime, timedelta
 from typing import Any
@@ -33,6 +34,9 @@ from shared.observability import log_event
 logger = logging.getLogger(__name__)
 
 SERVER_NAME = "alarm-management"
+
+# Progress listener: receives plain dict events (see ``copilot.api`` /api/chat/stream).
+Listener = Callable[[dict[str, Any]], None]
 
 
 class McpUnavailableError(RuntimeError):
@@ -77,6 +81,14 @@ class McpToolSession:
         self._validators = {c.name: Draft202012Validator(c.input_schema) for c in catalog}
         self.records: list[ToolCallRecord] = []
         self._step = 0
+        self.listener: Listener | None = None
+
+    def emit(self, event: dict[str, Any]) -> None:
+        if self.listener is not None:
+            try:
+                self.listener(event)
+            except Exception as exc:  # a broken progress consumer must never break the workflow
+                log_event(logger, "progress_listener_error", logging.WARNING, error=type(exc).__name__)
 
     def has(self, name: str) -> bool:
         return name in self._tools
@@ -90,6 +102,7 @@ class McpToolSession:
         return self._step
 
     def record_discovery(self, duration_ms: float) -> None:
+        self.emit({"type": "discovery", "tools": len(self.catalog), "duration_ms": duration_ms})
         self.records.append(
             ToolCallRecord(
                 step=self._next_step(),
@@ -121,6 +134,17 @@ class McpToolSession:
         def finish(**fields: Any) -> ToolCallRecord:
             record = ToolCallRecord(**base, duration_ms=round((time.perf_counter() - started) * 1000, 1), **fields)
             self.records.append(record)
+            self.emit(
+                {
+                    "type": "tool_end",
+                    "step": step,
+                    "tool": name,
+                    "status": record.status,
+                    "duration_ms": record.duration_ms,
+                    "retries": len(record.retries),
+                    "error_code": (record.error or {}).get("code"),
+                }
+            )
             log_event(
                 logger,
                 "mcp_tool_call",
@@ -133,6 +157,7 @@ class McpToolSession:
             )
             return record
 
+        self.emit({"type": "tool_start", "step": step, "tool": name, "arguments": arguments, "purpose": purpose})
         tool = self._tools.get(name)
         if tool is None:
             return finish(
@@ -201,7 +226,7 @@ class McpGateway:
         )
 
     @asynccontextmanager
-    async def connect(self, trace_id: str, conversation_id: str | None = None):
+    async def connect(self, trace_id: str, conversation_id: str | None = None, listener: Listener | None = None):
         client = self._client(trace_id, conversation_id)
         started = time.perf_counter()
         stack = AsyncExitStack()
@@ -228,6 +253,7 @@ class McpGateway:
             for t in listed.tools
         ]
         tool_session = McpToolSession(session, tools, catalog, trace_id=trace_id, timeout_s=self._settings.mcp_tool_timeout_s)
+        tool_session.listener = listener
         tool_session.record_discovery(round((time.perf_counter() - started) * 1000, 1))
         log_event(logger, "mcp_connected", server=SERVER_NAME, tools=len(catalog))
         try:

@@ -20,7 +20,8 @@ from __future__ import annotations
 import asyncio
 import logging
 from collections import Counter
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
+from contextlib import suppress
 from dataclasses import dataclass
 from datetime import timedelta
 from typing import Any, TypedDict
@@ -77,6 +78,12 @@ class Deps:
     retriever: Retriever | None
     tools: McpToolSession | None
     mcp_error: str | None = None
+    listener: Callable[[dict[str, Any]], None] | None = None
+
+    def emit(self, event: dict[str, Any]) -> None:
+        if self.listener is not None:
+            with suppress(Exception):  # progress reporting is best effort
+                self.listener(event)
 
 
 class CopilotState(TypedDict, total=False):
@@ -134,6 +141,7 @@ def _merge(state: Mapping[str, Any], **updates: Any) -> dict[str, Any]:
 
 
 async def understand(state: CopilotState, runtime: Runtime[Deps]) -> dict[str, Any]:
+    runtime.context.emit({"type": "stage", "stage": "understand", "label": "Understanding the question"})
     deps = runtime.context
     result = await detect_intent(
         state["question"], deps.llm, mode=deps.settings.intent_mode, context=state.get("context"), history=state.get("history")
@@ -145,6 +153,9 @@ async def understand(state: CopilotState, runtime: Runtime[Deps]) -> dict[str, A
         warnings.append(f"Intent LLM unavailable, used rule-based detection ({result.llm_error[:120]})")
     if result.used_context:
         warnings.append("Follow-up question: reused asset/alarm context from the previous turn")
+    deps.emit(
+        {"type": "intent", "intent": result.intent, "method": result.method, "entities": result.entities.model_dump(exclude_defaults=True)}
+    )
     return {
         "intent": result.model_dump(),
         "warnings": warnings,
@@ -162,6 +173,7 @@ def route_after_understand(state: CopilotState, runtime: Runtime[Deps]) -> str:
 
 
 async def resolve_scope(state: CopilotState, runtime: Runtime[Deps]) -> dict[str, Any]:
+    runtime.context.emit({"type": "stage", "stage": "resolve_scope", "label": "Identifying assets"})
     tools = _tools(runtime)
     ent = state["intent"]["entities"]
     updates: dict[str, Any] = {}
@@ -236,6 +248,7 @@ def _scope_args(state: CopilotState) -> dict[str, Any] | None:
 
 
 async def collect_alarms(state: CopilotState, runtime: Runtime[Deps]) -> dict[str, Any]:
+    runtime.context.emit({"type": "stage", "stage": "collect_alarms", "label": "Retrieving alarms"})
     tools = _tools(runtime)
     intent, ent, window = state["intent"]["intent"], state["intent"]["entities"], state["time_window"]
     scope_args = _scope_args(state)
@@ -326,6 +339,7 @@ def _ts(value: str) -> float:
 
 
 async def analyze(state: CopilotState, runtime: Runtime[Deps]) -> dict[str, Any]:
+    runtime.context.emit({"type": "stage", "stage": "analyze", "label": "Analysing alarm patterns"})
     tools, settings = _tools(runtime), runtime.context.settings
     intent, ent, window = state["intent"]["intent"], state["intent"]["entities"], state["time_window"]
     scope_args = _scope_args(state) or {}
@@ -428,6 +442,7 @@ async def recommend(state: CopilotState, runtime: Runtime[Deps]) -> dict[str, An
 
 
 async def retrieve(state: CopilotState, runtime: Runtime[Deps]) -> dict[str, Any]:
+    runtime.context.emit({"type": "stage", "stage": "retrieve", "label": "Searching plant documents"})
     deps = runtime.context
     intent, ent = state["intent"]["intent"], state["intent"]["entities"]
     scope, evidence = state.get("scope", {}), state.get("evidence", {})
@@ -479,6 +494,15 @@ async def retrieve(state: CopilotState, runtime: Runtime[Deps]) -> dict[str, Any
             "warnings": warnings,
             "errors": state.get("errors", []) + [{"stage": "rag", "code": "RETRIEVAL_ERROR", "message": str(exc)[:300]}],
         }
+    deps.emit(
+        {
+            "type": "retrieval",
+            "sources": len(outcome.citations),
+            "quarantined": len(outcome.quarantined),
+            "low_confidence": outcome.low_confidence,
+            "queries": len(plan),
+        }
+    )
     if outcome.quarantined:
         warnings.append(f"{len(outcome.quarantined)} retrieved passage(s) quarantined as possible prompt injection")
     if outcome.low_confidence:
@@ -505,6 +529,7 @@ async def check_consistency(state: CopilotState, runtime: Runtime[Deps]) -> dict
 
 
 async def synthesize(state: CopilotState, runtime: Runtime[Deps]) -> dict[str, Any]:
+    runtime.context.emit({"type": "stage", "stage": "synthesize", "label": "Writing the answer"})
     deps = runtime.context
     intent = state["intent"]["intent"]
     retrieval = state.get("retrieval") or {"citations": [], "low_confidence": True}

@@ -8,6 +8,7 @@
 |---|---|---|
 | 0:00 | README architecture diagram | MCP path (blue) and RAG path (green), and the auth boundaries. The copilot has no API token, so it can reach the API only through MCP. |
 | 0:45 | GUI sidebar | System health (MCP server, RAG index, LLM). **MCP tool discovery**: 13 tools; expand `correlate_alarms` to show its input and output schema. |
+| 1:15 | While it runs | The **live tool activity** panel streams every stage and MCP call (`tool(args)` → ✓ with timings), Claude-style. |
 | 1:30 | **Acceptance scenario**: "Investigate recurring high-severity alarms for Boiler Feed Pump 101 over the last 90 days…" | See the three rows below. |
 | | Answer | Causes cite the DA-101 correlation `[T#]` and TSG-BFP-002 `[S#]`. Actions cite SOP-BFP-001 §5.2 and MM-BFP-003 §6. |
 | | Conflict check | The API recommendation "restart the tripped pump" is flagged as **Do not follow**. |

@@ -43,13 +43,39 @@ def _patch_backend(monkeypatch, *, chat=None, fail=False):
     )
     monkeypatch.setattr(api_client, "chat", _fail if fail else chat)
 
+    def _stream(message, conversation_id):
+        if fail:
+            _fail()
+        response = chat(message, conversation_id)
+        yield {"type": "stage", "stage": "understand", "label": "Understanding the question"}
+        yield {"type": "discovery", "tools": 13, "duration_ms": 12}
+        yield {"type": "intent", "intent": "active_alarm_triage", "method": "rules", "entities": {"asset_names": ["Boiler Feed Pump 102"]}}
+        for t in response.get("tool_trace", []):
+            if t["tool"] == "tools/list":
+                continue
+            yield {"type": "tool_start", "step": t["step"], "tool": t["tool"], "arguments": t["arguments"], "purpose": t["purpose"]}
+            yield {
+                "type": "tool_end",
+                "step": t["step"],
+                "tool": t["tool"],
+                "status": t["status"],
+                "duration_ms": t["duration_ms"],
+                "retries": len(t["retries"]),
+                "error_code": None,
+            }
+        yield {"type": "retrieval", "sources": len(response.get("citations", [])), "quarantined": 0, "low_confidence": False, "queries": 4}
+        yield {"type": "result", "response": response}
+
+    monkeypatch.setattr(api_client, "chat_stream", _stream)
+
 
 def test_empty_state_and_tool_discovery(monkeypatch):
     _patch_backend(monkeypatch, chat=lambda m, c: {})
     at = AppTest.from_file(APP, default_timeout=30).run()
     assert not at.exception
     assert any("Ask about an asset" in i.value for i in at.info)
-    assert any("search_assets" in e.label for e in at.sidebar.expander)
+    assert any(e.label == "MCP tools (1)" for e in at.sidebar.expander)
+    assert any("search_assets" in m.value for m in at.sidebar.markdown)
 
 
 def test_renders_full_answer_with_panels_citations_and_trace(monkeypatch, real_response):
@@ -58,11 +84,21 @@ def test_renders_full_answer_with_panels_citations_and_trace(monkeypatch, real_r
     at.chat_input[0].set_value("Show active critical alarms for Boiler Feed Pump 102").run()
     assert not at.exception
     labels = [t.label for t in at.tabs]
-    assert labels[0].endswith("Alarm summary") and "Citations" in labels[2] and "MCP trace" in labels[3]
-    assert any(m.value.startswith("### Summary") for m in at.markdown)
-    assert any("SOP-BFP-001" in e.label for e in at.expander)  # citation expanders
-    assert any("search_assets" in e.label and "T2" in e.label for e in at.expander)  # trace expanders
+    assert labels[:2] == ["Overview", "Causes & actions"] and labels[2].startswith("Sources") and labels[3].startswith("Trace")
+    assert any('class="answer"' in m.value for m in at.markdown)  # concise summary first
+    assert any('class="actions"' in m.value for m in at.markdown)  # top actions with citation pills
+    assert not any("### Summary" in m.value or "### Recommended actions" in m.value for m in at.markdown)  # no long report in chat
+    assert any("SOP-BFP-001" in e.label for e in at.expander)  # source expanders
+    trace = at.selectbox(key="trace-1")
+    assert any("search_assets" in o for o in trace.options)
+    assert any(m.value == "Active alarms" or "Active alarms" in m.value for m in at.markdown)
     assert len(at.dataframe) >= 3
+    # live tool activity is kept as a collapsed log with the answer (Claude-style tool use)
+    log = next(s for s in at.status if s.label.startswith("Used "))  # expanders with an icon render as status
+    assert "tools" in log.label and any("search_assets(" in m.value for m in log.markdown)
+    # a second answer collapses the details of the first behind a toggle
+    at.chat_input[0].set_value("again").run()
+    assert not at.exception and len(at.toggle) == 1
 
 
 def test_backend_errors_are_shown(monkeypatch):

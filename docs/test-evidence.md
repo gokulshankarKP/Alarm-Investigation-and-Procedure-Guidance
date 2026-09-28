@@ -7,7 +7,7 @@
 ## Result
 
 ```text
-137 passed in 137.36s
+138 passed in 54.60s
 TOTAL  3881 statements, 302 missed, 92% coverage
 ruff check: All checks passed · ruff format --check: 92 files already formatted · mypy: no issues in 52 source files
 newman: Alarm-API-Simulator 15/15 requests, 3/3 assertions · Alarm-API-Chaining 32/32 requests, 11/11 test scripts
@@ -32,8 +32,8 @@ The coverage report is in `docs/coverage/coverage.xml`. `make coverage` regenera
 | `tests/integration/test_mcp_client_integration.py` | 9 | **MCP client**: server connectivity, discovery, invocation, invalid arguments, missing tools, **partial failure**, timeouts, auth failure |
 | `tests/integration/test_orchestration.py` | 11 | **Orchestration**: multi-step MCP chains, MCP output passed into later tools, RAG in the same workflow, combined answer, partial source failure, **conflicting evidence**, MCP down, vector store down, memory, LLM validation and fallback |
 | `tests/integration/test_postman_contract.py` | 2 | Both Postman collections replayed with variable chaining |
-| `tests/e2e/test_acceptance_scenario.py` | 4 | **End-to-end**: backend request → MCP server → Alarm API → RAG → grounded response with citations (mandatory acceptance scenario), tool discovery and health, request validation, injection safety |
-| `tests/e2e/test_gui.py` | 3 | GUI via Streamlit AppTest: empty state and tool discovery, full answer with panels, citations and trace, backend error state |
+| `tests/e2e/test_acceptance_scenario.py` | 5 | **End-to-end**: backend request → MCP server → Alarm API → RAG → grounded response with citations (mandatory acceptance scenario), tool discovery and health, request validation, injection safety, **streaming progress events** |
+| `tests/e2e/test_gui.py` | 3 | GUI via Streamlit AppTest: empty state and tool discovery, streamed answer with activity log, panels, citations and trace, backend error state |
 
 Integration and e2e tests run the simulator and the MCP server as **real HTTP servers in background threads**. The copilot connects through `langchain-mcp-adapters` over streamable HTTP, exactly as in production. Failures are injected through the simulator's `/admin/faults` endpoint.
 
