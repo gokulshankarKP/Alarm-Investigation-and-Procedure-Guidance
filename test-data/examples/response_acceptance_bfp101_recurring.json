@@ -1,0 +1,1759 @@
+{
+  "conversation_id": "conv-example-acceptance_bfp101_recurring",
+  "trace_id": "trace-4a104891252947eb",
+  "question": "Investigate recurring high-severity alarms for Boiler Feed Pump 101 over the last 90 days, identify likely contributing factors, retrieve the relevant operating procedure, and provide recommended actions with source evidence.",
+  "intent": "recurring_alarm_analysis",
+  "intent_method": "rules",
+  "entities": {
+    "asset_names": [
+      "Boiler Feed Pump 101"
+    ],
+    "asset_ids": [],
+    "asset_classes": [
+      "boiler_feed_pump"
+    ],
+    "alarm_codes": [],
+    "sites": [],
+    "units": [],
+    "severities": [
+      "high",
+      "critical"
+    ],
+    "status": "historical",
+    "lookback_days": 90,
+    "kpi": null
+  },
+  "time_window": {
+    "start": "2026-07-02T00:00:00Z",
+    "end": "2026-09-30T00:00:00Z",
+    "lookback_days": "90"
+  },
+  "answer_markdown": "### Summary\n'Boiler Feed Pump 101' resolves to BFP-101 (Boiler Feed Pump 101, NorthPlant Unit 1, criticality A) [T2]. 1 active alarm(s): BFP-VIB-H on BFP-101 (medium, acknowledged, 42 min) [T4]. 9 alarm(s) in the analysed window; most frequent: BFP-VIB-HH x8, BFP-MOTOR-TRIP x1 [T5]. Alarm count trend is increasing (2.8 -> 5.0 per bucket) [T7].\n\n### Likely causes\n- Alarms on DA-101 (Deaerator 101) precede alarms on BFP-101: possible common or upstream cause. [T9]\n- BFP-101 BFP-SUCT-P-L is followed by BFP-101 BFP-VIB-H within 15 min in 100% of cases (n=19, median lag 3.0 min) [T9]\n- DA-101 DA-LVL-L is followed by BFP-101 BFP-SUCT-P-L within 15 min in 95% of cases (n=19, median lag 2.0 min) [T9]\n- Documented likely causes: Boiler Feed Pump Troubleshooting Guide \u00a73 (3. BFP-VIB-H / BFP-VIB-HH \u2014 high vibration). [S2]\n\n### Recommended actions\n- **immediate**: Confirm standby pump auto-start. [S1]\n- **immediate**: Read the protection relay trip reason at the MCC (overload, earth fault, phase imbalance). [S1]\n- **short term**: Follow MM-MTR-001 Section 4 for the trip investigation. Do not reset and restart until the cause is identified. [S1]\n- **short term**: Attempt to start the available boiler feed pump (BFP-101 or BFP-102) that did not trip on a mechanical protection. Do not restart a pump that tripped on BFP-VIB-HH or BFP-BRG-TEMP-HH. [S3]\n- **short term**: Reduce boiler firing rate to minimum to slow the fall in drum level. [S3]\n- **short term**: Announce the emergency to the shift supervisor. [S3]\n- **immediate**: Confirm the standby pump has auto-started and boiler feed flow is restored. If it has not started within 30 seconds, start it manually. [S5]\n- **short term**: Confirm the standby pump auto-started and boiler feedwater flow is restored [T10] [S5]\n- **short term**: Monitor boiler drum level closely [T10] [S5]\n\n### API recommendations vs documents\n- \u274c **Do not follow** API recommendation \"Reset the vibration trip and restart the tripped pump after 10 minutes if the vibration reading has returned to normal\" [T10]: Controlled documents require the trip cause to be identified (and, for vibration trips, a reliability engineer review) before any reset or restart. [S1] [S3] [S5]\n\n### Applicable procedures\n- SOP-BFP-001 \u00a75.5: Boiler Feed Pump Operating Procedure: 5.5 BFP-MOTOR-TRIP \u2014 drive motor trip (priority 2, high) [S1]\n- SAF-002 \u00a72: Emergency Response \u2014 Loss of Boiler Feedwater: 2. Immediate actions (first 2 minutes) [S3]\n- SOP-BFP-001 \u00a75.2: Boiler Feed Pump Operating Procedure: 5.2 BFP-VIB-HH \u2014 very high vibration, trip (priority 2, high) [S5]\n- MM-BFP-003 \u00a76: Boiler Feed Pump Maintenance Manual: 6. Return to service after a vibration trip (BFP-VIB-HH) [S6]",
+  "summary": "'Boiler Feed Pump 101' resolves to BFP-101 (Boiler Feed Pump 101, NorthPlant Unit 1, criticality A) [T2]. 1 active alarm(s): BFP-VIB-H on BFP-101 (medium, acknowledged, 42 min) [T4]. 9 alarm(s) in the analysed window; most frequent: BFP-VIB-HH x8, BFP-MOTOR-TRIP x1 [T5]. Alarm count trend is increasing (2.8 -> 5.0 per bucket) [T7].",
+  "confidence": "high",
+  "likely_causes": [
+    {
+      "cause": "Alarms on DA-101 (Deaerator 101) precede alarms on BFP-101: possible common or upstream cause.",
+      "evidence": [
+        "T9"
+      ]
+    },
+    {
+      "cause": "BFP-101 BFP-SUCT-P-L is followed by BFP-101 BFP-VIB-H within 15 min in 100% of cases (n=19, median lag 3.0 min)",
+      "evidence": [
+        "T9"
+      ]
+    },
+    {
+      "cause": "DA-101 DA-LVL-L is followed by BFP-101 BFP-SUCT-P-L within 15 min in 95% of cases (n=19, median lag 2.0 min)",
+      "evidence": [
+        "T9"
+      ]
+    },
+    {
+      "cause": "Documented likely causes: Boiler Feed Pump Troubleshooting Guide \u00a73 (3. BFP-VIB-H / BFP-VIB-HH \u2014 high vibration).",
+      "evidence": [
+        "S2"
+      ]
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Confirm standby pump auto-start.",
+      "urgency": "immediate",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "action": "Read the protection relay trip reason at the MCC (overload, earth fault, phase imbalance).",
+      "urgency": "immediate",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "action": "Follow MM-MTR-001 Section 4 for the trip investigation. Do not reset and restart until the cause is identified.",
+      "urgency": "short_term",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "action": "Attempt to start the available boiler feed pump (BFP-101 or BFP-102) that did not trip on a mechanical protection. Do not restart a pump that tripped on BFP-VIB-HH or BFP-BRG-TEMP-HH.",
+      "urgency": "short_term",
+      "citations": [
+        "S3"
+      ]
+    },
+    {
+      "action": "Reduce boiler firing rate to minimum to slow the fall in drum level.",
+      "urgency": "short_term",
+      "citations": [
+        "S3"
+      ]
+    },
+    {
+      "action": "Announce the emergency to the shift supervisor.",
+      "urgency": "short_term",
+      "citations": [
+        "S3"
+      ]
+    },
+    {
+      "action": "Confirm the standby pump has auto-started and boiler feed flow is restored. If it has not started within 30 seconds, start it manually.",
+      "urgency": "immediate",
+      "citations": [
+        "S5"
+      ]
+    },
+    {
+      "action": "Confirm the standby pump auto-started and boiler feedwater flow is restored",
+      "urgency": "short_term",
+      "citations": [
+        "T10",
+        "S5"
+      ]
+    },
+    {
+      "action": "Monitor boiler drum level closely",
+      "urgency": "short_term",
+      "citations": [
+        "T10",
+        "S5"
+      ]
+    }
+  ],
+  "consistency_findings": [
+    {
+      "api_recommendation": "Confirm the standby pump auto-started and boiler feedwater flow is restored",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-BFP-001 \u00a75.2.",
+      "citations": [
+        "S5"
+      ],
+      "tool_ref": "T10"
+    },
+    {
+      "api_recommendation": "Monitor boiler drum level closely",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-BFP-001 \u00a75.2.",
+      "citations": [
+        "S5"
+      ],
+      "tool_ref": "T10"
+    },
+    {
+      "api_recommendation": "Reset the vibration trip and restart the tripped pump after 10 minutes if the vibration reading has returned to normal",
+      "verdict": "inconsistent",
+      "explanation": "Controlled documents require the trip cause to be identified (and, for vibration trips, a reliability engineer review) before any reset or restart.",
+      "citations": [
+        "S1",
+        "S3",
+        "S5"
+      ],
+      "tool_ref": "T10"
+    },
+    {
+      "api_recommendation": "Raise a maintenance notification with the vibration trend attached",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-BFP-001 \u00a75.2.",
+      "citations": [
+        "S5"
+      ],
+      "tool_ref": "T10"
+    }
+  ],
+  "procedures": [
+    {
+      "doc_id": "SOP-BFP-001",
+      "section": "\u00a75.5",
+      "reason": "Boiler Feed Pump Operating Procedure: 5.5 BFP-MOTOR-TRIP \u2014 drive motor trip (priority 2, high)",
+      "citation": "S1"
+    },
+    {
+      "doc_id": "SAF-002",
+      "section": "\u00a72",
+      "reason": "Emergency Response \u2014 Loss of Boiler Feedwater: 2. Immediate actions (first 2 minutes)",
+      "citation": "S3"
+    },
+    {
+      "doc_id": "SOP-BFP-001",
+      "section": "\u00a75.2",
+      "reason": "Boiler Feed Pump Operating Procedure: 5.2 BFP-VIB-HH \u2014 very high vibration, trip (priority 2, high)",
+      "citation": "S5"
+    },
+    {
+      "doc_id": "MM-BFP-003",
+      "section": "\u00a76",
+      "reason": "Boiler Feed Pump Maintenance Manual: 6. Return to service after a vibration trip (BFP-VIB-HH)",
+      "citation": "S6"
+    }
+  ],
+  "alarm_panel": {
+    "assets": [
+      {
+        "asset_id": "BFP-101",
+        "asset_name": "Boiler Feed Pump 101",
+        "asset_class": "boiler_feed_pump",
+        "site": "NorthPlant",
+        "unit": "Unit 1",
+        "criticality": "A",
+        "match_score": 1.0,
+        "exact_match": true
+      }
+    ],
+    "related_assets": [
+      {
+        "asset_id": "M-101",
+        "asset_name": "BFP-101 Drive Motor M-101",
+        "asset_class": "motor",
+        "relationship": "driver",
+        "criticality": "A"
+      },
+      {
+        "asset_id": "DA-101",
+        "asset_name": "Deaerator 101",
+        "asset_class": "deaerator",
+        "relationship": "suction_source",
+        "criticality": "A"
+      },
+      {
+        "asset_id": "FCV-101",
+        "asset_name": "Min-Flow Recirculation Valve FCV-101",
+        "asset_class": "valve",
+        "relationship": "min_flow_valve",
+        "criticality": "B"
+      },
+      {
+        "asset_id": "BFP-102",
+        "asset_name": "Boiler Feed Pump 102",
+        "asset_class": "boiler_feed_pump",
+        "relationship": "standby_pump",
+        "criticality": "A"
+      },
+      {
+        "asset_id": "BLR-101",
+        "asset_name": "Boiler 101",
+        "asset_class": "boiler",
+        "relationship": "discharge_destination",
+        "criticality": "A"
+      }
+    ],
+    "active_alarms": [
+      {
+        "alarm_id": "ALM-000608",
+        "asset_id": "BFP-101",
+        "asset_name": "Boiler Feed Pump 101",
+        "site": "NorthPlant",
+        "unit": "Unit 1",
+        "alarm_code": "BFP-VIB-H",
+        "alarm_name": "High bearing vibration",
+        "alarm_type": "device",
+        "severity": "medium",
+        "priority": 3,
+        "status": "active",
+        "acknowledged": true,
+        "start_time": "2026-09-29T23:18:00Z",
+        "end_time": null,
+        "ack_time": "2026-09-29T23:19:35Z",
+        "duration_minutes": 42.0,
+        "ack_delay_seconds": 95.0,
+        "value": 7.66,
+        "setpoint": 7.1,
+        "uom": "mm/s",
+        "is_trip": false,
+        "asset_class": "boiler_feed_pump",
+        "message": "Boiler Feed Pump 101: High bearing vibration (7.66 mm/s, setpoint 7.1)"
+      }
+    ],
+    "historical_summary": {
+      "count": 9,
+      "start": "2026-07-02T00:00:00Z",
+      "end": "2026-09-30T00:00:00Z",
+      "by_code": [
+        [
+          "BFP-VIB-HH",
+          8
+        ],
+        [
+          "BFP-MOTOR-TRIP",
+          1
+        ]
+      ],
+      "truncated": false,
+      "summary": {
+        "alarm_count": 9,
+        "recurring_rate": 0.333,
+        "avg_ack_delay_seconds": 43.9,
+        "critical_count": 0
+      }
+    },
+    "focus_alarm": {
+      "alarm_id": "ALM-000596",
+      "asset_id": "BFP-101",
+      "asset_name": "Boiler Feed Pump 101",
+      "site": "NorthPlant",
+      "unit": "Unit 1",
+      "alarm_code": "BFP-VIB-HH",
+      "alarm_name": "Very high bearing vibration - pump trip",
+      "alarm_type": "safety",
+      "severity": "high",
+      "priority": 2,
+      "status": "cleared",
+      "acknowledged": true,
+      "start_time": "2026-09-25T18:29:37.671640Z",
+      "end_time": "2026-09-25T22:29:36.676188Z",
+      "ack_time": "2026-09-25T18:30:22.168864Z",
+      "duration_minutes": 240.0,
+      "ack_delay_seconds": 44.5,
+      "value": 11.61,
+      "setpoint": 11.0,
+      "uom": "mm/s",
+      "is_trip": true,
+      "asset_class": "boiler_feed_pump",
+      "message": "Boiler Feed Pump 101: Very high bearing vibration - pump trip (11.61 mm/s, setpoint 11.0)"
+    },
+    "priority_scores": [],
+    "correlation_insights": [
+      "BFP-101 BFP-SUCT-P-L is followed by BFP-101 BFP-VIB-H within 15 min in 100% of cases (n=19, median lag 3.0 min)",
+      "DA-101 DA-LVL-L is followed by BFP-101 BFP-SUCT-P-L within 15 min in 95% of cases (n=19, median lag 2.0 min)",
+      "DA-101 DA-LVL-L is followed by BFP-101 BFP-VIB-H within 15 min in 95% of cases (n=19, median lag 5.0 min)",
+      "DA-101 DA-P-L is followed by BFP-101 BFP-SUCT-P-L within 15 min in 100% of cases (n=6, median lag 1.0 min)",
+      "DA-101 DA-P-L is followed by BFP-101 BFP-VIB-H within 15 min in 100% of cases (n=6, median lag 4.0 min)",
+      "BFP-101 BFP-SUCT-P-L is followed by BFP-101 BFP-VIB-HH within 15 min in 42% of cases (n=8, median lag 7.0 min)",
+      "DA-101 (Deaerator 101) alarms precede alarms on BFP-101: possible common cause"
+    ],
+    "common_causes": [
+      {
+        "asset_id": "DA-101",
+        "asset_name": "Deaerator 101",
+        "affected_assets": [
+          "BFP-101"
+        ],
+        "evidence": 58
+      }
+    ],
+    "rationalization": [],
+    "trend": {
+      "alarm_count": {
+        "direction": "increasing",
+        "first_half_avg": 2.8,
+        "second_half_avg": 5.0,
+        "relative_change": 0.786
+      }
+    },
+    "kpis": []
+  },
+  "citations": [
+    {
+      "id": "S1",
+      "doc_id": "SOP-BFP-001",
+      "revision": "C",
+      "title": "Boiler Feed Pump Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a75.5",
+      "heading_path": "5. Alarm response > 5.5 BFP-MOTOR-TRIP \u2014 drive motor trip (priority 2, high)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.06027,
+      "similarity": 0.0225,
+      "matched_alarm_codes": [
+        "BFP-MOTOR-TRIP"
+      ],
+      "excerpt": "### 5.5 BFP-MOTOR-TRIP \u2014 drive motor trip (priority 2, high)\n\n1. Confirm standby pump auto-start.\n2. Read the protection relay trip reason at the MCC (overload, earth fault, phase imbalance).\n3. Follow MM-MTR-001 Section 4 for the trip investigation. Do not reset and restart until\n   the cause is identified.",
+      "source_path": "procedures/SOP-BFP-001_boiler_feed_pump_operation.md",
+      "cited": true
+    },
+    {
+      "id": "S2",
+      "doc_id": "TSG-BFP-002",
+      "revision": "B",
+      "title": "Boiler Feed Pump Troubleshooting Guide",
+      "doc_type": "troubleshooting",
+      "section": "\u00a73",
+      "heading_path": "3. BFP-VIB-H / BFP-VIB-HH \u2014 high vibration",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.05755,
+      "similarity": -0.0126,
+      "matched_alarm_codes": [
+        "BFP-VIB-HH"
+      ],
+      "excerpt": "## 3. BFP-VIB-H / BFP-VIB-HH \u2014 high vibration\n\n| Likely cause | Evidence | Check |\n|---|---|---|\n| Cavitation (low NPSH) | Suction pressure alarm before or with vibration; broadband noise; crackling sound | DA-101 level/pressure, suction strainer \u0394P |\n| Operation below minimum flow | Flow < 60 t/h; recirculation valve closed | Recirc valve position vs. demand |\n| Misalignment | 2\u00d7 running-speed component; high axial vibration; recent maintenance | Laser alignment check |\n| Bearing wear | Rising trend over weeks; high-frequency bearing defect peaks | Vibration spectrum, oil analysis |\n| Impeller imbalance or damage | 1\u00d7 running-speed dominant | Spectrum; inspect at next outage |\n| Loose foundation bolts / soft foot | Directional vibration difference | Torque check, soft-foot check |",
+      "source_path": "troubleshooting/TSG-BFP-002_boiler_feed_pump_troubleshooting.md",
+      "cited": true
+    },
+    {
+      "id": "S3",
+      "doc_id": "SAF-002",
+      "revision": "B",
+      "title": "Emergency Response \u2014 Loss of Boiler Feedwater",
+      "doc_type": "safety",
+      "section": "\u00a72",
+      "heading_path": "2. Immediate actions (first 2 minutes)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.05658,
+      "similarity": 0.0325,
+      "matched_alarm_codes": [
+        "BFP-MOTOR-TRIP",
+        "BFP-VIB-HH"
+      ],
+      "excerpt": "## 2. Immediate actions (first 2 minutes)\n\n1. Attempt to start the available boiler feed pump (BFP-101 or BFP-102) that did **not** trip\n   on a mechanical protection. Do not restart a pump that tripped on BFP-VIB-HH or\n   BFP-BRG-TEMP-HH.\n2. Reduce boiler firing rate to minimum to slow the fall in drum level.\n3. Announce the emergency to the shift supervisor.",
+      "source_path": "safety/SAF-002_loss_of_boiler_feedwater_emergency.md",
+      "cited": true
+    },
+    {
+      "id": "S4",
+      "doc_id": "TSG-BFP-002",
+      "revision": "B",
+      "title": "Boiler Feed Pump Troubleshooting Guide",
+      "doc_type": "troubleshooting",
+      "section": "\u00a74",
+      "heading_path": "4. Cavitation: the most common cause of recurring BFP alarms",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.05588,
+      "similarity": -0.0318,
+      "matched_alarm_codes": [
+        "BFP-VIB-HH"
+      ],
+      "excerpt": "## 4. Cavitation: the most common cause of recurring BFP alarms\n\nCavitation happens when suction pressure falls near the vapour pressure of the hot feed water.\nVapour bubbles collapse on the impeller, causing noise, vibration, and erosion.\n\nTypical sequence seen in alarm history: `DA-LVL-L` or `DA-P-L` \u2192 `BFP-SUCT-P-L` \u2192\n`BFP-VIB-H` \u2192 possibly `BFP-VIB-HH` trip.\n\nCorrective actions:\n\n1. Stabilise deaerator level control (check DA-101 level control valve tuning).\n2. Clean the suction strainer if \u0394P exceeds 0.5 bar.\n3. Review deaerator pressure control during load changes.",
+      "source_path": "troubleshooting/TSG-BFP-002_boiler_feed_pump_troubleshooting.md",
+      "cited": false
+    },
+    {
+      "id": "S5",
+      "doc_id": "SOP-BFP-001",
+      "revision": "C",
+      "title": "Boiler Feed Pump Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a75.2",
+      "heading_path": "5. Alarm response > 5.2 BFP-VIB-HH \u2014 very high vibration, trip (priority 2, high)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.04362,
+      "similarity": -0.0374,
+      "matched_alarm_codes": [
+        "BFP-MOTOR-TRIP",
+        "BFP-VIB-HH"
+      ],
+      "excerpt": "### 5.2 BFP-VIB-HH \u2014 very high vibration, trip (priority 2, high)\n\n1. Confirm the standby pump has auto-started and boiler feed flow is restored.\n   If it has not started within 30 seconds, start it manually.\n2. Monitor boiler drum level. If drum level falls below the low alarm, follow SAF-002.\n3. **Do not restart the tripped pump** until the reliability engineer has reviewed the\n   vibration data and released it. See MM-BFP-003 Section 6.\n4. Raise a maintenance notification with the vibration trend attached.",
+      "source_path": "procedures/SOP-BFP-001_boiler_feed_pump_operation.md",
+      "cited": true
+    },
+    {
+      "id": "S6",
+      "doc_id": "MM-BFP-003",
+      "revision": "A",
+      "title": "Boiler Feed Pump Maintenance Manual",
+      "doc_type": "maintenance_manual",
+      "section": "\u00a76",
+      "heading_path": "6. Return to service after a vibration trip (BFP-VIB-HH)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.04208,
+      "similarity": 0.0067,
+      "matched_alarm_codes": [
+        "BFP-MOTOR-TRIP",
+        "BFP-VIB-HH"
+      ],
+      "excerpt": "## 6. Return to service after a vibration trip (BFP-VIB-HH)\n\nA pump that tripped on very high vibration **must not be restarted by operations alone**.\nBefore release:\n\n1. The reliability engineer reviews the vibration trend and spectrum from the trip event.\n2. If the root cause was a process condition (cavitation, low flow) that has been corrected,\n   the engineer may release the pump for a supervised test run of 30 minutes with a portable\n   analyser attached.\n3. If the spectrum shows a mechanical fault (bearing defect, misalignment, imbalance), the pump\n   stays out of service until repaired.\n4. The release decision is recorded in the maintenance system.\n\nAny automated recommendation to \"restart the tripped pump\" without this review is **not\nconsistent with this manual** and must not be followed.",
+      "source_path": "maintenance/MM-BFP-003_boiler_feed_pump_maintenance_manual.md",
+      "cited": true
+    },
+    {
+      "id": "S7",
+      "doc_id": "SOP-BFP-001",
+      "revision": "C",
+      "title": "Boiler Feed Pump Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a75.1",
+      "heading_path": "5. Alarm response > 5.1 BFP-VIB-H \u2014 high bearing vibration (priority 3, medium)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.04026,
+      "similarity": 0.0314,
+      "matched_alarm_codes": [
+        "BFP-VIB-HH"
+      ],
+      "excerpt": "### 5.1 BFP-VIB-H \u2014 high bearing vibration (priority 3, medium)\n\n1. Check the vibration trend for the last 24 hours. A step change points to a mechanical\n   event; a slow rise points to wear or misalignment.\n2. Check suction pressure. Low suction pressure causes cavitation, which shows as high,\n   noisy vibration (see TSG-BFP-002 Section 4).\n3. Check flow. Operation below minimum flow causes recirculation vibration.\n4. Request a portable vibration survey by the reliability team within the shift.",
+      "source_path": "procedures/SOP-BFP-001_boiler_feed_pump_operation.md",
+      "cited": false
+    },
+    {
+      "id": "S8",
+      "doc_id": "SOP-BFP-001",
+      "revision": "C",
+      "title": "Boiler Feed Pump Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a74",
+      "heading_path": "4. Start-up and changeover",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03868,
+      "similarity": 0.0318,
+      "matched_alarm_codes": [
+        "BFP-MOTOR-TRIP"
+      ],
+      "excerpt": "## 4. Start-up and changeover\n\n1. Confirm DA-101 level is above 60 % and pressure is stable.\n2. Confirm the recirculation valve is in AUTO.\n3. Confirm lube oil pressure is above 1.2 barg on the pump to be started.\n4. Start the pump from the DCS. Confirm discharge pressure rises within 10 seconds.\n5. For a planned changeover, start the standby pump, confirm stable flow for 5 minutes, then\n   stop the duty pump. Never run both pumps against a closed discharge.\n6. Limit motor starts to those allowed in MM-MTR-001 Section 5.",
+      "source_path": "procedures/SOP-BFP-001_boiler_feed_pump_operation.md",
+      "cited": false
+    }
+  ],
+  "quarantined_sources": [],
+  "tools_discovered": [
+    "search_assets",
+    "get_asset_metadata",
+    "get_alarms",
+    "get_alarm_details",
+    "summarize_alarms",
+    "get_alarm_trends",
+    "correlate_alarms",
+    "analyze_alarm_floods",
+    "find_rationalization_candidates",
+    "score_alarm_priority",
+    "get_operator_recommendations",
+    "calculate_alarm_kpi",
+    "list_kpi_definitions"
+  ],
+  "tool_trace": [
+    {
+      "step": 1,
+      "tool": "tools/list",
+      "server": "alarm-management",
+      "purpose": "Discover available MCP tools",
+      "status": "success",
+      "arguments": {},
+      "started_at": "2026-09-28T20:05:28.044678+00:00",
+      "duration_ms": 285.3,
+      "attempts": 0,
+      "retries": [],
+      "api_calls": [],
+      "error": null,
+      "result": {
+        "tools": [
+          "search_assets",
+          "get_asset_metadata",
+          "get_alarms",
+          "get_alarm_details",
+          "summarize_alarms",
+          "get_alarm_trends",
+          "correlate_alarms",
+          "analyze_alarm_floods",
+          "find_rationalization_candidates",
+          "score_alarm_priority",
+          "get_operator_recommendations",
+          "calculate_alarm_kpi",
+          "list_kpi_definitions"
+        ]
+      },
+      "trace_id": "trace-4a104891252947eb"
+    },
+    {
+      "step": 2,
+      "tool": "search_assets",
+      "server": "alarm-management",
+      "purpose": "Resolve 'Boiler Feed Pump 101' to an asset identifier",
+      "status": "success",
+      "arguments": {
+        "query": "Boiler Feed Pump 101",
+        "limit": 5
+      },
+      "started_at": "2026-09-28T20:05:28.049089+00:00",
+      "duration_ms": 295.7,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /assets/search",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 24.4,
+          "trace_id": "trace-4a104891252947eb",
+          "api_request_id": "req-9361795b8890"
+        }
+      ],
+      "error": null,
+      "result": {
+        "query": "Boiler Feed Pump 101",
+        "results": [
+          {
+            "asset_id": "BFP-101",
+            "asset_name": "Boiler Feed Pump 101",
+            "asset_class": "boiler_feed_pump",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "criticality": "A",
+            "match_score": 1.0,
+            "exact_match": true
+          },
+          {
+            "asset_id": "BFP-102",
+            "asset_name": "Boiler Feed Pump 102",
+            "asset_class": "boiler_feed_pump",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "criticality": "A",
+            "match_score": 0.75,
+            "exact_match": false
+          },
+          {
+            "asset_id": "BLR-101",
+            "asset_name": "Boiler 101",
+            "asset_class": "boiler",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "criticality": "A",
+            "match_score": 0.5,
+            "exact_match": false
+          },
+          {
+            "asset_id": "P-402",
+            "asset_name": "Heater Feed Pump P-402",
+            "asset_class": "pump",
+            "site": "EastRefinery",
+            "unit": "Unit 4",
+            "criticality": "B",
+            "match_score": 0.5,
+            "exact_match": false
+          }
+        ],
+        "total": 4,
+        "meta": {
+          "trace_id": "trace-4a104891252947eb",
+          "tool": "search_assets",
+          "api_calls": [
+            {
+              "api_endpoint": "GET /assets/search",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 24.4,
+              "trace_id": "trace-4a104891252947eb",
+              "api_request_id": "req-9361795b8890"
+            }
+          ],
+          "total_duration_ms": 24.7
+        }
+      },
+      "trace_id": "trace-4a104891252947eb"
+    },
+    {
+      "step": 3,
+      "tool": "get_asset_metadata",
+      "server": "alarm-management",
+      "purpose": "Asset context and related assets for BFP-101",
+      "status": "success",
+      "arguments": {
+        "asset_id": "BFP-101"
+      },
+      "started_at": "2026-09-28T20:05:28.345040+00:00",
+      "duration_ms": 217.9,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /assets/BFP-101/metadata",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 5.2,
+          "trace_id": "trace-4a104891252947eb",
+          "api_request_id": "req-43ba34e01430"
+        }
+      ],
+      "error": null,
+      "result": {
+        "asset_id": "BFP-101",
+        "asset_name": "Boiler Feed Pump 101",
+        "asset_class": "boiler_feed_pump",
+        "site": "NorthPlant",
+        "unit": "Unit 1",
+        "criticality": "A",
+        "description": "Multistage barrel-type centrifugal boiler feed pump, duty pump",
+        "related_assets": [
+          {
+            "asset_id": "M-101",
+            "asset_name": "BFP-101 Drive Motor M-101",
+            "asset_class": "motor",
+            "relationship": "driver",
+            "criticality": "A"
+          },
+          {
+            "asset_id": "DA-101",
+            "asset_name": "Deaerator 101",
+            "asset_class": "deaerator",
+            "relationship": "suction_source",
+            "criticality": "A"
+          },
+          {
+            "asset_id": "FCV-101",
+            "asset_name": "Min-Flow Recirculation Valve FCV-101",
+            "asset_class": "valve",
+            "relationship": "min_flow_valve",
+            "criticality": "B"
+          },
+          {
+            "asset_id": "BFP-102",
+            "asset_name": "Boiler Feed Pump 102",
+            "asset_class": "boiler_feed_pump",
+            "relationship": "standby_pump",
+            "criticality": "A"
+          },
+          {
+            "asset_id": "BLR-101",
+            "asset_name": "Boiler 101",
+            "asset_class": "boiler",
+            "relationship": "discharge_destination",
+            "criticality": "A"
+          }
+        ],
+        "attributes": {
+          "rated_flow_tph": "220",
+          "rated_head_barg": "140",
+          "speed_rpm": "2980"
+        },
+        "alarm_statistics": {
+          "active_alarms": 1,
+          "alarms_last_30_days": 21,
+          "last_alarm_time": "2026-09-29T23:18:00Z"
+        },
+        "maintenance": {
+          "last_preventive_maintenance": "2026-08-23T00:00:00Z",
+          "running_hours": 35059
+        },
+        "meta": {
+          "trace_id": "trace-4a104891252947eb",
+          "tool": "get_asset_metadata",
+          "api_calls": [
+            {
+              "api_endpoint": "GET /assets/BFP-101/metadata",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 5.2,
+              "trace_id": "trace-4a104891252947eb",
+              "api_request_id": "req-43ba34e01430"
+            }
+          ],
+          "total_duration_ms": 5.4
+        },
+        "manufacturer": "Sulzer-like (synthetic)",
+        "model": "MC-8/6",
+        "install_date": "2014-03-12",
+        "parent_asset_id": "BLR-101"
+      },
+      "trace_id": "trace-4a104891252947eb"
+    },
+    {
+      "step": 4,
+      "tool": "get_alarms",
+      "server": "alarm-management",
+      "purpose": "Retrieve currently active alarms",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "BFP-101"
+        ],
+        "status": "active",
+        "page_size": 100,
+        "sort_by": "priority",
+        "sort_order": "asc"
+      },
+      "started_at": "2026-09-28T20:05:28.564778+00:00",
+      "duration_ms": 221.6,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /alarms",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 4.8,
+          "trace_id": "trace-4a104891252947eb",
+          "api_request_id": "req-5c00564edbf5"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarms": [
+          {
+            "alarm_id": "ALM-000608",
+            "asset_id": "BFP-101",
+            "asset_name": "Boiler Feed Pump 101",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "alarm_code": "BFP-VIB-H",
+            "alarm_name": "High bearing vibration",
+            "alarm_type": "device",
+            "severity": "medium",
+            "priority": 3,
+            "status": "active",
+            "acknowledged": true,
+            "start_time": "2026-09-29T23:18:00Z",
+            "end_time": null,
+            "ack_time": "2026-09-29T23:19:35Z",
+            "duration_minutes": 42.0,
+            "ack_delay_seconds": 95.0,
+            "value": 7.66,
+            "setpoint": 7.1,
+            "uom": "mm/s",
+            "is_trip": false,
+            "asset_class": "boiler_feed_pump",
+            "message": "Boiler Feed Pump 101: High bearing vibration (7.66 mm/s, setpoint 7.1)"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "page_size": 100,
+          "total_items": 1,
+          "total_pages": 1,
+          "has_next": false
+        },
+        "pages_fetched": 1,
+        "truncated": false,
+        "meta": {
+          "trace_id": "trace-4a104891252947eb",
+          "tool": "get_alarms",
+          "api_calls": [
+            {
+              "api_endpoint": "GET /alarms",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 4.8,
+              "trace_id": "trace-4a104891252947eb",
+              "api_request_id": "req-5c00564edbf5"
+            }
+          ],
+          "total_duration_ms": 5.0
+        }
+      },
+      "trace_id": "trace-4a104891252947eb"
+    },
+    {
+      "step": 5,
+      "tool": "get_alarms",
+      "server": "alarm-management",
+      "purpose": "Retrieve alarm history for the last 90 days",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "BFP-101"
+        ],
+        "status": "all",
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z",
+        "page_size": 200,
+        "fetch_all_pages": true,
+        "severities": [
+          "high",
+          "critical"
+        ]
+      },
+      "started_at": "2026-09-28T20:05:28.788721+00:00",
+      "duration_ms": 228.8,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /alarms",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 6.1,
+          "trace_id": "trace-4a104891252947eb",
+          "api_request_id": "req-ece51b2d3e5c"
+        }
+      ],
+      "error": null,
+      "result": {
+        "_truncated": true,
+        "keys": [
+          "alarms",
+          "pagination",
+          "pages_fetched",
+          "truncated",
+          "meta"
+        ]
+      },
+      "trace_id": "trace-4a104891252947eb"
+    },
+    {
+      "step": 6,
+      "tool": "summarize_alarms",
+      "server": "alarm-management",
+      "purpose": "Aggregate alarm KPIs for the window",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "BFP-101"
+        ],
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z",
+        "group_by": [
+          "alarm_code",
+          "alarm_name"
+        ],
+        "kpis": [
+          "alarm_count",
+          "recurring_rate",
+          "avg_ack_delay",
+          "critical_count"
+        ],
+        "severities": [
+          "high",
+          "critical"
+        ]
+      },
+      "started_at": "2026-09-28T20:05:29.016245+00:00",
+      "duration_ms": 877.4,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/summary",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 577.0,
+          "trace_id": "trace-4a104891252947eb",
+          "api_request_id": "req-703c884fc8f5"
+        }
+      ],
+      "error": null,
+      "result": {
+        "totals": {
+          "alarm_count": 9,
+          "recurring_rate": 0.333,
+          "avg_ack_delay_seconds": 43.9,
+          "critical_count": 0
+        },
+        "groups": [
+          {
+            "group": {
+              "alarm_code": "BFP-VIB-HH",
+              "alarm_name": "Very high bearing vibration - pump trip"
+            },
+            "alarm_count": 8,
+            "recurring_rate": 0.375,
+            "avg_ack_delay_seconds": 44.4,
+            "critical_count": 0
+          },
+          {
+            "group": {
+              "alarm_code": "BFP-MOTOR-TRIP",
+              "alarm_name": "Drive motor trip"
+            },
+            "alarm_count": 1,
+            "recurring_rate": 0.0,
+            "avg_ack_delay_seconds": 40.0,
+            "critical_count": 0
+          }
+        ],
+        "top_alarms": [
+          {
+            "asset_id": "BFP-101",
+            "alarm_code": "BFP-VIB-HH",
+            "alarm_name": "Very high bearing vibration - pump trip",
+            "severity": "high",
+            "count": 8
+          },
+          {
+            "asset_id": "BFP-101",
+            "alarm_code": "BFP-MOTOR-TRIP",
+            "alarm_name": "Drive motor trip",
+            "severity": "high",
+            "count": 1
+          }
+        ],
+        "meta": {
+          "trace_id": "trace-4a104891252947eb",
+          "tool": "summarize_alarms",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/summary",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 577.0,
+              "trace_id": "trace-4a104891252947eb",
+              "api_request_id": "req-703c884fc8f5"
+            }
+          ],
+          "total_duration_ms": 577.2
+        },
+        "request": {
+          "asset_ids": [
+            "BFP-101"
+          ],
+          "time_range": {
+            "start_time": "2026-07-02T00:00:00Z",
+            "end_time": "2026-09-30T00:00:00Z"
+          },
+          "severity": [
+            "high",
+            "critical"
+          ],
+          "group_by": [
+            "alarm_code",
+            "alarm_name"
+          ],
+          "kpis": [
+            "alarm_count",
+            "recurring_rate",
+            "avg_ack_delay",
+            "critical_count"
+          ]
+        }
+      },
+      "trace_id": "trace-4a104891252947eb"
+    },
+    {
+      "step": 7,
+      "tool": "get_alarm_trends",
+      "server": "alarm-management",
+      "purpose": "Weekly alarm trend",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "BFP-101"
+        ],
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z",
+        "bucket": "weekly",
+        "metrics": [
+          "alarm_count"
+        ]
+      },
+      "started_at": "2026-09-28T20:05:29.016245+00:00",
+      "duration_ms": 899.4,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/trends",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 202.8,
+          "trace_id": "trace-4a104891252947eb",
+          "api_request_id": "req-cfc44d707957"
+        }
+      ],
+      "error": null,
+      "result": {
+        "bucket": "weekly",
+        "series": [
+          {
+            "bucket_start": "2026-07-02T00:00:00Z",
+            "alarm_count": 3
+          },
+          {
+            "bucket_start": "2026-07-09T00:00:00Z",
+            "alarm_count": 4
+          },
+          {
+            "bucket_start": "2026-07-16T00:00:00Z",
+            "alarm_count": 1
+          },
+          {
+            "bucket_start": "2026-07-23T00:00:00Z",
+            "alarm_count": 4
+          },
+          {
+            "bucket_start": "2026-07-30T00:00:00Z",
+            "alarm_count": 1
+          },
+          {
+            "bucket_start": "2026-08-06T00:00:00Z",
+            "alarm_count": 4
+          },
+          {
+            "bucket_start": "2026-08-13T00:00:00Z",
+            "alarm_count": 5
+          },
+          {
+            "bucket_start": "2026-08-20T00:00:00Z",
+            "alarm_count": 6
+          },
+          {
+            "bucket_start": "2026-08-27T00:00:00Z",
+            "alarm_count": 6
+          },
+          {
+            "bucket_start": "2026-09-03T00:00:00Z",
+            "alarm_count": 3
+          },
+          {
+            "bucket_start": "2026-09-10T00:00:00Z",
+            "alarm_count": 7
+          },
+          {
+            "bucket_start": "2026-09-17T00:00:00Z",
+            "alarm_count": 4
+          },
+          {
+            "bucket_start": "2026-09-24T00:00:00Z",
+            "alarm_count": 4
+          }
+        ],
+        "trend": {
+          "alarm_count": {
+            "direction": "increasing",
+            "first_half_avg": 2.8,
+            "second_half_avg": 5.0,
+            "relative_change": 0.786
+          }
+        },
+        "total_alarms": 52,
+        "meta": {
+          "trace_id": "trace-4a104891252947eb",
+          "tool": "get_alarm_trends",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/trends",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 202.8,
+              "trace_id": "trace-4a104891252947eb",
+              "api_request_id": "req-cfc44d707957"
+            }
+          ],
+          "total_duration_ms": 203.1
+        },
+        "request": {
+          "asset_ids": [
+            "BFP-101"
+          ],
+          "time_range": {
+            "start_time": "2026-07-02T00:00:00Z",
+            "end_time": "2026-09-30T00:00:00Z"
+          },
+          "bucket": "weekly",
+          "metrics": [
+            "alarm_count"
+          ]
+        }
+      },
+      "trace_id": "trace-4a104891252947eb"
+    },
+    {
+      "step": 8,
+      "tool": "find_rationalization_candidates",
+      "server": "alarm-management",
+      "purpose": "Check for recurring/chattering/stale alarms",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "BFP-101"
+        ],
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z"
+      },
+      "started_at": "2026-09-28T20:05:29.016245+00:00",
+      "duration_ms": 905.4,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/rationalization-candidates",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 401.1,
+          "trace_id": "trace-4a104891252947eb",
+          "api_request_id": "req-c6dbbba1eb88"
+        }
+      ],
+      "error": null,
+      "result": {
+        "candidate_count": 0,
+        "candidates": [],
+        "criteria": {
+          "recurrence_threshold_per_7_days": 5,
+          "stale_minutes_threshold": 180,
+          "chatter": ">= 3 activations in 1.0 min"
+        },
+        "meta": {
+          "trace_id": "trace-4a104891252947eb",
+          "tool": "find_rationalization_candidates",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/rationalization-candidates",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 401.1,
+              "trace_id": "trace-4a104891252947eb",
+              "api_request_id": "req-c6dbbba1eb88"
+            }
+          ],
+          "total_duration_ms": 401.4
+        },
+        "request": {
+          "asset_ids": [
+            "BFP-101"
+          ],
+          "time_range": {
+            "start_time": "2026-07-02T00:00:00Z",
+            "end_time": "2026-09-30T00:00:00Z"
+          },
+          "recurrence_threshold": 5,
+          "stale_minutes_threshold": 180,
+          "chatter_threshold": 3,
+          "chatter_window_minutes": 1.0
+        },
+        "alarms_analyzed": 52
+      },
+      "trace_id": "trace-4a104891252947eb"
+    },
+    {
+      "step": 9,
+      "tool": "correlate_alarms",
+      "server": "alarm-management",
+      "purpose": "Correlate alarms with related assets (sequences, common causes)",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "BFP-101"
+        ],
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z",
+        "lag_window_minutes": 15,
+        "severity_threshold": "medium",
+        "min_support": 2,
+        "include_related": true
+      },
+      "started_at": "2026-09-28T20:05:29.016245+00:00",
+      "duration_ms": 916.3,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/correlation",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 29.1,
+          "trace_id": "trace-4a104891252947eb",
+          "api_request_id": "req-cf4988381ab0"
+        }
+      ],
+      "error": null,
+      "result": {
+        "assets_analyzed": [
+          "BFP-101",
+          "BFP-102",
+          "BLR-101",
+          "DA-101",
+          "FCV-101",
+          "M-101"
+        ],
+        "alarms_analyzed": 85,
+        "pairs": [
+          {
+            "antecedent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-SUCT-P-L"
+            },
+            "consequent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-VIB-H"
+            },
+            "support": 19,
+            "confidence": 1.0,
+            "median_lag_minutes": 3.0,
+            "cross_asset": false
+          },
+          {
+            "antecedent": {
+              "asset_id": "DA-101",
+              "alarm_code": "DA-LVL-L"
+            },
+            "consequent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-SUCT-P-L"
+            },
+            "support": 19,
+            "confidence": 0.95,
+            "median_lag_minutes": 2.0,
+            "cross_asset": true
+          },
+          {
+            "antecedent": {
+              "asset_id": "DA-101",
+              "alarm_code": "DA-LVL-L"
+            },
+            "consequent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-VIB-H"
+            },
+            "support": 19,
+            "confidence": 0.95,
+            "median_lag_minutes": 5.0,
+            "cross_asset": true
+          },
+          {
+            "antecedent": {
+              "asset_id": "DA-101",
+              "alarm_code": "DA-P-L"
+            },
+            "consequent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-SUCT-P-L"
+            },
+            "support": 6,
+            "confidence": 1.0,
+            "median_lag_minutes": 1.0,
+            "cross_asset": true
+          },
+          {
+            "antecedent": {
+              "asset_id": "DA-101",
+              "alarm_code": "DA-P-L"
+            },
+            "consequent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-VIB-H"
+            },
+            "support": 6,
+            "confidence": 1.0,
+            "median_lag_minutes": 4.0,
+            "cross_asset": true
+          },
+          {
+            "antecedent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-SUCT-P-L"
+            },
+            "consequent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-VIB-HH"
+            },
+            "support": 8,
+            "confidence": 0.421,
+            "median_lag_minutes": 7.0,
+            "cross_asset": false
+          },
+          {
+            "antecedent": {
+              "asset_id": "DA-101",
+              "alarm_code": "DA-LVL-L"
+            },
+            "consequent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-VIB-HH"
+            },
+            "support": 8,
+            "confidence": 0.4,
+            "median_lag_minutes": 9.0,
+            "cross_asset": true
+          },
+          {
+            "antecedent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-VIB-H"
+            },
+            "consequent": {
+              "asset_id": "BFP-101",
+              "alarm_code": "BFP-VIB-HH"
+            },
+            "support": 8,
+            "confidence": 0.4,
+            "median_lag_minutes": 4.0,
+            "cross_asset": false
+          }
+        ],
+        "common_cause_candidates": [
+          {
+            "asset_id": "DA-101",
+            "asset_name": "Deaerator 101",
+            "affected_assets": [
+              "BFP-101"
+            ],
+            "evidence": 58
+          }
+        ],
+        "insights": [
+          "BFP-101 BFP-SUCT-P-L is followed by BFP-101 BFP-VIB-H within 15 min in 100% of cases (n=19, median lag 3.0 min)",
+          "DA-101 DA-LVL-L is followed by BFP-101 BFP-SUCT-P-L within 15 min in 95% of cases (n=19, median lag 2.0 min)",
+          "DA-101 DA-LVL-L is followed by BFP-101 BFP-VIB-H within 15 min in 95% of cases (n=19, median lag 5.0 min)",
+          "DA-101 DA-P-L is followed by BFP-101 BFP-SUCT-P-L within 15 min in 100% of cases (n=6, median lag 1.0 min)",
+          "DA-101 DA-P-L is followed by BFP-101 BFP-VIB-H within 15 min in 100% of cases (n=6, median lag 4.0 min)",
+          "BFP-101 BFP-SUCT-P-L is followed by BFP-101 BFP-VIB-HH within 15 min in 42% of cases (n=8, median lag 7.0 min)",
+          "DA-101 (Deaerator 101) alarms precede alarms on BFP-101: possible common cause"
+        ],
+        "meta": {
+          "trace_id": "trace-4a104891252947eb",
+          "tool": "correlate_alarms",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/correlation",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 29.1,
+              "trace_id": "trace-4a104891252947eb",
+              "api_request_id": "req-cf4988381ab0"
+            }
+          ],
+          "total_duration_ms": 29.3
+        },
+        "request": {
+          "asset_ids": [
+            "BFP-101"
+          ],
+          "time_range": {
+            "start_time": "2026-07-02T00:00:00Z",
+            "end_time": "2026-09-30T00:00:00Z"
+          },
+          "correlation_method": "cooccurrence",
+          "lag_window_minutes": 15,
+          "severity_threshold": "medium",
+          "min_support": 2,
+          "include_related": true
+        },
+        "correlation_method": "cooccurrence",
+        "lag_window_minutes": 15
+      },
+      "trace_id": "trace-4a104891252947eb"
+    },
+    {
+      "step": 10,
+      "tool": "get_operator_recommendations",
+      "server": "alarm-management",
+      "purpose": "API recommendations for BFP-VIB-HH on BFP-101 (ALM-000596)",
+      "status": "success",
+      "arguments": {
+        "alarm_id": "ALM-000596",
+        "include_related": true,
+        "include_asset_context": false,
+        "include_historical_pattern": true
+      },
+      "started_at": "2026-09-28T20:05:29.936432+00:00",
+      "duration_ms": 236.2,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /recommendations/operator-actions",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 4.1,
+          "trace_id": "trace-4a104891252947eb",
+          "api_request_id": "req-bd3b086ddbba"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarm_id": "ALM-000596",
+        "asset_id": "BFP-101",
+        "alarm_code": "BFP-VIB-HH",
+        "recommendations": [
+          {
+            "rank": 1,
+            "action": "Confirm the standby pump auto-started and boiler feedwater flow is restored",
+            "rationale": "The tripped pump no longer supplies the boiler",
+            "confidence": 0.93,
+            "source": "rule_engine"
+          },
+          {
+            "rank": 2,
+            "action": "Monitor boiler drum level closely",
+            "rationale": "Loss of feedwater lowers drum level",
+            "confidence": 0.88,
+            "source": "rule_engine"
+          },
+          {
+            "rank": 3,
+            "action": "Reset the vibration trip and restart the tripped pump after 10 minutes if the vibration reading has returned to normal",
+            "rationale": "Historical trips on this pump were often transient",
+            "confidence": 0.61,
+            "source": "rule_engine"
+          },
+          {
+            "rank": 4,
+            "action": "Raise a maintenance notification with the vibration trend attached",
+            "rationale": "Supports root-cause analysis",
+            "confidence": 0.7,
+            "source": "rule_engine"
+          }
+        ],
+        "related_alarms": [
+          {
+            "alarm_id": "ALM-000592",
+            "asset_id": "DA-101",
+            "asset_name": "Deaerator 101",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "alarm_code": "DA-LVL-L",
+            "alarm_name": "Deaerator low level",
+            "alarm_type": "process",
+            "severity": "medium",
+            "priority": 3,
+            "status": "cleared",
+            "acknowledged": true,
+            "start_time": "2026-09-25T18:20:37.671640Z",
+            "end_time": "2026-09-25T18:46:03.350409Z",
+            "ack_time": "2026-09-25T18:22:31.543391Z",
+            "duration_minutes": 25.4,
+            "ack_delay_seconds": 113.9,
+            "value": 44.39,
+            "setpoint": 45.0,
+            "uom": "%",
+            "is_trip": false,
+            "asset_class": "deaerator",
+            "message": "Deaerator 101: Deaerator low level (44.39 %, setpoint 45)"
+          },
+          {
+            "alarm_id": "ALM-000593",
+            "asset_id": "DA-101",
+            "asset_name": "Deaerator 101",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "alarm_code": "DA-P-L",
+            "alarm_name": "Deaerator low pressure",
+            "alarm_type": "process",
+            "severity": "medium",
+            "priority": 3,
+            "status": "cleared",
+            "acknowledged": true,
+            "start_time": "2026-09-25T18:21:37.671640Z",
+            "end_time": "2026-09-25T18:35:51.663981Z",
+            "ack_time": "2026-09-25T18:23:36.503885Z",
+            "duration_minutes": 14.2,
+            "ack_delay_seconds": 118.8,
+            "value": 1.41,
+            "setpoint": 1.5,
+            "uom": "barg",
+            "is_trip": false,
+            "asset_class": "deaerator",
+            "message": "Deaerator 101: Deaerator low pressure (1.41 barg, setpoint 1.5)"
+          }
+        ],
+        "asset_context": null,
+        "historical_pattern": {
+          "occurrences_last_90_days": 8,
+          "last_previous_occurrence": "2026-09-21T15:55:43.747670Z",
+          "typical_duration_minutes": 157.2,
+          "repeat_within_7_days": true
+        },
+        "disclaimer": "System-generated recommendations. Verify against site procedures before acting.",
+        "meta": {
+          "trace_id": "trace-4a104891252947eb",
+          "tool": "get_operator_recommendations",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /recommendations/operator-actions",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 4.1,
+              "trace_id": "trace-4a104891252947eb",
+              "api_request_id": "req-bd3b086ddbba"
+            }
+          ],
+          "total_duration_ms": 4.3
+        },
+        "alarm_name": "Very high bearing vibration - pump trip",
+        "severity": "high",
+        "engine_version": "reco-sim-1.4"
+      },
+      "trace_id": "trace-4a104891252947eb"
+    }
+  ],
+  "retrieval": {
+    "low_confidence": false,
+    "reason": null,
+    "queries": [
+      {
+        "purpose": "question",
+        "query": "Investigate recurring high-severity alarms for Boiler Feed Pump 101 over the last 90 days, identify likely contributing factors, retrieve the relevant operating procedure, and provide recommended actions with source evidence.",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "sites": [
+            "NorthPlant"
+          ],
+          "asset_classes": [
+            "boiler_feed_pump",
+            "deaerator",
+            "motor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0729,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "BFP-MOTOR-TRIP",
+          "BFP-VIB-HH"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SOP-BFP-001::revC::005",
+          "MM-BFP-003::revA::005",
+          "SAF-002::revB::001",
+          "TSG-BFP-002::revB::002",
+          "TSG-BFP-002::revB::003"
+        ]
+      },
+      {
+        "purpose": "alarm_response",
+        "query": "BFP-VIB-HH Very high bearing vibration - pump trip alarm response operator actions",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "sop"
+          ],
+          "sites": [
+            "NorthPlant"
+          ],
+          "asset_classes": [
+            "boiler_feed_pump",
+            "deaerator",
+            "motor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0354,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "BFP-VIB-HH"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SOP-BFP-001::revC::005",
+          "SOP-BFP-001::revC::004"
+        ]
+      },
+      {
+        "purpose": "alarm_response",
+        "query": "BFP-MOTOR-TRIP  alarm response operator actions",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "sop"
+          ],
+          "sites": [
+            "NorthPlant"
+          ],
+          "asset_classes": [
+            "boiler_feed_pump",
+            "deaerator",
+            "motor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0318,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "BFP-MOTOR-TRIP"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SOP-BFP-001::revC::008",
+          "SOP-BFP-001::revC::003"
+        ]
+      },
+      {
+        "purpose": "troubleshooting",
+        "query": "likely causes and diagnostic checks for recurring BFP-VIB-HH Very high bearing vibration - pump trip BFP-MOTOR-TRIP ",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "troubleshooting",
+            "maintenance_manual"
+          ],
+          "sites": [
+            "NorthPlant"
+          ],
+          "asset_classes": [
+            "boiler_feed_pump",
+            "deaerator",
+            "motor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0519,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "BFP-MOTOR-TRIP",
+          "BFP-VIB-HH"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "TSG-BFP-002::revB::002",
+          "MM-BFP-003::revA::005",
+          "TSG-BFP-002::revB::003"
+        ]
+      },
+      {
+        "purpose": "verify_recommendations",
+        "query": "Confirm the standby pump auto-started and boiler feedwater flow is restored ; Monitor boiler drum level closely ; Reset the vibration trip and restart the tripped pump after 10 minutes if the vibration reading has returned to normal ; Raise a maintenance notification with the vibration trend attached",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "maintenance_manual",
+            "sop",
+            "safety",
+            "troubleshooting"
+          ],
+          "sites": [
+            "NorthPlant"
+          ],
+          "asset_classes": [
+            "boiler_feed_pump",
+            "deaerator",
+            "motor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0873,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "BFP-MOTOR-TRIP",
+          "BFP-VIB-HH"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SAF-002::revB::001",
+          "TSG-BFP-002::revB::002",
+          "SOP-BFP-001::revC::005",
+          "MM-BFP-003::revA::005"
+        ]
+      }
+    ]
+  },
+  "warnings": [],
+  "errors": [],
+  "degraded": false,
+  "llm": {
+    "provider": "none",
+    "model": "none",
+    "used": false
+  },
+  "timings_ms": {
+    "total": 3312.5
+  }
+}

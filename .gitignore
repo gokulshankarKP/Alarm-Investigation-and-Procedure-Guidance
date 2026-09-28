@@ -1,0 +1,30 @@
+# Environments and secrets
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Test/coverage artefacts (the committed report lives in docs/coverage/)
+.coverage
+.coverage.*
+htmlcov/
+docs/coverage/html/
+
+# Assignment package (kept outside the repository; the Postman contract is copied to test-data/postman)
+*agent_api_and_complete_flow/
+
+# Local scratch
+test.ipynb
+*.log
+node_modules/

@@ -1,0 +1,111 @@
+{
+  "conversation_id": "conv-example-out_of_scope",
+  "trace_id": "trace-967c43cbb03447f9",
+  "question": "What is the capital of France?",
+  "intent": "out_of_scope",
+  "intent_method": "rules",
+  "entities": {
+    "asset_names": [],
+    "asset_ids": [],
+    "asset_classes": [],
+    "alarm_codes": [],
+    "sites": [],
+    "units": [],
+    "severities": [],
+    "status": "any",
+    "lookback_days": null,
+    "kpi": null
+  },
+  "time_window": {
+    "start": "2026-07-02T00:00:00Z",
+    "end": "2026-09-30T00:00:00Z",
+    "lookback_days": "90"
+  },
+  "answer_markdown": "I can only help with plant alarm investigation, alarm management KPIs and the related operating, maintenance, troubleshooting and safety procedures. Please ask about an asset, alarm, site or procedure.",
+  "summary": "I can only help with plant alarm investigation, alarm management KPIs and the related operating, maintenance, troubleshooting and safety procedures. Please ask about an asset, alarm, site or procedure.",
+  "confidence": "low",
+  "likely_causes": [],
+  "recommended_actions": [],
+  "consistency_findings": [],
+  "procedures": [],
+  "alarm_panel": {
+    "assets": [],
+    "related_assets": [],
+    "active_alarms": [],
+    "historical_summary": null,
+    "focus_alarm": null,
+    "priority_scores": [],
+    "correlation_insights": [],
+    "common_causes": [],
+    "rationalization": [],
+    "trend": null,
+    "kpis": []
+  },
+  "citations": [],
+  "quarantined_sources": [],
+  "tools_discovered": [
+    "search_assets",
+    "get_asset_metadata",
+    "get_alarms",
+    "get_alarm_details",
+    "summarize_alarms",
+    "get_alarm_trends",
+    "correlate_alarms",
+    "analyze_alarm_floods",
+    "find_rationalization_candidates",
+    "score_alarm_priority",
+    "get_operator_recommendations",
+    "calculate_alarm_kpi",
+    "list_kpi_definitions"
+  ],
+  "tool_trace": [
+    {
+      "step": 1,
+      "tool": "tools/list",
+      "server": "alarm-management",
+      "purpose": "Discover available MCP tools",
+      "status": "success",
+      "arguments": {},
+      "started_at": "2026-09-28T20:05:42.175526+00:00",
+      "duration_ms": 258.2,
+      "attempts": 0,
+      "retries": [],
+      "api_calls": [],
+      "error": null,
+      "result": {
+        "tools": [
+          "search_assets",
+          "get_asset_metadata",
+          "get_alarms",
+          "get_alarm_details",
+          "summarize_alarms",
+          "get_alarm_trends",
+          "correlate_alarms",
+          "analyze_alarm_floods",
+          "find_rationalization_candidates",
+          "score_alarm_priority",
+          "get_operator_recommendations",
+          "calculate_alarm_kpi",
+          "list_kpi_definitions"
+        ]
+      },
+      "trace_id": "trace-967c43cbb03447f9"
+    }
+  ],
+  "retrieval": {
+    "low_confidence": null,
+    "reason": null,
+    "queries": null
+  },
+  "warnings": [],
+  "errors": [],
+  "degraded": false,
+  "llm": {
+    "provider": "none",
+    "model": "none",
+    "used": false
+  },
+  "timings_ms": {
+    "total": 263.6
+  }
+}

@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONPATH: .:apps/alarm-api-simulator:apps/backend:apps/frontend:mcp-servers/alarm-management
+
+jobs:
+  lint:
+    name: Format, lint, static analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -r requirements-dev.txt
+      - run: ruff format --check apps mcp-servers connectors rag shared tests scripts
+      - run: ruff check apps mcp-servers connectors rag shared tests scripts
+      - run: mypy apps/alarm-api-simulator/alarm_api_sim apps/backend/copilot mcp-servers/alarm-management/alarm_mcp connectors rag shared --exclude rag/tests
+
+  test:
+    name: Unit, MCP, RAG, integration and e2e tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: agent_db
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: "5432"
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: agent_db
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -r requirements-dev.txt
+      - name: Unit + MCP server + RAG tests
+        run: pytest tests/unit rag/tests -q
+      - name: MCP client integration + orchestration + e2e (with coverage)
+        run: pytest -q --cov --cov-report=term --cov-report=xml:coverage.xml --cov-report=html:htmlcov
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: |
+            coverage.xml
+            htmlcov/
+
+  contract:
+    name: Postman contract (newman) against the simulator
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - run: pip install -r requirements.txt
+      - run: |
+          python -m alarm_api_sim --port 8000 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8000/health && break; sleep 1; done
+      - run: npx --yes newman run test-data/postman/Alarm-API-Simulator.postman_collection.json
+      - run: npx --yes newman run test-data/postman/Alarm-API-Chaining.postman_collection.json
+
+  build:
+    name: Docker build validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env && docker compose config -q
+      - run: docker build -t alarm-copilot:ci .
+      - name: Smoke-test the image (simulator + MCP server import)
+        run: docker run --rm alarm-copilot:ci python -c "import alarm_api_sim.main, alarm_mcp.server, copilot.api, rag.retrieval; print('ok')"
+
+  security:
+    name: Dependency audit (report-only)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install pip-audit
+      - run: pip-audit -r requirements.txt --progress-spinner off

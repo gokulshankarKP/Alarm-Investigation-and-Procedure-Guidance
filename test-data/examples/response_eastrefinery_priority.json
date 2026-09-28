@@ -1,0 +1,1530 @@
+{
+  "conversation_id": "conv-example-eastrefinery_priority",
+  "trace_id": "trace-8255f20711ef4330",
+  "question": "Which alarm has the highest priority in EastRefinery, and why?",
+  "intent": "priority_ranking",
+  "intent_method": "rules",
+  "entities": {
+    "asset_names": [],
+    "asset_ids": [],
+    "asset_classes": [],
+    "alarm_codes": [],
+    "sites": [
+      "EastRefinery"
+    ],
+    "units": [],
+    "severities": [],
+    "status": "any",
+    "lookback_days": null,
+    "kpi": null
+  },
+  "time_window": {
+    "start": "2026-07-02T00:00:00Z",
+    "end": "2026-09-30T00:00:00Z",
+    "lookback_days": "90"
+  },
+  "answer_markdown": "### Summary\n4 active alarm(s): CMP-SURGE on K-202 (critical, unacknowledged, 25 min); P-DISCH-P-L on P-402 (medium, unacknowledged, 50 min); PCV-POS-DEV on PCV-210 (medium, acknowledged, 15 min); CMP-DISCH-P-H on K-201 (medium, acknowledged, 8 min) [T2]. Highest dynamic priority: CMP-SURGE on K-202 (ALM-000612) scoring 83.3/100 (urgent) [T3]. Drivers: configured_severity 40.0, asset_criticality 25.0, duration_unacknowledged 15.0.\n\n### Likely causes\n- Documented likely causes: Compressor Discharge Pressure Alarm Troubleshooting \u00a71 (1. Why discharge pressure alarms recur). [S3]\n\n### Recommended actions\n- **immediate**: Confirm the anti-surge valve has opened. If not, open it manually from the DCS immediately. [S1]\n- **immediate**: Reduce discharge pressure setpoint or increase recycle flow until surge stops. [S1]\n- **short term**: Repeated surge can destroy the thrust bearing and impeller; notify the reliability engineer. [S1]\n- **immediate**: Confirm the compressor has tripped and the anti-surge valve has opened fully. [S2]\n- **immediate**: Start the spare compressor K-203 only after the downstream restriction is identified and cleared; otherwise it will trip for the same reason. [S2]\n- **short term**: Inform the shift supervisor and raise an event report. [S2]\n- **immediate**: Check the downstream header pressure and the position of PCV-210. A closing or sticking downstream valve is the most frequent cause. [S7]\n- **short term**: Confirm the anti-surge valve has opened; if not, open it manually from the DCS immediately [T7] [S1]\n- **short term**: Reduce the discharge pressure setpoint or increase recycle flow until surge stops [T7] [S1]\n\n### Applicable procedures\n- SOP-CMP-001 \u00a73.3: Process Gas Compressor Operating Procedure: 3.3 CMP-SURGE \u2014 surge detected (priority 1, critical) [S1]\n- SOP-CMP-001 \u00a73.2: Process Gas Compressor Operating Procedure: 3.2 CMP-DISCH-P-HH \u2014 discharge pressure trip (priority 2, high) [S2]\n- SOP-CMP-001 \u00a73.1: Process Gas Compressor Operating Procedure: 3.1 CMP-DISCH-P-H \u2014 high discharge pressure (priority 3, medium) [S7]",
+  "summary": "4 active alarm(s): CMP-SURGE on K-202 (critical, unacknowledged, 25 min); P-DISCH-P-L on P-402 (medium, unacknowledged, 50 min); PCV-POS-DEV on PCV-210 (medium, acknowledged, 15 min); CMP-DISCH-P-H on K-201 (medium, acknowledged, 8 min) [T2]. Highest dynamic priority: CMP-SURGE on K-202 (ALM-000612) scoring 83.3/100 (urgent) [T3]. Drivers: configured_severity 40.0, asset_criticality 25.0, duration_unacknowledged 15.0.",
+  "confidence": "high",
+  "likely_causes": [
+    {
+      "cause": "Documented likely causes: Compressor Discharge Pressure Alarm Troubleshooting \u00a71 (1. Why discharge pressure alarms recur).",
+      "evidence": [
+        "S3"
+      ]
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Confirm the anti-surge valve has opened. If not, open it manually from the DCS immediately.",
+      "urgency": "immediate",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "action": "Reduce discharge pressure setpoint or increase recycle flow until surge stops.",
+      "urgency": "immediate",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "action": "Repeated surge can destroy the thrust bearing and impeller; notify the reliability engineer.",
+      "urgency": "short_term",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "action": "Confirm the compressor has tripped and the anti-surge valve has opened fully.",
+      "urgency": "immediate",
+      "citations": [
+        "S2"
+      ]
+    },
+    {
+      "action": "Start the spare compressor K-203 only after the downstream restriction is identified and cleared; otherwise it will trip for the same reason.",
+      "urgency": "immediate",
+      "citations": [
+        "S2"
+      ]
+    },
+    {
+      "action": "Inform the shift supervisor and raise an event report.",
+      "urgency": "short_term",
+      "citations": [
+        "S2"
+      ]
+    },
+    {
+      "action": "Check the downstream header pressure and the position of PCV-210. A closing or sticking downstream valve is the most frequent cause.",
+      "urgency": "immediate",
+      "citations": [
+        "S7"
+      ]
+    },
+    {
+      "action": "Confirm the anti-surge valve has opened; if not, open it manually from the DCS immediately",
+      "urgency": "short_term",
+      "citations": [
+        "T7",
+        "S1"
+      ]
+    },
+    {
+      "action": "Reduce the discharge pressure setpoint or increase recycle flow until surge stops",
+      "urgency": "short_term",
+      "citations": [
+        "T7",
+        "S1"
+      ]
+    }
+  ],
+  "consistency_findings": [
+    {
+      "api_recommendation": "Confirm the anti-surge valve has opened; if not, open it manually from the DCS immediately",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-CMP-001 \u00a73.3.",
+      "citations": [
+        "S1"
+      ],
+      "tool_ref": "T7"
+    },
+    {
+      "api_recommendation": "Reduce the discharge pressure setpoint or increase recycle flow until surge stops",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-CMP-001 \u00a73.3.",
+      "citations": [
+        "S1"
+      ],
+      "tool_ref": "T7"
+    },
+    {
+      "api_recommendation": "Notify the reliability engineer",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-CMP-001 \u00a73.3.",
+      "citations": [
+        "S1"
+      ],
+      "tool_ref": "T7"
+    }
+  ],
+  "procedures": [
+    {
+      "doc_id": "SOP-CMP-001",
+      "section": "\u00a73.3",
+      "reason": "Process Gas Compressor Operating Procedure: 3.3 CMP-SURGE \u2014 surge detected (priority 1, critical)",
+      "citation": "S1"
+    },
+    {
+      "doc_id": "SOP-CMP-001",
+      "section": "\u00a73.2",
+      "reason": "Process Gas Compressor Operating Procedure: 3.2 CMP-DISCH-P-HH \u2014 discharge pressure trip (priority 2, high)",
+      "citation": "S2"
+    },
+    {
+      "doc_id": "SOP-CMP-001",
+      "section": "\u00a73.1",
+      "reason": "Process Gas Compressor Operating Procedure: 3.1 CMP-DISCH-P-H \u2014 high discharge pressure (priority 3, medium)",
+      "citation": "S7"
+    }
+  ],
+  "alarm_panel": {
+    "assets": [],
+    "related_assets": [],
+    "active_alarms": [
+      {
+        "alarm_id": "ALM-000607",
+        "asset_id": "P-402",
+        "asset_name": "Heater Feed Pump P-402",
+        "site": "EastRefinery",
+        "unit": "Unit 4",
+        "alarm_code": "P-DISCH-P-L",
+        "alarm_name": "Pump low discharge pressure",
+        "alarm_type": "process",
+        "severity": "medium",
+        "priority": 3,
+        "status": "active",
+        "acknowledged": false,
+        "start_time": "2026-09-29T23:10:00Z",
+        "end_time": null,
+        "ack_time": null,
+        "duration_minutes": 50.0,
+        "ack_delay_seconds": null,
+        "value": 11.3,
+        "setpoint": 12.0,
+        "uom": "barg",
+        "is_trip": false,
+        "asset_class": "pump",
+        "message": "Heater Feed Pump P-402: Pump low discharge pressure (11.3 barg, setpoint 12)"
+      },
+      {
+        "alarm_id": "ALM-000615",
+        "asset_id": "PCV-210",
+        "asset_name": "Header Pressure Control Valve PCV-210",
+        "site": "EastRefinery",
+        "unit": "Unit 2",
+        "alarm_code": "PCV-POS-DEV",
+        "alarm_name": "Control valve position deviation",
+        "alarm_type": "device",
+        "severity": "medium",
+        "priority": 3,
+        "status": "active",
+        "acknowledged": true,
+        "start_time": "2026-09-29T23:45:00Z",
+        "end_time": null,
+        "ack_time": "2026-09-29T23:50:00Z",
+        "duration_minutes": 15.0,
+        "ack_delay_seconds": 300.0,
+        "value": 10.3,
+        "setpoint": 10.0,
+        "uom": "%",
+        "is_trip": false,
+        "asset_class": "valve",
+        "message": "Header Pressure Control Valve PCV-210: Control valve position deviation (10.3 %, setpoint 10)"
+      },
+      {
+        "alarm_id": "ALM-000618",
+        "asset_id": "K-201",
+        "asset_name": "Process Gas Compressor K-201",
+        "site": "EastRefinery",
+        "unit": "Unit 2",
+        "alarm_code": "CMP-DISCH-P-H",
+        "alarm_name": "High discharge pressure",
+        "alarm_type": "process",
+        "severity": "medium",
+        "priority": 3,
+        "status": "active",
+        "acknowledged": true,
+        "start_time": "2026-09-29T23:52:00Z",
+        "end_time": null,
+        "ack_time": "2026-09-29T23:53:00Z",
+        "duration_minutes": 8.0,
+        "ack_delay_seconds": 60.0,
+        "value": 8.8,
+        "setpoint": 8.6,
+        "uom": "barg",
+        "is_trip": false,
+        "asset_class": "compressor",
+        "message": "Process Gas Compressor K-201: High discharge pressure (8.8 barg, setpoint 8.6)"
+      },
+      {
+        "alarm_id": "ALM-000612",
+        "asset_id": "K-202",
+        "asset_name": "Process Gas Compressor K-202",
+        "site": "EastRefinery",
+        "unit": "Unit 2",
+        "alarm_code": "CMP-SURGE",
+        "alarm_name": "Compressor surge detected",
+        "alarm_type": "safety",
+        "severity": "critical",
+        "priority": 1,
+        "status": "active",
+        "acknowledged": false,
+        "start_time": "2026-09-29T23:35:00Z",
+        "end_time": null,
+        "ack_time": null,
+        "duration_minutes": 25.0,
+        "ack_delay_seconds": null,
+        "value": null,
+        "setpoint": null,
+        "uom": "status",
+        "is_trip": false,
+        "asset_class": "compressor",
+        "message": "Process Gas Compressor K-202: Compressor surge detected"
+      }
+    ],
+    "historical_summary": null,
+    "focus_alarm": {
+      "alarm_id": "ALM-000612",
+      "asset_id": "K-202",
+      "asset_name": "Process Gas Compressor K-202",
+      "site": "EastRefinery",
+      "unit": "Unit 2",
+      "alarm_code": "CMP-SURGE",
+      "alarm_name": "Compressor surge detected",
+      "alarm_type": "safety",
+      "severity": "critical",
+      "priority": 1,
+      "status": "active",
+      "acknowledged": false,
+      "start_time": "2026-09-29T23:35:00Z",
+      "end_time": null,
+      "ack_time": null,
+      "duration_minutes": 25.0,
+      "ack_delay_seconds": null,
+      "value": null,
+      "setpoint": null,
+      "uom": "status",
+      "is_trip": false,
+      "asset_class": "compressor",
+      "message": "Process Gas Compressor K-202: Compressor surge detected"
+    },
+    "priority_scores": [
+      {
+        "alarm_id": "ALM-000612",
+        "asset_id": "K-202",
+        "alarm_code": "CMP-SURGE",
+        "severity": "critical",
+        "configured_priority": 1,
+        "priority_score": 83.3,
+        "priority_band": "urgent",
+        "components": [
+          {
+            "factor": "configured_severity",
+            "weight_pct": 40,
+            "points": 40.0,
+            "detail": "severity=critical (priority 1)"
+          },
+          {
+            "factor": "asset_criticality",
+            "weight_pct": 25,
+            "points": 25.0,
+            "detail": "K-202 criticality A"
+          },
+          {
+            "factor": "duration_unacknowledged",
+            "weight_pct": 15,
+            "points": 15.0,
+            "detail": "25 min unacknowledged vs 5 min max response time"
+          },
+          {
+            "factor": "recurrence_24h",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 previous occurrence(s) of CMP-SURGE on K-202 in 24 h"
+          },
+          {
+            "factor": "related_active_alarms",
+            "weight_pct": 10,
+            "points": 3.3,
+            "detail": "1 concurrent alarm(s) on this or connected assets"
+          }
+        ],
+        "rationale": "CMP-SURGE on K-202 scores 83.3/100: configured_severity 40 pts; asset_criticality 25 pts; duration_unacknowledged 15.0 pts; recurrence_24h 0.0 pts; related_active_alarms 3.3 pts",
+        "meta": {
+          "trace_id": "trace-8255f20711ef4330",
+          "tool": "score_alarm_priority",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/priority-score",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 588.6,
+              "trace_id": "trace-8255f20711ef4330",
+              "api_request_id": "req-b6e17b45f9e7"
+            }
+          ],
+          "total_duration_ms": 588.8
+        },
+        "related_active_alarm_ids": [
+          "ALM-000615"
+        ],
+        "scored_at": "2026-09-30T00:00:00Z"
+      },
+      {
+        "alarm_id": "ALM-000618",
+        "asset_id": "K-201",
+        "alarm_code": "CMP-DISCH-P-H",
+        "severity": "medium",
+        "configured_priority": 3,
+        "priority_score": 50.2,
+        "priority_band": "medium",
+        "components": [
+          {
+            "factor": "configured_severity",
+            "weight_pct": 40,
+            "points": 18.0,
+            "detail": "severity=medium (priority 3)"
+          },
+          {
+            "factor": "asset_criticality",
+            "weight_pct": 25,
+            "points": 25.0,
+            "detail": "K-201 criticality A"
+          },
+          {
+            "factor": "duration_unacknowledged",
+            "weight_pct": 15,
+            "points": 0.5,
+            "detail": "1 min unacknowledged vs 30 min max response time"
+          },
+          {
+            "factor": "recurrence_24h",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 previous occurrence(s) of CMP-DISCH-P-H on K-201 in 24 h"
+          },
+          {
+            "factor": "related_active_alarms",
+            "weight_pct": 10,
+            "points": 6.7,
+            "detail": "2 concurrent alarm(s) on this or connected assets"
+          }
+        ],
+        "rationale": "CMP-DISCH-P-H on K-201 scores 50.2/100: configured_severity 18 pts; asset_criticality 25 pts; duration_unacknowledged 0.5 pts; recurrence_24h 0.0 pts; related_active_alarms 6.7 pts",
+        "meta": {
+          "trace_id": "trace-8255f20711ef4330",
+          "tool": "score_alarm_priority",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/priority-score",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 19.2,
+              "trace_id": "trace-8255f20711ef4330",
+              "api_request_id": "req-f32e625e872c"
+            }
+          ],
+          "total_duration_ms": 19.3
+        },
+        "related_active_alarm_ids": [
+          "ALM-000612",
+          "ALM-000615"
+        ],
+        "scored_at": "2026-09-30T00:00:00Z"
+      },
+      {
+        "alarm_id": "ALM-000607",
+        "asset_id": "P-402",
+        "alarm_code": "P-DISCH-P-L",
+        "severity": "medium",
+        "configured_priority": 3,
+        "priority_score": 48.0,
+        "priority_band": "medium",
+        "components": [
+          {
+            "factor": "configured_severity",
+            "weight_pct": 40,
+            "points": 18.0,
+            "detail": "severity=medium (priority 3)"
+          },
+          {
+            "factor": "asset_criticality",
+            "weight_pct": 25,
+            "points": 15.0,
+            "detail": "P-402 criticality B"
+          },
+          {
+            "factor": "duration_unacknowledged",
+            "weight_pct": 15,
+            "points": 15.0,
+            "detail": "50 min unacknowledged vs 30 min max response time"
+          },
+          {
+            "factor": "recurrence_24h",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 previous occurrence(s) of P-DISCH-P-L on P-402 in 24 h"
+          },
+          {
+            "factor": "related_active_alarms",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 concurrent alarm(s) on this or connected assets"
+          }
+        ],
+        "rationale": "P-DISCH-P-L on P-402 scores 48.0/100: configured_severity 18 pts; asset_criticality 15 pts; duration_unacknowledged 15.0 pts; recurrence_24h 0.0 pts; related_active_alarms 0.0 pts",
+        "meta": {
+          "trace_id": "trace-8255f20711ef4330",
+          "tool": "score_alarm_priority",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/priority-score",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 196.1,
+              "trace_id": "trace-8255f20711ef4330",
+              "api_request_id": "req-bbc0de71a016"
+            }
+          ],
+          "total_duration_ms": 196.3
+        },
+        "related_active_alarm_ids": [],
+        "scored_at": "2026-09-30T00:00:00Z"
+      },
+      {
+        "alarm_id": "ALM-000615",
+        "asset_id": "PCV-210",
+        "alarm_code": "PCV-POS-DEV",
+        "severity": "medium",
+        "configured_priority": 3,
+        "priority_score": 42.2,
+        "priority_band": "medium",
+        "components": [
+          {
+            "factor": "configured_severity",
+            "weight_pct": 40,
+            "points": 18.0,
+            "detail": "severity=medium (priority 3)"
+          },
+          {
+            "factor": "asset_criticality",
+            "weight_pct": 25,
+            "points": 15.0,
+            "detail": "PCV-210 criticality B"
+          },
+          {
+            "factor": "duration_unacknowledged",
+            "weight_pct": 15,
+            "points": 2.5,
+            "detail": "5 min unacknowledged vs 30 min max response time"
+          },
+          {
+            "factor": "recurrence_24h",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 previous occurrence(s) of PCV-POS-DEV on PCV-210 in 24 h"
+          },
+          {
+            "factor": "related_active_alarms",
+            "weight_pct": 10,
+            "points": 6.7,
+            "detail": "2 concurrent alarm(s) on this or connected assets"
+          }
+        ],
+        "rationale": "PCV-POS-DEV on PCV-210 scores 42.2/100: configured_severity 18 pts; asset_criticality 15 pts; duration_unacknowledged 2.5 pts; recurrence_24h 0.0 pts; related_active_alarms 6.7 pts",
+        "meta": {
+          "trace_id": "trace-8255f20711ef4330",
+          "tool": "score_alarm_priority",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/priority-score",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 392.9,
+              "trace_id": "trace-8255f20711ef4330",
+              "api_request_id": "req-941576598d76"
+            }
+          ],
+          "total_duration_ms": 393.0
+        },
+        "related_active_alarm_ids": [
+          "ALM-000612",
+          "ALM-000618"
+        ],
+        "scored_at": "2026-09-30T00:00:00Z"
+      }
+    ],
+    "correlation_insights": [],
+    "common_causes": [],
+    "rationalization": [],
+    "trend": null,
+    "kpis": []
+  },
+  "citations": [
+    {
+      "id": "S1",
+      "doc_id": "SOP-CMP-001",
+      "revision": "B",
+      "title": "Process Gas Compressor Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a73.3",
+      "heading_path": "3. Alarm response > 3.3 CMP-SURGE \u2014 surge detected (priority 1, critical)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.04208,
+      "similarity": -0.062,
+      "matched_alarm_codes": [
+        "CMP-SURGE"
+      ],
+      "excerpt": "### 3.3 CMP-SURGE \u2014 surge detected (priority 1, critical)\n\n1. Confirm the anti-surge valve has opened. If not, open it manually from the DCS immediately.\n2. Reduce discharge pressure setpoint or increase recycle flow until surge stops.\n3. Repeated surge can destroy the thrust bearing and impeller; notify the reliability engineer.",
+      "source_path": "procedures/SOP-CMP-001_compressor_operation.md",
+      "cited": true
+    },
+    {
+      "id": "S2",
+      "doc_id": "SOP-CMP-001",
+      "revision": "B",
+      "title": "Process Gas Compressor Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a73.2",
+      "heading_path": "3. Alarm response > 3.2 CMP-DISCH-P-HH \u2014 discharge pressure trip (priority 2, high)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03975,
+      "similarity": 0.0355,
+      "matched_alarm_codes": [
+        "CMP-SURGE"
+      ],
+      "excerpt": "### 3.2 CMP-DISCH-P-HH \u2014 discharge pressure trip (priority 2, high)\n\n1. Confirm the compressor has tripped and the anti-surge valve has opened fully.\n2. Start the spare compressor K-203 only after the downstream restriction is identified and\n   cleared; otherwise it will trip for the same reason.\n3. Inform the shift supervisor and raise an event report.",
+      "source_path": "procedures/SOP-CMP-001_compressor_operation.md",
+      "cited": true
+    },
+    {
+      "id": "S3",
+      "doc_id": "TSG-CMP-002",
+      "revision": "A",
+      "title": "Compressor Discharge Pressure Alarm Troubleshooting",
+      "doc_type": "troubleshooting",
+      "section": "\u00a71",
+      "heading_path": "1. Why discharge pressure alarms recur",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03951,
+      "similarity": 0.0464,
+      "matched_alarm_codes": [
+        "CMP-SURGE"
+      ],
+      "excerpt": "## 1. Why discharge pressure alarms recur\n\nRepeated `CMP-DISCH-P-H` alarms usually have one of five causes. Work through them in this\norder, because the first two explain most recurring cases.\n\n| # | Cause | Typical alarm pattern | Key evidence |\n|---|---|---|---|\n| 1 | Downstream restriction (PCV-210 sticking, fouled downstream exchanger, partially closed block valve) | Alarm on all running compressors at the same time | Header pressure high while flow falls; PCV-210 position not matching output |\n| 2 | Alarm setpoint too close to normal operation | Many short alarms (< 2 min), chattering, no operator action taken | Normal discharge near 8.4 barg vs. H alarm at 8.6 barg; alarm clears by itself |\n| 3 | Intercooler fouling | Slow increase in `CMP-INTERCOOL-T-H` over weeks, then discharge pressure and temperature alarms | Intercooler \u0394T falling; cooling water \u0394T normal |\n| 4 | Load transfer from parallel compressor | Alarm on one compressor right after the other unloads or trips | Correlated trip or unload event seconds before |\n| 5 | Pressure transmitter drift | Alarm on one compressor only; other indications normal | Compare PT reading with local gauge; last calibration date |",
+      "source_path": "troubleshooting/TSG-CMP-002_compressor_discharge_pressure_troubleshooting.md",
+      "cited": true
+    },
+    {
+      "id": "S4",
+      "doc_id": "SOP-CMP-001",
+      "revision": "B",
+      "title": "Process Gas Compressor Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a72",
+      "heading_path": "2. Operating limits",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03773,
+      "similarity": 0.0523,
+      "matched_alarm_codes": [
+        "CMP-SURGE"
+      ],
+      "excerpt": "## 2. Operating limits\n\n| Parameter | Normal | Alarm H | Alarm HH (trip) |\n|---|---|---|---|\n| Discharge pressure | 7.4\u20138.2 barg | H: 8.6 barg | HH: 9.0 barg, compressor trips |\n| Discharge temperature | 110\u2013135 \u00b0C | H: 150 \u00b0C | HH: 165 \u00b0C, trip |\n| Intercooler gas outlet temperature | 35\u201345 \u00b0C | H: 50 \u00b0C | \u2014 |\n| Shaft vibration | < 40 \u00b5m pk-pk | H: 60 \u00b5m | HH: 85 \u00b5m, trip |\n| Lube oil pressure | 1.8\u20132.2 barg | L: 1.4 barg | LL: 1.0 barg, trip |\n\nThe downstream header relief valve is set at 9.5 barg.",
+      "source_path": "procedures/SOP-CMP-001_compressor_operation.md",
+      "cited": false
+    },
+    {
+      "id": "S5",
+      "doc_id": "TSG-CMP-002",
+      "revision": "A",
+      "title": "Compressor Discharge Pressure Alarm Troubleshooting",
+      "doc_type": "troubleshooting",
+      "section": "\u00a73",
+      "heading_path": "3. Recommended actions by cause",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03721,
+      "similarity": 0.0082,
+      "matched_alarm_codes": [
+        "CMP-SURGE"
+      ],
+      "excerpt": "## 3. Recommended actions by cause\n\n| Cause | Immediate | Permanent |\n|---|---|---|\n| Downstream restriction | Reduce load; open bypass under supervisor instruction | Repair PCV-210; clean exchanger |\n| Setpoint too close | Continue operation; do not shelve without approval | Rationalize: add 0.1 bar deadband and 30 s on-delay, or review setpoint |\n| Intercooler fouling | Increase cooling water flow if available | Chemical or mechanical cleaning |\n| Load transfer | Stabilise with anti-surge valve | Review load-sharing controller tuning |\n| Transmitter drift | Use local gauge reading | Recalibrate or replace transmitter |",
+      "source_path": "troubleshooting/TSG-CMP-002_compressor_discharge_pressure_troubleshooting.md",
+      "cited": false
+    },
+    {
+      "id": "S6",
+      "doc_id": "SOP-CMP-001",
+      "revision": "B",
+      "title": "Process Gas Compressor Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a71",
+      "heading_path": "1. Scope",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.0369,
+      "similarity": 0.0197,
+      "matched_alarm_codes": [
+        "CMP-SURGE"
+      ],
+      "excerpt": "## 1. Scope\n\nCovers the three two-stage centrifugal process gas compressors in EastRefinery Unit 2.\nK-201 and K-202 run in parallel; K-203 is the installed spare. Each compressor has an\nintercooler between stages (E-201/E-202/E-203) and an anti-surge recycle valve\n(UV-201/UV-202/UV-203).\n\n**Related assets for compressor alarm investigation:** the intercooler and its cooling water\nsupply, the anti-surge valve, the downstream header and its pressure control valve PCV-210,\nthe drive motor, and the lube oil system.",
+      "source_path": "procedures/SOP-CMP-001_compressor_operation.md",
+      "cited": false
+    },
+    {
+      "id": "S7",
+      "doc_id": "SOP-CMP-001",
+      "revision": "B",
+      "title": "Process Gas Compressor Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a73.1",
+      "heading_path": "3. Alarm response > 3.1 CMP-DISCH-P-H \u2014 high discharge pressure (priority 3, medium)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03626,
+      "similarity": 0.0082,
+      "matched_alarm_codes": [
+        "CMP-SURGE"
+      ],
+      "excerpt": "### 3.1 CMP-DISCH-P-H \u2014 high discharge pressure (priority 3, medium)\n\n1. Check the downstream header pressure and the position of PCV-210. A closing or sticking\n   downstream valve is the most frequent cause.\n2. Check whether the parallel compressor has just tripped or unloaded (load transfer).\n3. Reduce compressor load via the capacity controller if pressure keeps rising.\n4. If the alarm is recurring, follow TSG-CMP-002.",
+      "source_path": "procedures/SOP-CMP-001_compressor_operation.md",
+      "cited": true
+    }
+  ],
+  "quarantined_sources": [],
+  "tools_discovered": [
+    "search_assets",
+    "get_asset_metadata",
+    "get_alarms",
+    "get_alarm_details",
+    "summarize_alarms",
+    "get_alarm_trends",
+    "correlate_alarms",
+    "analyze_alarm_floods",
+    "find_rationalization_candidates",
+    "score_alarm_priority",
+    "get_operator_recommendations",
+    "calculate_alarm_kpi",
+    "list_kpi_definitions"
+  ],
+  "tool_trace": [
+    {
+      "step": 1,
+      "tool": "tools/list",
+      "server": "alarm-management",
+      "purpose": "Discover available MCP tools",
+      "status": "success",
+      "arguments": {},
+      "started_at": "2026-09-28T20:05:36.960590+00:00",
+      "duration_ms": 246.7,
+      "attempts": 0,
+      "retries": [],
+      "api_calls": [],
+      "error": null,
+      "result": {
+        "tools": [
+          "search_assets",
+          "get_asset_metadata",
+          "get_alarms",
+          "get_alarm_details",
+          "summarize_alarms",
+          "get_alarm_trends",
+          "correlate_alarms",
+          "analyze_alarm_floods",
+          "find_rationalization_candidates",
+          "score_alarm_priority",
+          "get_operator_recommendations",
+          "calculate_alarm_kpi",
+          "list_kpi_definitions"
+        ]
+      },
+      "trace_id": "trace-8255f20711ef4330"
+    },
+    {
+      "step": 2,
+      "tool": "get_alarms",
+      "server": "alarm-management",
+      "purpose": "Retrieve currently active alarms",
+      "status": "success",
+      "arguments": {
+        "site": "EastRefinery",
+        "status": "active",
+        "page_size": 100,
+        "sort_by": "priority",
+        "sort_order": "asc"
+      },
+      "started_at": "2026-09-28T20:05:36.966558+00:00",
+      "duration_ms": 267.4,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /alarms",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 5.6,
+          "trace_id": "trace-8255f20711ef4330",
+          "api_request_id": "req-0aa9126a2ba6"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarms": [
+          {
+            "alarm_id": "ALM-000607",
+            "asset_id": "P-402",
+            "asset_name": "Heater Feed Pump P-402",
+            "site": "EastRefinery",
+            "unit": "Unit 4",
+            "alarm_code": "P-DISCH-P-L",
+            "alarm_name": "Pump low discharge pressure",
+            "alarm_type": "process",
+            "severity": "medium",
+            "priority": 3,
+            "status": "active",
+            "acknowledged": false,
+            "start_time": "2026-09-29T23:10:00Z",
+            "end_time": null,
+            "ack_time": null,
+            "duration_minutes": 50.0,
+            "ack_delay_seconds": null,
+            "value": 11.3,
+            "setpoint": 12.0,
+            "uom": "barg",
+            "is_trip": false,
+            "asset_class": "pump",
+            "message": "Heater Feed Pump P-402: Pump low discharge pressure (11.3 barg, setpoint 12)"
+          },
+          {
+            "alarm_id": "ALM-000615",
+            "asset_id": "PCV-210",
+            "asset_name": "Header Pressure Control Valve PCV-210",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "alarm_code": "PCV-POS-DEV",
+            "alarm_name": "Control valve position deviation",
+            "alarm_type": "device",
+            "severity": "medium",
+            "priority": 3,
+            "status": "active",
+            "acknowledged": true,
+            "start_time": "2026-09-29T23:45:00Z",
+            "end_time": null,
+            "ack_time": "2026-09-29T23:50:00Z",
+            "duration_minutes": 15.0,
+            "ack_delay_seconds": 300.0,
+            "value": 10.3,
+            "setpoint": 10.0,
+            "uom": "%",
+            "is_trip": false,
+            "asset_class": "valve",
+            "message": "Header Pressure Control Valve PCV-210: Control valve position deviation (10.3 %, setpoint 10)"
+          },
+          {
+            "alarm_id": "ALM-000618",
+            "asset_id": "K-201",
+            "asset_name": "Process Gas Compressor K-201",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "alarm_code": "CMP-DISCH-P-H",
+            "alarm_name": "High discharge pressure",
+            "alarm_type": "process",
+            "severity": "medium",
+            "priority": 3,
+            "status": "active",
+            "acknowledged": true,
+            "start_time": "2026-09-29T23:52:00Z",
+            "end_time": null,
+            "ack_time": "2026-09-29T23:53:00Z",
+            "duration_minutes": 8.0,
+            "ack_delay_seconds": 60.0,
+            "value": 8.8,
+            "setpoint": 8.6,
+            "uom": "barg",
+            "is_trip": false,
+            "asset_class": "compressor",
+            "message": "Process Gas Compressor K-201: High discharge pressure (8.8 barg, setpoint 8.6)"
+          },
+          {
+            "alarm_id": "ALM-000612",
+            "asset_id": "K-202",
+            "asset_name": "Process Gas Compressor K-202",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "alarm_code": "CMP-SURGE",
+            "alarm_name": "Compressor surge detected",
+            "alarm_type": "safety",
+            "severity": "critical",
+            "priority": 1,
+            "status": "active",
+            "acknowledged": false,
+            "start_time": "2026-09-29T23:35:00Z",
+            "end_time": null,
+            "ack_time": null,
+            "duration_minutes": 25.0,
+            "ack_delay_seconds": null,
+            "value": null,
+            "setpoint": null,
+            "uom": "status",
+            "is_trip": false,
+            "asset_class": "compressor",
+            "message": "Process Gas Compressor K-202: Compressor surge detected"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "page_size": 100,
+          "total_items": 4,
+          "total_pages": 1,
+          "has_next": false
+        },
+        "pages_fetched": 1,
+        "truncated": false,
+        "meta": {
+          "trace_id": "trace-8255f20711ef4330",
+          "tool": "get_alarms",
+          "api_calls": [
+            {
+              "api_endpoint": "GET /alarms",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 5.6,
+              "trace_id": "trace-8255f20711ef4330",
+              "api_request_id": "req-0aa9126a2ba6"
+            }
+          ],
+          "total_duration_ms": 5.8
+        }
+      },
+      "trace_id": "trace-8255f20711ef4330"
+    },
+    {
+      "step": 3,
+      "tool": "score_alarm_priority",
+      "server": "alarm-management",
+      "purpose": "Dynamic priority score for CMP-SURGE on K-202",
+      "status": "success",
+      "arguments": {
+        "alarm_id": "ALM-000612"
+      },
+      "started_at": "2026-09-28T20:05:37.232908+00:00",
+      "duration_ms": 819.2,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/priority-score",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 588.6,
+          "trace_id": "trace-8255f20711ef4330",
+          "api_request_id": "req-b6e17b45f9e7"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarm_id": "ALM-000612",
+        "asset_id": "K-202",
+        "alarm_code": "CMP-SURGE",
+        "severity": "critical",
+        "configured_priority": 1,
+        "priority_score": 83.3,
+        "priority_band": "urgent",
+        "components": [
+          {
+            "factor": "configured_severity",
+            "weight_pct": 40,
+            "points": 40.0,
+            "detail": "severity=critical (priority 1)"
+          },
+          {
+            "factor": "asset_criticality",
+            "weight_pct": 25,
+            "points": 25.0,
+            "detail": "K-202 criticality A"
+          },
+          {
+            "factor": "duration_unacknowledged",
+            "weight_pct": 15,
+            "points": 15.0,
+            "detail": "25 min unacknowledged vs 5 min max response time"
+          },
+          {
+            "factor": "recurrence_24h",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 previous occurrence(s) of CMP-SURGE on K-202 in 24 h"
+          },
+          {
+            "factor": "related_active_alarms",
+            "weight_pct": 10,
+            "points": 3.3,
+            "detail": "1 concurrent alarm(s) on this or connected assets"
+          }
+        ],
+        "rationale": "CMP-SURGE on K-202 scores 83.3/100: configured_severity 40 pts; asset_criticality 25 pts; duration_unacknowledged 15.0 pts; recurrence_24h 0.0 pts; related_active_alarms 3.3 pts",
+        "meta": {
+          "trace_id": "trace-8255f20711ef4330",
+          "tool": "score_alarm_priority",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/priority-score",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 588.6,
+              "trace_id": "trace-8255f20711ef4330",
+              "api_request_id": "req-b6e17b45f9e7"
+            }
+          ],
+          "total_duration_ms": 588.8
+        },
+        "related_active_alarm_ids": [
+          "ALM-000615"
+        ],
+        "scored_at": "2026-09-30T00:00:00Z"
+      },
+      "trace_id": "trace-8255f20711ef4330"
+    },
+    {
+      "step": 4,
+      "tool": "score_alarm_priority",
+      "server": "alarm-management",
+      "purpose": "Dynamic priority score for P-DISCH-P-L on P-402",
+      "status": "success",
+      "arguments": {
+        "alarm_id": "ALM-000607"
+      },
+      "started_at": "2026-09-28T20:05:37.232908+00:00",
+      "duration_ms": 857.6,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/priority-score",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 196.1,
+          "trace_id": "trace-8255f20711ef4330",
+          "api_request_id": "req-bbc0de71a016"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarm_id": "ALM-000607",
+        "asset_id": "P-402",
+        "alarm_code": "P-DISCH-P-L",
+        "severity": "medium",
+        "configured_priority": 3,
+        "priority_score": 48.0,
+        "priority_band": "medium",
+        "components": [
+          {
+            "factor": "configured_severity",
+            "weight_pct": 40,
+            "points": 18.0,
+            "detail": "severity=medium (priority 3)"
+          },
+          {
+            "factor": "asset_criticality",
+            "weight_pct": 25,
+            "points": 15.0,
+            "detail": "P-402 criticality B"
+          },
+          {
+            "factor": "duration_unacknowledged",
+            "weight_pct": 15,
+            "points": 15.0,
+            "detail": "50 min unacknowledged vs 30 min max response time"
+          },
+          {
+            "factor": "recurrence_24h",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 previous occurrence(s) of P-DISCH-P-L on P-402 in 24 h"
+          },
+          {
+            "factor": "related_active_alarms",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 concurrent alarm(s) on this or connected assets"
+          }
+        ],
+        "rationale": "P-DISCH-P-L on P-402 scores 48.0/100: configured_severity 18 pts; asset_criticality 15 pts; duration_unacknowledged 15.0 pts; recurrence_24h 0.0 pts; related_active_alarms 0.0 pts",
+        "meta": {
+          "trace_id": "trace-8255f20711ef4330",
+          "tool": "score_alarm_priority",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/priority-score",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 196.1,
+              "trace_id": "trace-8255f20711ef4330",
+              "api_request_id": "req-bbc0de71a016"
+            }
+          ],
+          "total_duration_ms": 196.3
+        },
+        "related_active_alarm_ids": [],
+        "scored_at": "2026-09-30T00:00:00Z"
+      },
+      "trace_id": "trace-8255f20711ef4330"
+    },
+    {
+      "step": 5,
+      "tool": "score_alarm_priority",
+      "server": "alarm-management",
+      "purpose": "Dynamic priority score for PCV-POS-DEV on PCV-210",
+      "status": "success",
+      "arguments": {
+        "alarm_id": "ALM-000615"
+      },
+      "started_at": "2026-09-28T20:05:37.232908+00:00",
+      "duration_ms": 843.4,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/priority-score",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 392.9,
+          "trace_id": "trace-8255f20711ef4330",
+          "api_request_id": "req-941576598d76"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarm_id": "ALM-000615",
+        "asset_id": "PCV-210",
+        "alarm_code": "PCV-POS-DEV",
+        "severity": "medium",
+        "configured_priority": 3,
+        "priority_score": 42.2,
+        "priority_band": "medium",
+        "components": [
+          {
+            "factor": "configured_severity",
+            "weight_pct": 40,
+            "points": 18.0,
+            "detail": "severity=medium (priority 3)"
+          },
+          {
+            "factor": "asset_criticality",
+            "weight_pct": 25,
+            "points": 15.0,
+            "detail": "PCV-210 criticality B"
+          },
+          {
+            "factor": "duration_unacknowledged",
+            "weight_pct": 15,
+            "points": 2.5,
+            "detail": "5 min unacknowledged vs 30 min max response time"
+          },
+          {
+            "factor": "recurrence_24h",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 previous occurrence(s) of PCV-POS-DEV on PCV-210 in 24 h"
+          },
+          {
+            "factor": "related_active_alarms",
+            "weight_pct": 10,
+            "points": 6.7,
+            "detail": "2 concurrent alarm(s) on this or connected assets"
+          }
+        ],
+        "rationale": "PCV-POS-DEV on PCV-210 scores 42.2/100: configured_severity 18 pts; asset_criticality 15 pts; duration_unacknowledged 2.5 pts; recurrence_24h 0.0 pts; related_active_alarms 6.7 pts",
+        "meta": {
+          "trace_id": "trace-8255f20711ef4330",
+          "tool": "score_alarm_priority",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/priority-score",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 392.9,
+              "trace_id": "trace-8255f20711ef4330",
+              "api_request_id": "req-941576598d76"
+            }
+          ],
+          "total_duration_ms": 393.0
+        },
+        "related_active_alarm_ids": [
+          "ALM-000612",
+          "ALM-000618"
+        ],
+        "scored_at": "2026-09-30T00:00:00Z"
+      },
+      "trace_id": "trace-8255f20711ef4330"
+    },
+    {
+      "step": 6,
+      "tool": "score_alarm_priority",
+      "server": "alarm-management",
+      "purpose": "Dynamic priority score for CMP-DISCH-P-H on K-201",
+      "status": "success",
+      "arguments": {
+        "alarm_id": "ALM-000618"
+      },
+      "started_at": "2026-09-28T20:05:37.232908+00:00",
+      "duration_ms": 850.2,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/priority-score",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 19.2,
+          "trace_id": "trace-8255f20711ef4330",
+          "api_request_id": "req-f32e625e872c"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarm_id": "ALM-000618",
+        "asset_id": "K-201",
+        "alarm_code": "CMP-DISCH-P-H",
+        "severity": "medium",
+        "configured_priority": 3,
+        "priority_score": 50.2,
+        "priority_band": "medium",
+        "components": [
+          {
+            "factor": "configured_severity",
+            "weight_pct": 40,
+            "points": 18.0,
+            "detail": "severity=medium (priority 3)"
+          },
+          {
+            "factor": "asset_criticality",
+            "weight_pct": 25,
+            "points": 25.0,
+            "detail": "K-201 criticality A"
+          },
+          {
+            "factor": "duration_unacknowledged",
+            "weight_pct": 15,
+            "points": 0.5,
+            "detail": "1 min unacknowledged vs 30 min max response time"
+          },
+          {
+            "factor": "recurrence_24h",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 previous occurrence(s) of CMP-DISCH-P-H on K-201 in 24 h"
+          },
+          {
+            "factor": "related_active_alarms",
+            "weight_pct": 10,
+            "points": 6.7,
+            "detail": "2 concurrent alarm(s) on this or connected assets"
+          }
+        ],
+        "rationale": "CMP-DISCH-P-H on K-201 scores 50.2/100: configured_severity 18 pts; asset_criticality 25 pts; duration_unacknowledged 0.5 pts; recurrence_24h 0.0 pts; related_active_alarms 6.7 pts",
+        "meta": {
+          "trace_id": "trace-8255f20711ef4330",
+          "tool": "score_alarm_priority",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/priority-score",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 19.2,
+              "trace_id": "trace-8255f20711ef4330",
+              "api_request_id": "req-f32e625e872c"
+            }
+          ],
+          "total_duration_ms": 19.3
+        },
+        "related_active_alarm_ids": [
+          "ALM-000612",
+          "ALM-000615"
+        ],
+        "scored_at": "2026-09-30T00:00:00Z"
+      },
+      "trace_id": "trace-8255f20711ef4330"
+    },
+    {
+      "step": 7,
+      "tool": "get_operator_recommendations",
+      "server": "alarm-management",
+      "purpose": "API recommendations for CMP-SURGE on K-202 (ALM-000612)",
+      "status": "success",
+      "arguments": {
+        "alarm_id": "ALM-000612",
+        "include_related": true,
+        "include_asset_context": false,
+        "include_historical_pattern": true
+      },
+      "started_at": "2026-09-28T20:05:38.094073+00:00",
+      "duration_ms": 235.8,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /recommendations/operator-actions",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 4.0,
+          "trace_id": "trace-8255f20711ef4330",
+          "api_request_id": "req-fa5c088e2a3b"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarm_id": "ALM-000612",
+        "asset_id": "K-202",
+        "alarm_code": "CMP-SURGE",
+        "recommendations": [
+          {
+            "rank": 1,
+            "action": "Confirm the anti-surge valve has opened; if not, open it manually from the DCS immediately",
+            "rationale": "Surge can destroy the thrust bearing and impeller",
+            "confidence": 0.95,
+            "source": "rule_engine"
+          },
+          {
+            "rank": 2,
+            "action": "Reduce the discharge pressure setpoint or increase recycle flow until surge stops",
+            "rationale": "Moves the operating point away from the surge line",
+            "confidence": 0.88,
+            "source": "rule_engine"
+          },
+          {
+            "rank": 3,
+            "action": "Notify the reliability engineer",
+            "rationale": "Repeated surge requires mechanical inspection",
+            "confidence": 0.8,
+            "source": "rule_engine"
+          }
+        ],
+        "related_alarms": [
+          {
+            "alarm_id": "ALM-000615",
+            "asset_id": "PCV-210",
+            "asset_name": "Header Pressure Control Valve PCV-210",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "alarm_code": "PCV-POS-DEV",
+            "alarm_name": "Control valve position deviation",
+            "alarm_type": "device",
+            "severity": "medium",
+            "priority": 3,
+            "status": "active",
+            "acknowledged": true,
+            "start_time": "2026-09-29T23:45:00Z",
+            "end_time": null,
+            "ack_time": "2026-09-29T23:50:00Z",
+            "duration_minutes": 15.0,
+            "ack_delay_seconds": 300.0,
+            "value": 10.3,
+            "setpoint": 10.0,
+            "uom": "%",
+            "is_trip": false,
+            "asset_class": "valve",
+            "message": "Header Pressure Control Valve PCV-210: Control valve position deviation (10.3 %, setpoint 10)"
+          },
+          {
+            "alarm_id": "ALM-000618",
+            "asset_id": "K-201",
+            "asset_name": "Process Gas Compressor K-201",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "alarm_code": "CMP-DISCH-P-H",
+            "alarm_name": "High discharge pressure",
+            "alarm_type": "process",
+            "severity": "medium",
+            "priority": 3,
+            "status": "active",
+            "acknowledged": true,
+            "start_time": "2026-09-29T23:52:00Z",
+            "end_time": null,
+            "ack_time": "2026-09-29T23:53:00Z",
+            "duration_minutes": 8.0,
+            "ack_delay_seconds": 60.0,
+            "value": 8.8,
+            "setpoint": 8.6,
+            "uom": "barg",
+            "is_trip": false,
+            "asset_class": "compressor",
+            "message": "Process Gas Compressor K-201: High discharge pressure (8.8 barg, setpoint 8.6)"
+          }
+        ],
+        "asset_context": null,
+        "historical_pattern": {
+          "occurrences_last_90_days": 1,
+          "last_previous_occurrence": null,
+          "typical_duration_minutes": null,
+          "repeat_within_7_days": false
+        },
+        "disclaimer": "System-generated recommendations. Verify against site procedures before acting.",
+        "meta": {
+          "trace_id": "trace-8255f20711ef4330",
+          "tool": "get_operator_recommendations",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /recommendations/operator-actions",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 4.0,
+              "trace_id": "trace-8255f20711ef4330",
+              "api_request_id": "req-fa5c088e2a3b"
+            }
+          ],
+          "total_duration_ms": 4.2
+        },
+        "alarm_name": "Compressor surge detected",
+        "severity": "critical",
+        "engine_version": "reco-sim-1.4"
+      },
+      "trace_id": "trace-8255f20711ef4330"
+    }
+  ],
+  "retrieval": {
+    "low_confidence": false,
+    "reason": null,
+    "queries": [
+      {
+        "purpose": "question",
+        "query": "Which alarm has the highest priority in EastRefinery, and why?",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "sites": [
+            "EastRefinery"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0523,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "CMP-SURGE"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SOP-CMP-001::revB::004",
+          "SOP-CMP-001::revB::001",
+          "TSG-CMP-002::revA::000",
+          "SOP-CMP-001::revB::000",
+          "SOP-CMP-001::revB::002"
+        ]
+      },
+      {
+        "purpose": "alarm_response",
+        "query": "CMP-SURGE Compressor surge detected alarm response operator actions",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "sop"
+          ],
+          "sites": [
+            "EastRefinery"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0446,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "CMP-SURGE"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SOP-CMP-001::revB::004",
+          "SOP-CMP-001::revB::003"
+        ]
+      },
+      {
+        "purpose": "verify_recommendations",
+        "query": "Confirm the anti-surge valve has opened; if not, open it manually from the DCS immediately ; Reduce the discharge pressure setpoint or increase recycle flow until surge stops ; Notify the reliability engineer",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "maintenance_manual",
+            "sop",
+            "safety",
+            "troubleshooting"
+          ],
+          "sites": [
+            "EastRefinery"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0804,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "CMP-SURGE"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SOP-CMP-001::revB::004",
+          "SOP-CMP-001::revB::003",
+          "TSG-CMP-002::revA::000",
+          "TSG-CMP-002::revA::002"
+        ]
+      },
+      {
+        "purpose": "priority_policy",
+        "query": "alarm priority levels response time dynamic priority scoring asset criticality",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "alarm_philosophy"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0196,
+        "low_confidence": true,
+        "reason": "best similarity 0.02 below threshold 0.62 and no exact alarm-code match",
+        "alarm_codes": [],
+        "asset_ids": [],
+        "chunks": [
+          "ALM-PHIL-001::revD::002",
+          "ALM-PHIL-001::revD::007"
+        ]
+      },
+      {
+        "purpose": "safety",
+        "query": "safety rules trips interlocks isolation  CMP-SURGE",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "safety"
+          ],
+          "sites": [
+            "EastRefinery"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0494,
+        "low_confidence": true,
+        "reason": "best similarity 0.05 below threshold 0.62 and no exact alarm-code match",
+        "alarm_codes": [
+          "CMP-SURGE"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SAF-001::revE::005",
+          "SAF-001::revE::003"
+        ]
+      }
+    ]
+  },
+  "warnings": [],
+  "errors": [],
+  "degraded": false,
+  "llm": {
+    "provider": "none",
+    "model": "none",
+    "used": false
+  },
+  "timings_ms": {
+    "total": 2242.9
+  }
+}

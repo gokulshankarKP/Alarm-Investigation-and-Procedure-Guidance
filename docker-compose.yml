@@ -1,0 +1,134 @@
+# docker compose up --build
+#   GUI:        http://localhost:8501
+#   Backend:    http://localhost:8080/docs
+#   MCP server: http://localhost:9000/mcp   (health: /health)
+#   Alarm API:  http://localhost:8000/docs
+#
+# The LLM and embeddings use Ollama on the host by default (OLLAMA_BASE_URL). To run Ollama in
+# a container instead: docker compose --profile ollama up --build  and set
+# OLLAMA_BASE_URL=http://ollama:11434. Without any Ollama, set LLM_PROVIDER=none and
+# EMBEDDING_PROVIDER=hash in .env (fully offline, deterministic answers).
+
+x-app: &app
+  build: .
+  image: alarm-copilot:latest
+  env_file:
+    - path: .env
+      required: false
+  restart: unless-stopped
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-agent_db}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"   # host 5433 to avoid clashing with a local PostgreSQL
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-agent_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  alarm-api:
+    <<: *app
+    command: ["python", "-m", "alarm_api_sim", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  alarm-mcp:
+    <<: *app
+    command: ["python", "-m", "alarm_mcp", "--host", "0.0.0.0", "--port", "9000"]
+    environment:
+      ALARM_API_BASE_URL: http://alarm-api:8000
+      MCP_ALLOWED_HOSTS: "alarm-mcp:*,localhost:*,127.0.0.1:*"
+    ports:
+      - "9000:9000"
+    depends_on:
+      alarm-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9000/health', timeout=3)"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  rag-ingest:
+    <<: *app
+    restart: "no"
+    command: ["python", "-m", "rag.ingestion"]
+    environment:
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL_DOCKER:-http://host.docker.internal:11434}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  backend:
+    <<: *app
+    command: ["python", "-m", "copilot", "--host", "0.0.0.0", "--port", "8080"]
+    environment:
+      MCP_SERVER_URL: http://alarm-mcp:9000/mcp
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL_DOCKER:-http://host.docker.internal:11434}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8080:8080"
+    depends_on:
+      alarm-mcp:
+        condition: service_healthy
+      rag-ingest:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health', timeout=10)"]
+      interval: 10s
+      timeout: 15s
+      retries: 20
+
+  frontend:
+    <<: *app
+    command: ["streamlit", "run", "apps/frontend/copilot_ui/app.py", "--server.port", "8501", "--server.address", "0.0.0.0",
+              "--server.headless", "true", "--browser.gatherUsageStats", "false"]
+    environment:
+      BACKEND_URL: http://backend:8080
+    ports:
+      - "8501:8501"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["ollama"]
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+
+  ollama-models:
+    image: ollama/ollama:latest
+    profiles: ["ollama"]
+    restart: "no"
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["sh", "-c", "sleep 5 && ollama pull ${OLLAMA_MODEL:-qwen3:8b} && ollama pull ${EMBEDDING_MODEL:-nomic-embed-text}"]
+    depends_on:
+      - ollama
+
+volumes:
+  pgdata:
+  ollama:
