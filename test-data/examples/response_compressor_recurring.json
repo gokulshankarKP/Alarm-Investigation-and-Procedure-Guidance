@@ -1,0 +1,1954 @@
+{
+  "conversation_id": "conv-example-compressor_recurring",
+  "trace_id": "trace-a30019172d5041a0",
+  "question": "Why are compressor discharge pressure alarms repeatedly occurring?",
+  "intent": "recurring_alarm_analysis",
+  "intent_method": "rules",
+  "entities": {
+    "asset_names": [],
+    "asset_ids": [],
+    "asset_classes": [
+      "compressor"
+    ],
+    "alarm_codes": [],
+    "sites": [],
+    "units": [],
+    "severities": [],
+    "status": "historical",
+    "lookback_days": null,
+    "kpi": null
+  },
+  "time_window": {
+    "start": "2026-07-02T00:00:00Z",
+    "end": "2026-09-30T00:00:00Z",
+    "lookback_days": "90"
+  },
+  "answer_markdown": "### Summary\n'compressor' resolves to K-201 (Process Gas Compressor K-201, EastRefinery Unit 2, criticality A) [T2]. 2 active alarm(s): CMP-SURGE on K-202 (critical, unacknowledged, 25 min); CMP-DISCH-P-H on K-201 (medium, acknowledged, 8 min) [T4]. 179 alarm(s) in the analysed window; most frequent: CMP-DISCH-P-H x141, CMP-INTERCOOL-T-H x22, CMP-DISCH-T-H x6, CMP-DISCH-P-HH x4 [T5]. Alarm count trend is increasing (12.2 -> 15.1 per bucket) [T7].\n\n### Likely causes\n- Alarms on PCV-210 (Header Pressure Control Valve PCV-210) precede alarms on K-201, K-202: possible common or upstream cause. [T9]\n- K-201 CMP-DISCH-P-H is followed by K-202 CMP-DISCH-P-H within 15 min in 68% of cases (n=49, median lag 1.2 min) [T9]\n- PCV-210 PCV-POS-DEV is followed by K-201 CMP-DISCH-P-H within 15 min in 100% of cases (n=28, median lag 3.5 min) [T9]\n- CMP-DISCH-P-H on K-201 is a rationalization candidate (recurring, cleared_without_operator_action, 72 occurrences). [T8]\n- Documented likely causes: Compressor Discharge Pressure Alarm Troubleshooting \u00a71 (1. Why discharge pressure alarms recur). [S1]\n\n### Recommended actions\n- **immediate**: Check the downstream header pressure and the position of PCV-210. A closing or sticking downstream valve is the most frequent cause. [S2]\n- **immediate**: Check whether the parallel compressor has just tripped or unloaded (load transfer). [S2]\n- **short term**: Reduce compressor load via the capacity controller if pressure keeps rising. [S2]\n- **immediate**: Check cooling water supply temperature and flow to the intercooler. [S3]\n- **immediate**: A rising intercooler outlet temperature over weeks indicates fouling (see TSG-CMP-002). [S3]\n- **immediate**: Confirm the compressor has tripped and the anti-surge valve has opened fully. [S5]\n- **immediate**: Start the spare compressor K-203 only after the downstream restriction is identified and cleared; otherwise it will trip for the same reason. [S5]\n- **short term**: Check downstream header pressure and PCV-210 position [T10] [S1]\n- **short term**: Reduce compressor load via the capacity controller if pressure keeps rising [T10] [S2]\n\n### API recommendations vs documents\n- \u274c **Do not follow** API recommendation \"Start the spare compressor K-203 immediately to share the load\" [T10]: Documents say not to start the spare compressor until the downstream restriction is identified and cleared, otherwise it trips for the same reason. (This advice only exists in the superseded revision A.) [S5]\n\n### Applicable procedures\n- SOP-CMP-001 \u00a73.1: Process Gas Compressor Operating Procedure: 3.1 CMP-DISCH-P-H \u2014 high discharge pressure (priority 3, medium) [S2]\n- SOP-CMP-001 \u00a73.4: Process Gas Compressor Operating Procedure: 3.4 CMP-DISCH-T-H / CMP-INTERCOOL-T-H \u2014 high temperature [S3]\n- SOP-CMP-001 \u00a73.2: Process Gas Compressor Operating Procedure: 3.2 CMP-DISCH-P-HH \u2014 discharge pressure trip (priority 2, high) [S5]",
+  "summary": "'compressor' resolves to K-201 (Process Gas Compressor K-201, EastRefinery Unit 2, criticality A) [T2]. 2 active alarm(s): CMP-SURGE on K-202 (critical, unacknowledged, 25 min); CMP-DISCH-P-H on K-201 (medium, acknowledged, 8 min) [T4]. 179 alarm(s) in the analysed window; most frequent: CMP-DISCH-P-H x141, CMP-INTERCOOL-T-H x22, CMP-DISCH-T-H x6, CMP-DISCH-P-HH x4 [T5]. Alarm count trend is increasing (12.2 -> 15.1 per bucket) [T7].",
+  "confidence": "high",
+  "likely_causes": [
+    {
+      "cause": "Alarms on PCV-210 (Header Pressure Control Valve PCV-210) precede alarms on K-201, K-202: possible common or upstream cause.",
+      "evidence": [
+        "T9"
+      ]
+    },
+    {
+      "cause": "K-201 CMP-DISCH-P-H is followed by K-202 CMP-DISCH-P-H within 15 min in 68% of cases (n=49, median lag 1.2 min)",
+      "evidence": [
+        "T9"
+      ]
+    },
+    {
+      "cause": "PCV-210 PCV-POS-DEV is followed by K-201 CMP-DISCH-P-H within 15 min in 100% of cases (n=28, median lag 3.5 min)",
+      "evidence": [
+        "T9"
+      ]
+    },
+    {
+      "cause": "CMP-DISCH-P-H on K-201 is a rationalization candidate (recurring, cleared_without_operator_action, 72 occurrences).",
+      "evidence": [
+        "T8"
+      ]
+    },
+    {
+      "cause": "Documented likely causes: Compressor Discharge Pressure Alarm Troubleshooting \u00a71 (1. Why discharge pressure alarms recur).",
+      "evidence": [
+        "S1"
+      ]
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Check the downstream header pressure and the position of PCV-210. A closing or sticking downstream valve is the most frequent cause.",
+      "urgency": "immediate",
+      "citations": [
+        "S2"
+      ]
+    },
+    {
+      "action": "Check whether the parallel compressor has just tripped or unloaded (load transfer).",
+      "urgency": "immediate",
+      "citations": [
+        "S2"
+      ]
+    },
+    {
+      "action": "Reduce compressor load via the capacity controller if pressure keeps rising.",
+      "urgency": "short_term",
+      "citations": [
+        "S2"
+      ]
+    },
+    {
+      "action": "Check cooling water supply temperature and flow to the intercooler.",
+      "urgency": "immediate",
+      "citations": [
+        "S3"
+      ]
+    },
+    {
+      "action": "A rising intercooler outlet temperature over weeks indicates fouling (see TSG-CMP-002).",
+      "urgency": "immediate",
+      "citations": [
+        "S3"
+      ]
+    },
+    {
+      "action": "Confirm the compressor has tripped and the anti-surge valve has opened fully.",
+      "urgency": "immediate",
+      "citations": [
+        "S5"
+      ]
+    },
+    {
+      "action": "Start the spare compressor K-203 only after the downstream restriction is identified and cleared; otherwise it will trip for the same reason.",
+      "urgency": "immediate",
+      "citations": [
+        "S5"
+      ]
+    },
+    {
+      "action": "Check downstream header pressure and PCV-210 position",
+      "urgency": "short_term",
+      "citations": [
+        "T10",
+        "S1"
+      ]
+    },
+    {
+      "action": "Reduce compressor load via the capacity controller if pressure keeps rising",
+      "urgency": "short_term",
+      "citations": [
+        "T10",
+        "S2"
+      ]
+    }
+  ],
+  "consistency_findings": [
+    {
+      "api_recommendation": "Check downstream header pressure and PCV-210 position",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in TSG-CMP-002 \u00a71.",
+      "citations": [
+        "S1"
+      ],
+      "tool_ref": "T10"
+    },
+    {
+      "api_recommendation": "Start the spare compressor K-203 immediately to share the load",
+      "verdict": "inconsistent",
+      "explanation": "Documents say not to start the spare compressor until the downstream restriction is identified and cleared, otherwise it trips for the same reason. (This advice only exists in the superseded revision A.)",
+      "citations": [
+        "S5"
+      ],
+      "tool_ref": "T10"
+    },
+    {
+      "api_recommendation": "Reduce compressor load via the capacity controller if pressure keeps rising",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-CMP-001 \u00a73.1.",
+      "citations": [
+        "S2"
+      ],
+      "tool_ref": "T10"
+    }
+  ],
+  "procedures": [
+    {
+      "doc_id": "SOP-CMP-001",
+      "section": "\u00a73.1",
+      "reason": "Process Gas Compressor Operating Procedure: 3.1 CMP-DISCH-P-H \u2014 high discharge pressure (priority 3, medium)",
+      "citation": "S2"
+    },
+    {
+      "doc_id": "SOP-CMP-001",
+      "section": "\u00a73.4",
+      "reason": "Process Gas Compressor Operating Procedure: 3.4 CMP-DISCH-T-H / CMP-INTERCOOL-T-H \u2014 high temperature",
+      "citation": "S3"
+    },
+    {
+      "doc_id": "SOP-CMP-001",
+      "section": "\u00a73.2",
+      "reason": "Process Gas Compressor Operating Procedure: 3.2 CMP-DISCH-P-HH \u2014 discharge pressure trip (priority 2, high)",
+      "citation": "S5"
+    }
+  ],
+  "alarm_panel": {
+    "assets": [
+      {
+        "asset_id": "K-201",
+        "asset_name": "Process Gas Compressor K-201",
+        "asset_class": "compressor",
+        "site": "EastRefinery",
+        "unit": "Unit 2",
+        "criticality": "A",
+        "match_score": 1.0,
+        "exact_match": false
+      }
+    ],
+    "related_assets": [
+      {
+        "asset_id": "E-201",
+        "asset_name": "Intercooler E-201",
+        "asset_class": "heat_exchanger",
+        "relationship": "intercooler",
+        "criticality": "B"
+      },
+      {
+        "asset_id": "UV-201",
+        "asset_name": "Anti-Surge Valve UV-201",
+        "asset_class": "valve",
+        "relationship": "anti_surge_valve",
+        "criticality": "A"
+      },
+      {
+        "asset_id": "PCV-210",
+        "asset_name": "Header Pressure Control Valve PCV-210",
+        "asset_class": "valve",
+        "relationship": "downstream_pressure_control",
+        "criticality": "B"
+      },
+      {
+        "asset_id": "M-201",
+        "asset_name": "K-201 Drive Motor M-201",
+        "asset_class": "motor",
+        "relationship": "driver",
+        "criticality": "A"
+      },
+      {
+        "asset_id": "K-202",
+        "asset_name": "Process Gas Compressor K-202",
+        "asset_class": "compressor",
+        "relationship": "parallel_compressor",
+        "criticality": "A"
+      },
+      {
+        "asset_id": "K-203",
+        "asset_name": "Process Gas Compressor K-203",
+        "asset_class": "compressor",
+        "relationship": "parallel_compressor",
+        "criticality": "A"
+      }
+    ],
+    "active_alarms": [
+      {
+        "alarm_id": "ALM-000618",
+        "asset_id": "K-201",
+        "asset_name": "Process Gas Compressor K-201",
+        "site": "EastRefinery",
+        "unit": "Unit 2",
+        "alarm_code": "CMP-DISCH-P-H",
+        "alarm_name": "High discharge pressure",
+        "alarm_type": "process",
+        "severity": "medium",
+        "priority": 3,
+        "status": "active",
+        "acknowledged": true,
+        "start_time": "2026-09-29T23:52:00Z",
+        "end_time": null,
+        "ack_time": "2026-09-29T23:53:00Z",
+        "duration_minutes": 8.0,
+        "ack_delay_seconds": 60.0,
+        "value": 8.8,
+        "setpoint": 8.6,
+        "uom": "barg",
+        "is_trip": false,
+        "asset_class": "compressor",
+        "message": "Process Gas Compressor K-201: High discharge pressure (8.8 barg, setpoint 8.6)"
+      },
+      {
+        "alarm_id": "ALM-000612",
+        "asset_id": "K-202",
+        "asset_name": "Process Gas Compressor K-202",
+        "site": "EastRefinery",
+        "unit": "Unit 2",
+        "alarm_code": "CMP-SURGE",
+        "alarm_name": "Compressor surge detected",
+        "alarm_type": "safety",
+        "severity": "critical",
+        "priority": 1,
+        "status": "active",
+        "acknowledged": false,
+        "start_time": "2026-09-29T23:35:00Z",
+        "end_time": null,
+        "ack_time": null,
+        "duration_minutes": 25.0,
+        "ack_delay_seconds": null,
+        "value": null,
+        "setpoint": null,
+        "uom": "status",
+        "is_trip": false,
+        "asset_class": "compressor",
+        "message": "Process Gas Compressor K-202: Compressor surge detected"
+      }
+    ],
+    "historical_summary": {
+      "count": 179,
+      "start": "2026-07-02T00:00:00Z",
+      "end": "2026-09-30T00:00:00Z",
+      "by_code": [
+        [
+          "CMP-DISCH-P-H",
+          141
+        ],
+        [
+          "CMP-INTERCOOL-T-H",
+          22
+        ],
+        [
+          "CMP-DISCH-T-H",
+          6
+        ],
+        [
+          "CMP-DISCH-P-HH",
+          4
+        ],
+        [
+          "CMP-VIB-H",
+          3
+        ],
+        [
+          "CMP-LUBE-P-L",
+          2
+        ],
+        [
+          "CMP-SURGE",
+          1
+        ]
+      ],
+      "truncated": false,
+      "summary": {
+        "alarm_count": 179,
+        "recurring_rate": 0.916,
+        "avg_ack_delay_seconds": 209.0,
+        "critical_count": 1
+      }
+    },
+    "focus_alarm": {
+      "alarm_id": "ALM-000618",
+      "asset_id": "K-201",
+      "asset_name": "Process Gas Compressor K-201",
+      "site": "EastRefinery",
+      "unit": "Unit 2",
+      "alarm_code": "CMP-DISCH-P-H",
+      "alarm_name": "High discharge pressure",
+      "alarm_type": "process",
+      "severity": "medium",
+      "priority": 3,
+      "status": "active",
+      "acknowledged": true,
+      "start_time": "2026-09-29T23:52:00Z",
+      "end_time": null,
+      "ack_time": "2026-09-29T23:53:00Z",
+      "duration_minutes": 8.0,
+      "ack_delay_seconds": 60.0,
+      "value": 8.8,
+      "setpoint": 8.6,
+      "uom": "barg",
+      "is_trip": false,
+      "asset_class": "compressor",
+      "message": "Process Gas Compressor K-201: High discharge pressure (8.8 barg, setpoint 8.6)"
+    },
+    "priority_scores": [],
+    "correlation_insights": [
+      "K-201 CMP-DISCH-P-H is followed by K-202 CMP-DISCH-P-H within 15 min in 68% of cases (n=49, median lag 1.2 min)",
+      "PCV-210 PCV-POS-DEV is followed by K-201 CMP-DISCH-P-H within 15 min in 100% of cases (n=28, median lag 3.5 min)",
+      "PCV-210 PCV-POS-DEV is followed by K-202 CMP-DISCH-P-H within 15 min in 96% of cases (n=27, median lag 4.6 min)",
+      "K-202 CMP-DISCH-P-H is followed by K-201 CMP-DISCH-P-H within 15 min in 49% of cases (n=34, median lag 1.5 min)",
+      "K-202 CMP-DISCH-P-H is followed by K-201 CMP-DISCH-P-HH within 15 min in 13% of cases (n=9, median lag 5.0 min)",
+      "K-201 CMP-DISCH-P-H is followed by K-201 CMP-DISCH-P-HH within 15 min in 12% of cases (n=9, median lag 6.0 min)",
+      "PCV-210 (Header Pressure Control Valve PCV-210) alarms precede alarms on K-201, K-202: possible common cause"
+    ],
+    "common_causes": [
+      {
+        "asset_id": "PCV-210",
+        "asset_name": "Header Pressure Control Valve PCV-210",
+        "affected_assets": [
+          "K-201",
+          "K-202"
+        ],
+        "evidence": 55
+      }
+    ],
+    "rationalization": [
+      {
+        "asset_id": "K-201",
+        "alarm_code": "CMP-DISCH-P-H",
+        "alarm_name": "High discharge pressure",
+        "reasons": [
+          "recurring",
+          "cleared_without_operator_action"
+        ],
+        "occurrences": 72,
+        "max_occurrences_in_7_days": 12,
+        "suggested_review": "Review setpoint, deadband and on/off delay; investigate the recurring root cause and consider state-based suppression",
+        "asset_name": "Process Gas Compressor K-201",
+        "severity": "medium",
+        "chatter_events": 0,
+        "stale_active_minutes": 0,
+        "cleared_without_action": 56
+      },
+      {
+        "asset_id": "K-202",
+        "alarm_code": "CMP-DISCH-P-H",
+        "alarm_name": "High discharge pressure",
+        "reasons": [
+          "recurring",
+          "cleared_without_operator_action"
+        ],
+        "occurrences": 69,
+        "max_occurrences_in_7_days": 10,
+        "suggested_review": "Review setpoint, deadband and on/off delay; investigate the recurring root cause and consider state-based suppression",
+        "asset_name": "Process Gas Compressor K-202",
+        "severity": "medium",
+        "chatter_events": 0,
+        "stale_active_minutes": 0,
+        "cleared_without_action": 48
+      }
+    ],
+    "trend": {
+      "alarm_count": {
+        "direction": "increasing",
+        "first_half_avg": 12.2,
+        "second_half_avg": 15.1,
+        "relative_change": 0.238
+      }
+    },
+    "kpis": []
+  },
+  "citations": [
+    {
+      "id": "S1",
+      "doc_id": "TSG-CMP-002",
+      "revision": "A",
+      "title": "Compressor Discharge Pressure Alarm Troubleshooting",
+      "doc_type": "troubleshooting",
+      "section": "\u00a71",
+      "heading_path": "1. Why discharge pressure alarms recur",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.07848,
+      "similarity": 0.0054,
+      "matched_alarm_codes": [
+        "CMP-DISCH-P-H",
+        "CMP-INTERCOOL-T-H"
+      ],
+      "excerpt": "## 1. Why discharge pressure alarms recur\n\nRepeated `CMP-DISCH-P-H` alarms usually have one of five causes. Work through them in this\norder, because the first two explain most recurring cases.\n\n| # | Cause | Typical alarm pattern | Key evidence |\n|---|---|---|---|\n| 1 | Downstream restriction (PCV-210 sticking, fouled downstream exchanger, partially closed block valve) | Alarm on all running compressors at the same time | Header pressure high while flow falls; PCV-210 position not matching output |\n| 2 | Alarm setpoint too close to normal operation | Many short alarms (< 2 min), chattering, no operator action taken | Normal discharge near 8.4 barg vs. H alarm at 8.6 barg; alarm clears by itself |\n| 3 | Intercooler fouling | Slow increase in `CMP-INTERCOOL-T-H` over weeks, then discharge pressure and temperature alarms | Intercooler \u0394T falling; cooling water \u0394T normal |\n| 4 | Load transfer from parallel compressor | Alarm on one compressor right after the other unloads or trips | Correlated trip or unload event seconds before |\n| 5 | Pressure transmitter drift | Alarm on one compressor only; other indications normal | Compare PT reading with local gauge; last calibration date |",
+      "source_path": "troubleshooting/TSG-CMP-002_compressor_discharge_pressure_troubleshooting.md",
+      "cited": true
+    },
+    {
+      "id": "S2",
+      "doc_id": "SOP-CMP-001",
+      "revision": "B",
+      "title": "Process Gas Compressor Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a73.1",
+      "heading_path": "3. Alarm response > 3.1 CMP-DISCH-P-H \u2014 high discharge pressure (priority 3, medium)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.05978,
+      "similarity": -0.0077,
+      "matched_alarm_codes": [
+        "CMP-DISCH-P-H"
+      ],
+      "excerpt": "### 3.1 CMP-DISCH-P-H \u2014 high discharge pressure (priority 3, medium)\n\n1. Check the downstream header pressure and the position of PCV-210. A closing or sticking\n   downstream valve is the most frequent cause.\n2. Check whether the parallel compressor has just tripped or unloaded (load transfer).\n3. Reduce compressor load via the capacity controller if pressure keeps rising.\n4. If the alarm is recurring, follow TSG-CMP-002.",
+      "source_path": "procedures/SOP-CMP-001_compressor_operation.md",
+      "cited": true
+    },
+    {
+      "id": "S3",
+      "doc_id": "SOP-CMP-001",
+      "revision": "B",
+      "title": "Process Gas Compressor Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a73.4",
+      "heading_path": "3. Alarm response > 3.4 CMP-DISCH-T-H / CMP-INTERCOOL-T-H \u2014 high temperature",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.05932,
+      "similarity": -0.0468,
+      "matched_alarm_codes": [
+        "CMP-INTERCOOL-T-H"
+      ],
+      "excerpt": "### 3.4 CMP-DISCH-T-H / CMP-INTERCOOL-T-H \u2014 high temperature\n\n1. Check cooling water supply temperature and flow to the intercooler.\n2. A rising intercooler outlet temperature over weeks indicates fouling (see TSG-CMP-002).",
+      "source_path": "procedures/SOP-CMP-001_compressor_operation.md",
+      "cited": true
+    },
+    {
+      "id": "S4",
+      "doc_id": "SOP-CMP-001",
+      "revision": "B",
+      "title": "Process Gas Compressor Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a72",
+      "heading_path": "2. Operating limits",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.04027,
+      "similarity": 0.0751,
+      "matched_alarm_codes": [
+        "CMP-INTERCOOL-T-H"
+      ],
+      "excerpt": "## 2. Operating limits\n\n| Parameter | Normal | Alarm H | Alarm HH (trip) |\n|---|---|---|---|\n| Discharge pressure | 7.4\u20138.2 barg | H: 8.6 barg | HH: 9.0 barg, compressor trips |\n| Discharge temperature | 110\u2013135 \u00b0C | H: 150 \u00b0C | HH: 165 \u00b0C, trip |\n| Intercooler gas outlet temperature | 35\u201345 \u00b0C | H: 50 \u00b0C | \u2014 |\n| Shaft vibration | < 40 \u00b5m pk-pk | H: 60 \u00b5m | HH: 85 \u00b5m, trip |\n| Lube oil pressure | 1.8\u20132.2 barg | L: 1.4 barg | LL: 1.0 barg, trip |\n\nThe downstream header relief valve is set at 9.5 barg.",
+      "source_path": "procedures/SOP-CMP-001_compressor_operation.md",
+      "cited": false
+    },
+    {
+      "id": "S5",
+      "doc_id": "SOP-CMP-001",
+      "revision": "B",
+      "title": "Process Gas Compressor Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a73.2",
+      "heading_path": "3. Alarm response > 3.2 CMP-DISCH-P-HH \u2014 discharge pressure trip (priority 2, high)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.04026,
+      "similarity": 0.0363,
+      "matched_alarm_codes": [
+        "CMP-DISCH-P-H"
+      ],
+      "excerpt": "### 3.2 CMP-DISCH-P-HH \u2014 discharge pressure trip (priority 2, high)\n\n1. Confirm the compressor has tripped and the anti-surge valve has opened fully.\n2. Start the spare compressor K-203 only after the downstream restriction is identified and\n   cleared; otherwise it will trip for the same reason.\n3. Inform the shift supervisor and raise an event report.",
+      "source_path": "procedures/SOP-CMP-001_compressor_operation.md",
+      "cited": true
+    },
+    {
+      "id": "S6",
+      "doc_id": "TSG-CMP-002",
+      "revision": "A",
+      "title": "Compressor Discharge Pressure Alarm Troubleshooting",
+      "doc_type": "troubleshooting",
+      "section": "\u00a73",
+      "heading_path": "3. Recommended actions by cause",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.04,
+      "similarity": 0.0301,
+      "matched_alarm_codes": [
+        "CMP-DISCH-P-H",
+        "CMP-INTERCOOL-T-H"
+      ],
+      "excerpt": "## 3. Recommended actions by cause\n\n| Cause | Immediate | Permanent |\n|---|---|---|\n| Downstream restriction | Reduce load; open bypass under supervisor instruction | Repair PCV-210; clean exchanger |\n| Setpoint too close | Continue operation; do not shelve without approval | Rationalize: add 0.1 bar deadband and 30 s on-delay, or review setpoint |\n| Intercooler fouling | Increase cooling water flow if available | Chemical or mechanical cleaning |\n| Load transfer | Stabilise with anti-surge valve | Review load-sharing controller tuning |\n| Transmitter drift | Use local gauge reading | Recalibrate or replace transmitter |",
+      "source_path": "troubleshooting/TSG-CMP-002_compressor_discharge_pressure_troubleshooting.md",
+      "cited": false
+    },
+    {
+      "id": "S7",
+      "doc_id": "TSG-CMP-002",
+      "revision": "A",
+      "title": "Compressor Discharge Pressure Alarm Troubleshooting",
+      "doc_type": "troubleshooting",
+      "section": "\u00a72",
+      "heading_path": "2. Diagnostic steps",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03975,
+      "similarity": -0.0372,
+      "matched_alarm_codes": [
+        "CMP-DISCH-P-H",
+        "CMP-INTERCOOL-T-H"
+      ],
+      "excerpt": "## 2. Diagnostic steps\n\n1. **Correlate across compressors.** If K-201 and K-202 alarm within the same 15 minutes, suspect\n   a common downstream cause (1). If only one alarms, suspect causes 4 or 5.\n2. **Check alarm duration and count.** Many alarms shorter than 2 minutes that clear without\n   action indicate a chattering or badly placed setpoint (2). Raise a rationalization request per\n   ALM-PHIL-001 Section 8 instead of repeatedly acknowledging.\n3. **Trend intercooler temperatures** for 90 days. A steady rise indicates fouling (3). Schedule\n   intercooler cleaning at the next opportunity.\n4. **Check PCV-210** stroke test results and positioner feedback.\n5. **Verify the transmitter** against a calibrated gauge if the pattern is single-machine.",
+      "source_path": "troubleshooting/TSG-CMP-002_compressor_discharge_pressure_troubleshooting.md",
+      "cited": false
+    },
+    {
+      "id": "S8",
+      "doc_id": "SOP-CMP-001",
+      "revision": "B",
+      "title": "Process Gas Compressor Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a71",
+      "heading_path": "1. Scope",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03739,
+      "similarity": -0.031,
+      "matched_alarm_codes": [
+        "CMP-DISCH-P-H",
+        "CMP-INTERCOOL-T-H"
+      ],
+      "excerpt": "## 1. Scope\n\nCovers the three two-stage centrifugal process gas compressors in EastRefinery Unit 2.\nK-201 and K-202 run in parallel; K-203 is the installed spare. Each compressor has an\nintercooler between stages (E-201/E-202/E-203) and an anti-surge recycle valve\n(UV-201/UV-202/UV-203).\n\n**Related assets for compressor alarm investigation:** the intercooler and its cooling water\nsupply, the anti-surge valve, the downstream header and its pressure control valve PCV-210,\nthe drive motor, and the lube oil system.",
+      "source_path": "procedures/SOP-CMP-001_compressor_operation.md",
+      "cited": false
+    }
+  ],
+  "quarantined_sources": [],
+  "tools_discovered": [
+    "search_assets",
+    "get_asset_metadata",
+    "get_alarms",
+    "get_alarm_details",
+    "summarize_alarms",
+    "get_alarm_trends",
+    "correlate_alarms",
+    "analyze_alarm_floods",
+    "find_rationalization_candidates",
+    "score_alarm_priority",
+    "get_operator_recommendations",
+    "calculate_alarm_kpi",
+    "list_kpi_definitions"
+  ],
+  "tool_trace": [
+    {
+      "step": 1,
+      "tool": "tools/list",
+      "server": "alarm-management",
+      "purpose": "Discover available MCP tools",
+      "status": "success",
+      "arguments": {},
+      "started_at": "2026-09-28T20:05:33.977546+00:00",
+      "duration_ms": 283.6,
+      "attempts": 0,
+      "retries": [],
+      "api_calls": [],
+      "error": null,
+      "result": {
+        "tools": [
+          "search_assets",
+          "get_asset_metadata",
+          "get_alarms",
+          "get_alarm_details",
+          "summarize_alarms",
+          "get_alarm_trends",
+          "correlate_alarms",
+          "analyze_alarm_floods",
+          "find_rationalization_candidates",
+          "score_alarm_priority",
+          "get_operator_recommendations",
+          "calculate_alarm_kpi",
+          "list_kpi_definitions"
+        ]
+      },
+      "trace_id": "trace-a30019172d5041a0"
+    },
+    {
+      "step": 2,
+      "tool": "search_assets",
+      "server": "alarm-management",
+      "purpose": "Resolve 'compressor' to an asset identifier",
+      "status": "success",
+      "arguments": {
+        "query": "compressor",
+        "limit": 5
+      },
+      "started_at": "2026-09-28T20:05:33.977546+00:00",
+      "duration_ms": 207.0,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /assets/search",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 4.3,
+          "trace_id": "trace-a30019172d5041a0",
+          "api_request_id": "req-e675bf9d9d7d"
+        }
+      ],
+      "error": null,
+      "result": {
+        "query": "compressor",
+        "results": [
+          {
+            "asset_id": "K-201",
+            "asset_name": "Process Gas Compressor K-201",
+            "asset_class": "compressor",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "criticality": "A",
+            "match_score": 1.0,
+            "exact_match": false
+          },
+          {
+            "asset_id": "K-202",
+            "asset_name": "Process Gas Compressor K-202",
+            "asset_class": "compressor",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "criticality": "A",
+            "match_score": 1.0,
+            "exact_match": false
+          },
+          {
+            "asset_id": "K-203",
+            "asset_name": "Process Gas Compressor K-203",
+            "asset_class": "compressor",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "criticality": "A",
+            "match_score": 1.0,
+            "exact_match": false
+          },
+          {
+            "asset_id": "PCV-210",
+            "asset_name": "Header Pressure Control Valve PCV-210",
+            "asset_class": "valve",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "criticality": "B",
+            "match_score": 0.4,
+            "exact_match": false
+          }
+        ],
+        "total": 4,
+        "meta": {
+          "trace_id": "trace-a30019172d5041a0",
+          "tool": "search_assets",
+          "api_calls": [
+            {
+              "api_endpoint": "GET /assets/search",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 4.3,
+              "trace_id": "trace-a30019172d5041a0",
+              "api_request_id": "req-e675bf9d9d7d"
+            }
+          ],
+          "total_duration_ms": 4.5
+        }
+      },
+      "trace_id": "trace-a30019172d5041a0"
+    },
+    {
+      "step": 3,
+      "tool": "get_asset_metadata",
+      "server": "alarm-management",
+      "purpose": "Asset context and related assets for K-201",
+      "status": "success",
+      "arguments": {
+        "asset_id": "K-201"
+      },
+      "started_at": "2026-09-28T20:05:34.190835+00:00",
+      "duration_ms": 293.7,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /assets/K-201/metadata",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 4.0,
+          "trace_id": "trace-a30019172d5041a0",
+          "api_request_id": "req-da657884430a"
+        }
+      ],
+      "error": null,
+      "result": {
+        "asset_id": "K-201",
+        "asset_name": "Process Gas Compressor K-201",
+        "asset_class": "compressor",
+        "site": "EastRefinery",
+        "unit": "Unit 2",
+        "criticality": "A",
+        "description": "Two-stage centrifugal process gas compressor",
+        "related_assets": [
+          {
+            "asset_id": "E-201",
+            "asset_name": "Intercooler E-201",
+            "asset_class": "heat_exchanger",
+            "relationship": "intercooler",
+            "criticality": "B"
+          },
+          {
+            "asset_id": "UV-201",
+            "asset_name": "Anti-Surge Valve UV-201",
+            "asset_class": "valve",
+            "relationship": "anti_surge_valve",
+            "criticality": "A"
+          },
+          {
+            "asset_id": "PCV-210",
+            "asset_name": "Header Pressure Control Valve PCV-210",
+            "asset_class": "valve",
+            "relationship": "downstream_pressure_control",
+            "criticality": "B"
+          },
+          {
+            "asset_id": "M-201",
+            "asset_name": "K-201 Drive Motor M-201",
+            "asset_class": "motor",
+            "relationship": "driver",
+            "criticality": "A"
+          },
+          {
+            "asset_id": "K-202",
+            "asset_name": "Process Gas Compressor K-202",
+            "asset_class": "compressor",
+            "relationship": "parallel_compressor",
+            "criticality": "A"
+          },
+          {
+            "asset_id": "K-203",
+            "asset_name": "Process Gas Compressor K-203",
+            "asset_class": "compressor",
+            "relationship": "parallel_compressor",
+            "criticality": "A"
+          }
+        ],
+        "attributes": {
+          "normal_discharge_barg": "7.4-8.2",
+          "trip_discharge_barg": "9.0"
+        },
+        "alarm_statistics": {
+          "active_alarms": 1,
+          "alarms_last_30_days": 44,
+          "last_alarm_time": "2026-09-29T23:52:00Z"
+        },
+        "maintenance": {
+          "last_preventive_maintenance": "2026-08-29T00:00:00Z",
+          "running_hours": 29879
+        },
+        "meta": {
+          "trace_id": "trace-a30019172d5041a0",
+          "tool": "get_asset_metadata",
+          "api_calls": [
+            {
+              "api_endpoint": "GET /assets/K-201/metadata",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 4.0,
+              "trace_id": "trace-a30019172d5041a0",
+              "api_request_id": "req-da657884430a"
+            }
+          ],
+          "total_duration_ms": 4.1
+        },
+        "manufacturer": "Synthetic",
+        "model": "PGC-2S",
+        "install_date": "2017-08-15",
+        "parent_asset_id": null
+      },
+      "trace_id": "trace-a30019172d5041a0"
+    },
+    {
+      "step": 4,
+      "tool": "get_alarms",
+      "server": "alarm-management",
+      "purpose": "Retrieve currently active alarms",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "K-201",
+          "K-202",
+          "K-203"
+        ],
+        "status": "active",
+        "page_size": 100,
+        "sort_by": "priority",
+        "sort_order": "asc"
+      },
+      "started_at": "2026-09-28T20:05:34.484524+00:00",
+      "duration_ms": 235.1,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /alarms",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 5.7,
+          "trace_id": "trace-a30019172d5041a0",
+          "api_request_id": "req-19df0c7fffee"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarms": [
+          {
+            "alarm_id": "ALM-000618",
+            "asset_id": "K-201",
+            "asset_name": "Process Gas Compressor K-201",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "alarm_code": "CMP-DISCH-P-H",
+            "alarm_name": "High discharge pressure",
+            "alarm_type": "process",
+            "severity": "medium",
+            "priority": 3,
+            "status": "active",
+            "acknowledged": true,
+            "start_time": "2026-09-29T23:52:00Z",
+            "end_time": null,
+            "ack_time": "2026-09-29T23:53:00Z",
+            "duration_minutes": 8.0,
+            "ack_delay_seconds": 60.0,
+            "value": 8.8,
+            "setpoint": 8.6,
+            "uom": "barg",
+            "is_trip": false,
+            "asset_class": "compressor",
+            "message": "Process Gas Compressor K-201: High discharge pressure (8.8 barg, setpoint 8.6)"
+          },
+          {
+            "alarm_id": "ALM-000612",
+            "asset_id": "K-202",
+            "asset_name": "Process Gas Compressor K-202",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "alarm_code": "CMP-SURGE",
+            "alarm_name": "Compressor surge detected",
+            "alarm_type": "safety",
+            "severity": "critical",
+            "priority": 1,
+            "status": "active",
+            "acknowledged": false,
+            "start_time": "2026-09-29T23:35:00Z",
+            "end_time": null,
+            "ack_time": null,
+            "duration_minutes": 25.0,
+            "ack_delay_seconds": null,
+            "value": null,
+            "setpoint": null,
+            "uom": "status",
+            "is_trip": false,
+            "asset_class": "compressor",
+            "message": "Process Gas Compressor K-202: Compressor surge detected"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "page_size": 100,
+          "total_items": 2,
+          "total_pages": 1,
+          "has_next": false
+        },
+        "pages_fetched": 1,
+        "truncated": false,
+        "meta": {
+          "trace_id": "trace-a30019172d5041a0",
+          "tool": "get_alarms",
+          "api_calls": [
+            {
+              "api_endpoint": "GET /alarms",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 5.7,
+              "trace_id": "trace-a30019172d5041a0",
+              "api_request_id": "req-19df0c7fffee"
+            }
+          ],
+          "total_duration_ms": 5.9
+        }
+      },
+      "trace_id": "trace-a30019172d5041a0"
+    },
+    {
+      "step": 5,
+      "tool": "get_alarms",
+      "server": "alarm-management",
+      "purpose": "Retrieve alarm history for the last 90 days",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "K-201",
+          "K-202",
+          "K-203"
+        ],
+        "status": "all",
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z",
+        "page_size": 200,
+        "fetch_all_pages": true
+      },
+      "started_at": "2026-09-28T20:05:34.719268+00:00",
+      "duration_ms": 306.4,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /alarms",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 7.5,
+          "trace_id": "trace-a30019172d5041a0",
+          "api_request_id": "req-d970a6ebbcd5"
+        }
+      ],
+      "error": null,
+      "result": {
+        "_truncated": true,
+        "keys": [
+          "alarms",
+          "pagination",
+          "pages_fetched",
+          "truncated",
+          "meta"
+        ]
+      },
+      "trace_id": "trace-a30019172d5041a0"
+    },
+    {
+      "step": 6,
+      "tool": "summarize_alarms",
+      "server": "alarm-management",
+      "purpose": "Aggregate alarm KPIs for the window",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "K-201",
+          "K-202",
+          "K-203"
+        ],
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z",
+        "group_by": [
+          "alarm_code",
+          "alarm_name"
+        ],
+        "kpis": [
+          "alarm_count",
+          "recurring_rate",
+          "avg_ack_delay",
+          "critical_count"
+        ]
+      },
+      "started_at": "2026-09-28T20:05:35.028200+00:00",
+      "duration_ms": 771.2,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/summary",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 569.1,
+          "trace_id": "trace-a30019172d5041a0",
+          "api_request_id": "req-42293a42674d"
+        }
+      ],
+      "error": null,
+      "result": {
+        "totals": {
+          "alarm_count": 179,
+          "recurring_rate": 0.916,
+          "avg_ack_delay_seconds": 209.0,
+          "critical_count": 1
+        },
+        "groups": [
+          {
+            "group": {
+              "alarm_code": "CMP-DISCH-P-H",
+              "alarm_name": "High discharge pressure"
+            },
+            "alarm_count": 141,
+            "recurring_rate": 1.0,
+            "avg_ack_delay_seconds": 65.8,
+            "critical_count": 0
+          },
+          {
+            "group": {
+              "alarm_code": "CMP-INTERCOOL-T-H",
+              "alarm_name": "High intercooler gas outlet temperature"
+            },
+            "alarm_count": 22,
+            "recurring_rate": 0.955,
+            "avg_ack_delay_seconds": 502.1,
+            "critical_count": 0
+          },
+          {
+            "group": {
+              "alarm_code": "CMP-DISCH-T-H",
+              "alarm_name": "High discharge temperature"
+            },
+            "alarm_count": 6,
+            "recurring_rate": 0.167,
+            "avg_ack_delay_seconds": 218.8,
+            "critical_count": 0
+          },
+          {
+            "group": {
+              "alarm_code": "CMP-DISCH-P-HH",
+              "alarm_name": "Discharge pressure trip"
+            },
+            "alarm_count": 4,
+            "recurring_rate": 0.25,
+            "avg_ack_delay_seconds": 62.4,
+            "critical_count": 0
+          },
+          {
+            "group": {
+              "alarm_code": "CMP-VIB-H",
+              "alarm_name": "High shaft vibration"
+            },
+            "alarm_count": 3,
+            "recurring_rate": 0.0,
+            "avg_ack_delay_seconds": 101.9,
+            "critical_count": 0
+          },
+          {
+            "group": {
+              "alarm_code": "CMP-LUBE-P-L",
+              "alarm_name": "Low lube oil pressure"
+            },
+            "alarm_count": 2,
+            "recurring_rate": 0.0,
+            "avg_ack_delay_seconds": 59.2,
+            "critical_count": 0
+          },
+          {
+            "group": {
+              "alarm_code": "CMP-SURGE",
+              "alarm_name": "Compressor surge detected"
+            },
+            "alarm_count": 1,
+            "recurring_rate": 0.0,
+            "avg_ack_delay_seconds": null,
+            "critical_count": 1
+          }
+        ],
+        "top_alarms": [
+          {
+            "asset_id": "K-201",
+            "alarm_code": "CMP-DISCH-P-H",
+            "alarm_name": "High discharge pressure",
+            "severity": "medium",
+            "count": 72
+          },
+          {
+            "asset_id": "K-202",
+            "alarm_code": "CMP-DISCH-P-H",
+            "alarm_name": "High discharge pressure",
+            "severity": "medium",
+            "count": 69
+          },
+          {
+            "asset_id": "K-201",
+            "alarm_code": "CMP-INTERCOOL-T-H",
+            "alarm_name": "High intercooler gas outlet temperature",
+            "severity": "medium",
+            "count": 22
+          },
+          {
+            "asset_id": "K-201",
+            "alarm_code": "CMP-DISCH-T-H",
+            "alarm_name": "High discharge temperature",
+            "severity": "medium",
+            "count": 6
+          },
+          {
+            "asset_id": "K-201",
+            "alarm_code": "CMP-DISCH-P-HH",
+            "alarm_name": "Discharge pressure trip",
+            "severity": "high",
+            "count": 4
+          }
+        ],
+        "meta": {
+          "trace_id": "trace-a30019172d5041a0",
+          "tool": "summarize_alarms",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/summary",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 569.1,
+              "trace_id": "trace-a30019172d5041a0",
+              "api_request_id": "req-42293a42674d"
+            }
+          ],
+          "total_duration_ms": 569.3
+        },
+        "request": {
+          "asset_ids": [
+            "K-201",
+            "K-202",
+            "K-203"
+          ],
+          "time_range": {
+            "start_time": "2026-07-02T00:00:00Z",
+            "end_time": "2026-09-30T00:00:00Z"
+          },
+          "group_by": [
+            "alarm_code",
+            "alarm_name"
+          ],
+          "kpis": [
+            "alarm_count",
+            "recurring_rate",
+            "avg_ack_delay",
+            "critical_count"
+          ]
+        }
+      },
+      "trace_id": "trace-a30019172d5041a0"
+    },
+    {
+      "step": 7,
+      "tool": "get_alarm_trends",
+      "server": "alarm-management",
+      "purpose": "Weekly alarm trend",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "K-201",
+          "K-202",
+          "K-203"
+        ],
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z",
+        "bucket": "weekly",
+        "metrics": [
+          "alarm_count"
+        ]
+      },
+      "started_at": "2026-09-28T20:05:35.028200+00:00",
+      "duration_ms": 806.8,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/trends",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 199.6,
+          "trace_id": "trace-a30019172d5041a0",
+          "api_request_id": "req-293e30fe5e9c"
+        }
+      ],
+      "error": null,
+      "result": {
+        "bucket": "weekly",
+        "series": [
+          {
+            "bucket_start": "2026-07-02T00:00:00Z",
+            "alarm_count": 9
+          },
+          {
+            "bucket_start": "2026-07-09T00:00:00Z",
+            "alarm_count": 13
+          },
+          {
+            "bucket_start": "2026-07-16T00:00:00Z",
+            "alarm_count": 9
+          },
+          {
+            "bucket_start": "2026-07-23T00:00:00Z",
+            "alarm_count": 16
+          },
+          {
+            "bucket_start": "2026-07-30T00:00:00Z",
+            "alarm_count": 14
+          },
+          {
+            "bucket_start": "2026-08-06T00:00:00Z",
+            "alarm_count": 12
+          },
+          {
+            "bucket_start": "2026-08-13T00:00:00Z",
+            "alarm_count": 17
+          },
+          {
+            "bucket_start": "2026-08-20T00:00:00Z",
+            "alarm_count": 9
+          },
+          {
+            "bucket_start": "2026-08-27T00:00:00Z",
+            "alarm_count": 17
+          },
+          {
+            "bucket_start": "2026-09-03T00:00:00Z",
+            "alarm_count": 18
+          },
+          {
+            "bucket_start": "2026-09-10T00:00:00Z",
+            "alarm_count": 14
+          },
+          {
+            "bucket_start": "2026-09-17T00:00:00Z",
+            "alarm_count": 16
+          },
+          {
+            "bucket_start": "2026-09-24T00:00:00Z",
+            "alarm_count": 15
+          }
+        ],
+        "trend": {
+          "alarm_count": {
+            "direction": "increasing",
+            "first_half_avg": 12.2,
+            "second_half_avg": 15.1,
+            "relative_change": 0.238
+          }
+        },
+        "total_alarms": 179,
+        "meta": {
+          "trace_id": "trace-a30019172d5041a0",
+          "tool": "get_alarm_trends",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/trends",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 199.6,
+              "trace_id": "trace-a30019172d5041a0",
+              "api_request_id": "req-293e30fe5e9c"
+            }
+          ],
+          "total_duration_ms": 199.8
+        },
+        "request": {
+          "asset_ids": [
+            "K-201",
+            "K-202",
+            "K-203"
+          ],
+          "time_range": {
+            "start_time": "2026-07-02T00:00:00Z",
+            "end_time": "2026-09-30T00:00:00Z"
+          },
+          "bucket": "weekly",
+          "metrics": [
+            "alarm_count"
+          ]
+        }
+      },
+      "trace_id": "trace-a30019172d5041a0"
+    },
+    {
+      "step": 8,
+      "tool": "find_rationalization_candidates",
+      "server": "alarm-management",
+      "purpose": "Check for recurring/chattering/stale alarms",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "K-201",
+          "K-202",
+          "K-203"
+        ],
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z"
+      },
+      "started_at": "2026-09-28T20:05:35.028200+00:00",
+      "duration_ms": 812.9,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/rationalization-candidates",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 389.4,
+          "trace_id": "trace-a30019172d5041a0",
+          "api_request_id": "req-4133f49620f9"
+        }
+      ],
+      "error": null,
+      "result": {
+        "candidate_count": 2,
+        "candidates": [
+          {
+            "asset_id": "K-201",
+            "alarm_code": "CMP-DISCH-P-H",
+            "alarm_name": "High discharge pressure",
+            "reasons": [
+              "recurring",
+              "cleared_without_operator_action"
+            ],
+            "occurrences": 72,
+            "max_occurrences_in_7_days": 12,
+            "suggested_review": "Review setpoint, deadband and on/off delay; investigate the recurring root cause and consider state-based suppression",
+            "asset_name": "Process Gas Compressor K-201",
+            "severity": "medium",
+            "chatter_events": 0,
+            "stale_active_minutes": 0,
+            "cleared_without_action": 56
+          },
+          {
+            "asset_id": "K-202",
+            "alarm_code": "CMP-DISCH-P-H",
+            "alarm_name": "High discharge pressure",
+            "reasons": [
+              "recurring",
+              "cleared_without_operator_action"
+            ],
+            "occurrences": 69,
+            "max_occurrences_in_7_days": 10,
+            "suggested_review": "Review setpoint, deadband and on/off delay; investigate the recurring root cause and consider state-based suppression",
+            "asset_name": "Process Gas Compressor K-202",
+            "severity": "medium",
+            "chatter_events": 0,
+            "stale_active_minutes": 0,
+            "cleared_without_action": 48
+          }
+        ],
+        "criteria": {
+          "recurrence_threshold_per_7_days": 5,
+          "stale_minutes_threshold": 180,
+          "chatter": ">= 3 activations in 1.0 min"
+        },
+        "meta": {
+          "trace_id": "trace-a30019172d5041a0",
+          "tool": "find_rationalization_candidates",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/rationalization-candidates",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 389.4,
+              "trace_id": "trace-a30019172d5041a0",
+              "api_request_id": "req-4133f49620f9"
+            }
+          ],
+          "total_duration_ms": 389.6
+        },
+        "request": {
+          "asset_ids": [
+            "K-201",
+            "K-202",
+            "K-203"
+          ],
+          "time_range": {
+            "start_time": "2026-07-02T00:00:00Z",
+            "end_time": "2026-09-30T00:00:00Z"
+          },
+          "recurrence_threshold": 5,
+          "stale_minutes_threshold": 180,
+          "chatter_threshold": 3,
+          "chatter_window_minutes": 1.0
+        },
+        "alarms_analyzed": 179
+      },
+      "trace_id": "trace-a30019172d5041a0"
+    },
+    {
+      "step": 9,
+      "tool": "correlate_alarms",
+      "server": "alarm-management",
+      "purpose": "Correlate alarms with related assets (sequences, common causes)",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "K-201",
+          "K-202",
+          "K-203"
+        ],
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z",
+        "lag_window_minutes": 15,
+        "severity_threshold": "medium",
+        "min_support": 2,
+        "include_related": true
+      },
+      "started_at": "2026-09-28T20:05:35.028200+00:00",
+      "duration_ms": 800.1,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/correlation",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 16.1,
+          "trace_id": "trace-a30019172d5041a0",
+          "api_request_id": "req-b0a6e699db41"
+        }
+      ],
+      "error": null,
+      "result": {
+        "assets_analyzed": [
+          "E-201",
+          "E-202",
+          "E-203",
+          "K-201",
+          "K-202",
+          "K-203",
+          "M-201",
+          "M-202",
+          "M-203",
+          "PCV-210",
+          "UV-201",
+          "UV-202",
+          "UV-203"
+        ],
+        "alarms_analyzed": 207,
+        "pairs": [
+          {
+            "antecedent": {
+              "asset_id": "K-201",
+              "alarm_code": "CMP-DISCH-P-H"
+            },
+            "consequent": {
+              "asset_id": "K-202",
+              "alarm_code": "CMP-DISCH-P-H"
+            },
+            "support": 49,
+            "confidence": 0.681,
+            "median_lag_minutes": 1.2,
+            "cross_asset": true
+          },
+          {
+            "antecedent": {
+              "asset_id": "PCV-210",
+              "alarm_code": "PCV-POS-DEV"
+            },
+            "consequent": {
+              "asset_id": "K-201",
+              "alarm_code": "CMP-DISCH-P-H"
+            },
+            "support": 28,
+            "confidence": 1.0,
+            "median_lag_minutes": 3.5,
+            "cross_asset": true
+          },
+          {
+            "antecedent": {
+              "asset_id": "PCV-210",
+              "alarm_code": "PCV-POS-DEV"
+            },
+            "consequent": {
+              "asset_id": "K-202",
+              "alarm_code": "CMP-DISCH-P-H"
+            },
+            "support": 27,
+            "confidence": 0.964,
+            "median_lag_minutes": 4.6,
+            "cross_asset": true
+          },
+          {
+            "antecedent": {
+              "asset_id": "K-202",
+              "alarm_code": "CMP-DISCH-P-H"
+            },
+            "consequent": {
+              "asset_id": "K-201",
+              "alarm_code": "CMP-DISCH-P-H"
+            },
+            "support": 34,
+            "confidence": 0.493,
+            "median_lag_minutes": 1.5,
+            "cross_asset": true
+          },
+          {
+            "antecedent": {
+              "asset_id": "K-202",
+              "alarm_code": "CMP-DISCH-P-H"
+            },
+            "consequent": {
+              "asset_id": "K-201",
+              "alarm_code": "CMP-DISCH-P-HH"
+            },
+            "support": 9,
+            "confidence": 0.13,
+            "median_lag_minutes": 5.0,
+            "cross_asset": true
+          },
+          {
+            "antecedent": {
+              "asset_id": "K-201",
+              "alarm_code": "CMP-DISCH-P-H"
+            },
+            "consequent": {
+              "asset_id": "K-201",
+              "alarm_code": "CMP-DISCH-P-HH"
+            },
+            "support": 9,
+            "confidence": 0.125,
+            "median_lag_minutes": 6.0,
+            "cross_asset": false
+          },
+          {
+            "antecedent": {
+              "asset_id": "PCV-210",
+              "alarm_code": "PCV-POS-DEV"
+            },
+            "consequent": {
+              "asset_id": "K-201",
+              "alarm_code": "CMP-DISCH-P-HH"
+            },
+            "support": 4,
+            "confidence": 0.143,
+            "median_lag_minutes": 12.0,
+            "cross_asset": true
+          }
+        ],
+        "common_cause_candidates": [
+          {
+            "asset_id": "PCV-210",
+            "asset_name": "Header Pressure Control Valve PCV-210",
+            "affected_assets": [
+              "K-201",
+              "K-202"
+            ],
+            "evidence": 55
+          }
+        ],
+        "insights": [
+          "K-201 CMP-DISCH-P-H is followed by K-202 CMP-DISCH-P-H within 15 min in 68% of cases (n=49, median lag 1.2 min)",
+          "PCV-210 PCV-POS-DEV is followed by K-201 CMP-DISCH-P-H within 15 min in 100% of cases (n=28, median lag 3.5 min)",
+          "PCV-210 PCV-POS-DEV is followed by K-202 CMP-DISCH-P-H within 15 min in 96% of cases (n=27, median lag 4.6 min)",
+          "K-202 CMP-DISCH-P-H is followed by K-201 CMP-DISCH-P-H within 15 min in 49% of cases (n=34, median lag 1.5 min)",
+          "K-202 CMP-DISCH-P-H is followed by K-201 CMP-DISCH-P-HH within 15 min in 13% of cases (n=9, median lag 5.0 min)",
+          "K-201 CMP-DISCH-P-H is followed by K-201 CMP-DISCH-P-HH within 15 min in 12% of cases (n=9, median lag 6.0 min)",
+          "PCV-210 (Header Pressure Control Valve PCV-210) alarms precede alarms on K-201, K-202: possible common cause"
+        ],
+        "meta": {
+          "trace_id": "trace-a30019172d5041a0",
+          "tool": "correlate_alarms",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/correlation",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 16.1,
+              "trace_id": "trace-a30019172d5041a0",
+              "api_request_id": "req-b0a6e699db41"
+            }
+          ],
+          "total_duration_ms": 16.2
+        },
+        "request": {
+          "asset_ids": [
+            "K-201",
+            "K-202",
+            "K-203"
+          ],
+          "time_range": {
+            "start_time": "2026-07-02T00:00:00Z",
+            "end_time": "2026-09-30T00:00:00Z"
+          },
+          "correlation_method": "cooccurrence",
+          "lag_window_minutes": 15,
+          "severity_threshold": "medium",
+          "min_support": 2,
+          "include_related": true
+        },
+        "correlation_method": "cooccurrence",
+        "lag_window_minutes": 15
+      },
+      "trace_id": "trace-a30019172d5041a0"
+    },
+    {
+      "step": 10,
+      "tool": "get_operator_recommendations",
+      "server": "alarm-management",
+      "purpose": "API recommendations for CMP-DISCH-P-H on K-201 (ALM-000618)",
+      "status": "success",
+      "arguments": {
+        "alarm_id": "ALM-000618",
+        "include_related": true,
+        "include_asset_context": false,
+        "include_historical_pattern": true
+      },
+      "started_at": "2026-09-28T20:05:35.843217+00:00",
+      "duration_ms": 229.3,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /recommendations/operator-actions",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 3.7,
+          "trace_id": "trace-a30019172d5041a0",
+          "api_request_id": "req-401fb12ecd01"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarm_id": "ALM-000618",
+        "asset_id": "K-201",
+        "alarm_code": "CMP-DISCH-P-H",
+        "recommendations": [
+          {
+            "rank": 1,
+            "action": "Check downstream header pressure and PCV-210 position",
+            "rationale": "Downstream restriction is the most common cause on this unit",
+            "confidence": 0.87,
+            "source": "rule_engine"
+          },
+          {
+            "rank": 2,
+            "action": "Start the spare compressor K-203 immediately to share the load",
+            "rationale": "Additional capacity reduces discharge pressure on the running machines",
+            "confidence": 0.58,
+            "source": "rule_engine"
+          },
+          {
+            "rank": 3,
+            "action": "Reduce compressor load via the capacity controller if pressure keeps rising",
+            "rationale": "Keeps discharge pressure below the trip setpoint",
+            "confidence": 0.74,
+            "source": "rule_engine"
+          }
+        ],
+        "related_alarms": [
+          {
+            "alarm_id": "ALM-000612",
+            "asset_id": "K-202",
+            "asset_name": "Process Gas Compressor K-202",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "alarm_code": "CMP-SURGE",
+            "alarm_name": "Compressor surge detected",
+            "alarm_type": "safety",
+            "severity": "critical",
+            "priority": 1,
+            "status": "active",
+            "acknowledged": false,
+            "start_time": "2026-09-29T23:35:00Z",
+            "end_time": null,
+            "ack_time": null,
+            "duration_minutes": 25.0,
+            "ack_delay_seconds": null,
+            "value": null,
+            "setpoint": null,
+            "uom": "status",
+            "is_trip": false,
+            "asset_class": "compressor",
+            "message": "Process Gas Compressor K-202: Compressor surge detected"
+          },
+          {
+            "alarm_id": "ALM-000615",
+            "asset_id": "PCV-210",
+            "asset_name": "Header Pressure Control Valve PCV-210",
+            "site": "EastRefinery",
+            "unit": "Unit 2",
+            "alarm_code": "PCV-POS-DEV",
+            "alarm_name": "Control valve position deviation",
+            "alarm_type": "device",
+            "severity": "medium",
+            "priority": 3,
+            "status": "active",
+            "acknowledged": true,
+            "start_time": "2026-09-29T23:45:00Z",
+            "end_time": null,
+            "ack_time": "2026-09-29T23:50:00Z",
+            "duration_minutes": 15.0,
+            "ack_delay_seconds": 300.0,
+            "value": 10.3,
+            "setpoint": 10.0,
+            "uom": "%",
+            "is_trip": false,
+            "asset_class": "valve",
+            "message": "Header Pressure Control Valve PCV-210: Control valve position deviation (10.3 %, setpoint 10)"
+          }
+        ],
+        "asset_context": null,
+        "historical_pattern": {
+          "occurrences_last_90_days": 72,
+          "last_previous_occurrence": "2026-09-27T12:10:05.104106Z",
+          "typical_duration_minutes": 1.2,
+          "repeat_within_7_days": true
+        },
+        "disclaimer": "System-generated recommendations. Verify against site procedures before acting.",
+        "meta": {
+          "trace_id": "trace-a30019172d5041a0",
+          "tool": "get_operator_recommendations",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /recommendations/operator-actions",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 3.7,
+              "trace_id": "trace-a30019172d5041a0",
+              "api_request_id": "req-401fb12ecd01"
+            }
+          ],
+          "total_duration_ms": 3.9
+        },
+        "alarm_name": "High discharge pressure",
+        "severity": "medium",
+        "engine_version": "reco-sim-1.4"
+      },
+      "trace_id": "trace-a30019172d5041a0"
+    }
+  ],
+  "retrieval": {
+    "low_confidence": false,
+    "reason": null,
+    "queries": [
+      {
+        "purpose": "question",
+        "query": "Why are compressor discharge pressure alarms repeatedly occurring?",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "sites": [
+            "EastRefinery"
+          ],
+          "asset_classes": [
+            "compressor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0501,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "CMP-DISCH-P-H",
+          "CMP-INTERCOOL-T-H"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "TSG-CMP-002::revA::000",
+          "SOP-CMP-001::revB::002",
+          "SOP-CMP-001::revB::003",
+          "SOP-CMP-001::revB::001",
+          "VB-CMP-099::rev1::001"
+        ]
+      },
+      {
+        "purpose": "alarm_response",
+        "query": "CMP-DISCH-P-H High discharge pressure alarm response operator actions",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "sop"
+          ],
+          "sites": [
+            "EastRefinery"
+          ],
+          "asset_classes": [
+            "compressor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0393,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "CMP-DISCH-P-H"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SOP-CMP-001::revB::002",
+          "SOP-CMP-001::revB::003"
+        ]
+      },
+      {
+        "purpose": "alarm_response",
+        "query": "CMP-INTERCOOL-T-H  alarm response operator actions",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "sop"
+          ],
+          "sites": [
+            "EastRefinery"
+          ],
+          "asset_classes": [
+            "compressor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0751,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "CMP-INTERCOOL-T-H"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SOP-CMP-001::revB::005",
+          "SOP-CMP-001::revB::001"
+        ]
+      },
+      {
+        "purpose": "troubleshooting",
+        "query": "likely causes and diagnostic checks for recurring CMP-DISCH-P-H High discharge pressure CMP-INTERCOOL-T-H ",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "troubleshooting",
+            "maintenance_manual"
+          ],
+          "sites": [
+            "EastRefinery"
+          ],
+          "asset_classes": [
+            "compressor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0405,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "CMP-DISCH-P-H",
+          "CMP-INTERCOOL-T-H"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "TSG-CMP-002::revA::000",
+          "TSG-CMP-002::revA::002",
+          "TSG-CMP-002::revA::001"
+        ]
+      },
+      {
+        "purpose": "verify_recommendations",
+        "query": "Check downstream header pressure and PCV-210 position ; Start the spare compressor K-203 immediately to share the load ; Reduce compressor load via the capacity controller if pressure keeps rising",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "maintenance_manual",
+            "sop",
+            "safety",
+            "troubleshooting"
+          ],
+          "sites": [
+            "EastRefinery"
+          ],
+          "asset_classes": [
+            "compressor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0767,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "CMP-DISCH-P-H",
+          "CMP-INTERCOOL-T-H"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "TSG-CMP-002::revA::000",
+          "SOP-CMP-001::revB::002",
+          "SOP-CMP-001::revB::005",
+          "SOP-CMP-001::revB::000"
+        ]
+      }
+    ]
+  },
+  "warnings": [],
+  "errors": [],
+  "degraded": false,
+  "llm": {
+    "provider": "none",
+    "model": "none",
+    "used": false
+  },
+  "timings_ms": {
+    "total": 3014.0
+  }
+}

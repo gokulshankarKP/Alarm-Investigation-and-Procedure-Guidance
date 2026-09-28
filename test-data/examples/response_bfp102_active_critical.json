@@ -1,0 +1,1322 @@
+{
+  "conversation_id": "conv-example-bfp102_active_critical",
+  "trace_id": "trace-ca22327f4a854144",
+  "question": "Show active critical alarms for Boiler Feed Pump 102 and recommend immediate actions.",
+  "intent": "active_alarm_triage",
+  "intent_method": "rules",
+  "entities": {
+    "asset_names": [
+      "Boiler Feed Pump 102"
+    ],
+    "asset_ids": [],
+    "asset_classes": [
+      "boiler_feed_pump"
+    ],
+    "alarm_codes": [],
+    "sites": [],
+    "units": [],
+    "severities": [
+      "critical"
+    ],
+    "status": "active",
+    "lookback_days": null,
+    "kpi": null
+  },
+  "time_window": {
+    "start": "2026-07-02T00:00:00Z",
+    "end": "2026-09-30T00:00:00Z",
+    "lookback_days": "90"
+  },
+  "answer_markdown": "### Summary\n'Boiler Feed Pump 102' resolves to BFP-102 (Boiler Feed Pump 102, NorthPlant Unit 1, criticality A) [T2]. 1 active alarm(s): BFP-SUCT-P-LL on BFP-102 (critical, unacknowledged, 12 min) [T4]. Highest dynamic priority: BFP-SUCT-P-LL on BFP-102 (ALM-000616) scoring 90.0/100 (urgent) [T6]. Drivers: configured_severity 40.0, asset_criticality 25.0, duration_unacknowledged 15.0.\n\n### Likely causes\n- Documented likely causes: Boiler Feed Pump Troubleshooting Guide \u00a72 (2. Recurring high-severity alarms: first questions). [S4]\n\n### Recommended actions\n- **immediate**: Check DA-101 level and pressure immediately. Most low-suction events originate at the deaerator, not the pump. [S1]\n- **immediate**: Check the suction strainer differential pressure. [S1]\n- **short term**: On LL, the pump trips to prevent cavitation damage. Restore DA-101 conditions before starting any pump. Follow SAF-002 if drum level is falling. [S1]\n- **short term**: Check DA-101 deaerator level and pressure immediately [T7] [S1]\n- **short term**: Check the suction strainer differential pressure [T7] [S1]\n- **short term**: Restore DA-101 conditions before starting any boiler feed pump [T7] [S1]\n- **short term**: If boiler drum level is falling, apply the loss-of-feedwater emergency response [T7] [S1]\n\n### Applicable procedures\n- SOP-BFP-001 \u00a75.4: Boiler Feed Pump Operating Procedure: 5.4 BFP-SUCT-P-L / LL \u2014 low suction pressure (LL: priority 1, critical) [S1]",
+  "summary": "'Boiler Feed Pump 102' resolves to BFP-102 (Boiler Feed Pump 102, NorthPlant Unit 1, criticality A) [T2]. 1 active alarm(s): BFP-SUCT-P-LL on BFP-102 (critical, unacknowledged, 12 min) [T4]. Highest dynamic priority: BFP-SUCT-P-LL on BFP-102 (ALM-000616) scoring 90.0/100 (urgent) [T6]. Drivers: configured_severity 40.0, asset_criticality 25.0, duration_unacknowledged 15.0.",
+  "confidence": "high",
+  "likely_causes": [
+    {
+      "cause": "Documented likely causes: Boiler Feed Pump Troubleshooting Guide \u00a72 (2. Recurring high-severity alarms: first questions).",
+      "evidence": [
+        "S4"
+      ]
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Check DA-101 level and pressure immediately. Most low-suction events originate at the deaerator, not the pump.",
+      "urgency": "immediate",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "action": "Check the suction strainer differential pressure.",
+      "urgency": "immediate",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "action": "On LL, the pump trips to prevent cavitation damage. Restore DA-101 conditions before starting any pump. Follow SAF-002 if drum level is falling.",
+      "urgency": "short_term",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "action": "Check DA-101 deaerator level and pressure immediately",
+      "urgency": "short_term",
+      "citations": [
+        "T7",
+        "S1"
+      ]
+    },
+    {
+      "action": "Check the suction strainer differential pressure",
+      "urgency": "short_term",
+      "citations": [
+        "T7",
+        "S1"
+      ]
+    },
+    {
+      "action": "Restore DA-101 conditions before starting any boiler feed pump",
+      "urgency": "short_term",
+      "citations": [
+        "T7",
+        "S1"
+      ]
+    },
+    {
+      "action": "If boiler drum level is falling, apply the loss-of-feedwater emergency response",
+      "urgency": "short_term",
+      "citations": [
+        "T7",
+        "S1"
+      ]
+    }
+  ],
+  "consistency_findings": [
+    {
+      "api_recommendation": "Check DA-101 deaerator level and pressure immediately",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-BFP-001 \u00a75.4.",
+      "citations": [
+        "S1"
+      ],
+      "tool_ref": "T7"
+    },
+    {
+      "api_recommendation": "Check the suction strainer differential pressure",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-BFP-001 \u00a75.4.",
+      "citations": [
+        "S1"
+      ],
+      "tool_ref": "T7"
+    },
+    {
+      "api_recommendation": "Restore DA-101 conditions before starting any boiler feed pump",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-BFP-001 \u00a75.4.",
+      "citations": [
+        "S1"
+      ],
+      "tool_ref": "T7"
+    },
+    {
+      "api_recommendation": "If boiler drum level is falling, apply the loss-of-feedwater emergency response",
+      "verdict": "consistent",
+      "explanation": "Matches guidance in SOP-BFP-001 \u00a75.4.",
+      "citations": [
+        "S1"
+      ],
+      "tool_ref": "T7"
+    }
+  ],
+  "procedures": [
+    {
+      "doc_id": "SOP-BFP-001",
+      "section": "\u00a75.4",
+      "reason": "Boiler Feed Pump Operating Procedure: 5.4 BFP-SUCT-P-L / LL \u2014 low suction pressure (LL: priority 1, critical)",
+      "citation": "S1"
+    }
+  ],
+  "alarm_panel": {
+    "assets": [
+      {
+        "asset_id": "BFP-102",
+        "asset_name": "Boiler Feed Pump 102",
+        "asset_class": "boiler_feed_pump",
+        "site": "NorthPlant",
+        "unit": "Unit 1",
+        "criticality": "A",
+        "match_score": 1.0,
+        "exact_match": true
+      }
+    ],
+    "related_assets": [
+      {
+        "asset_id": "M-102",
+        "asset_name": "BFP-102 Drive Motor M-102",
+        "asset_class": "motor",
+        "relationship": "driver",
+        "criticality": "A"
+      },
+      {
+        "asset_id": "DA-101",
+        "asset_name": "Deaerator 101",
+        "asset_class": "deaerator",
+        "relationship": "suction_source",
+        "criticality": "A"
+      },
+      {
+        "asset_id": "FCV-102",
+        "asset_name": "Min-Flow Recirculation Valve FCV-102",
+        "asset_class": "valve",
+        "relationship": "min_flow_valve",
+        "criticality": "B"
+      },
+      {
+        "asset_id": "BFP-101",
+        "asset_name": "Boiler Feed Pump 101",
+        "asset_class": "boiler_feed_pump",
+        "relationship": "duty_pump",
+        "criticality": "A"
+      },
+      {
+        "asset_id": "BLR-101",
+        "asset_name": "Boiler 101",
+        "asset_class": "boiler",
+        "relationship": "discharge_destination",
+        "criticality": "A"
+      }
+    ],
+    "active_alarms": [
+      {
+        "alarm_id": "ALM-000616",
+        "asset_id": "BFP-102",
+        "asset_name": "Boiler Feed Pump 102",
+        "site": "NorthPlant",
+        "unit": "Unit 1",
+        "alarm_code": "BFP-SUCT-P-LL",
+        "alarm_name": "Very low suction pressure - pump trip",
+        "alarm_type": "safety",
+        "severity": "critical",
+        "priority": 1,
+        "status": "active",
+        "acknowledged": false,
+        "start_time": "2026-09-29T23:48:00Z",
+        "end_time": null,
+        "ack_time": null,
+        "duration_minutes": 12.0,
+        "ack_delay_seconds": null,
+        "value": 3.07,
+        "setpoint": 3.2,
+        "uom": "barg",
+        "is_trip": true,
+        "asset_class": "boiler_feed_pump",
+        "message": "Boiler Feed Pump 102: Very low suction pressure - pump trip (3.07 barg, setpoint 3.2)"
+      }
+    ],
+    "historical_summary": null,
+    "focus_alarm": {
+      "alarm_id": "ALM-000616",
+      "asset_id": "BFP-102",
+      "asset_name": "Boiler Feed Pump 102",
+      "site": "NorthPlant",
+      "unit": "Unit 1",
+      "alarm_code": "BFP-SUCT-P-LL",
+      "alarm_name": "Very low suction pressure - pump trip",
+      "alarm_type": "safety",
+      "severity": "critical",
+      "priority": 1,
+      "status": "active",
+      "acknowledged": false,
+      "start_time": "2026-09-29T23:48:00Z",
+      "end_time": null,
+      "ack_time": null,
+      "duration_minutes": 12.0,
+      "ack_delay_seconds": null,
+      "value": 3.07,
+      "setpoint": 3.2,
+      "uom": "barg",
+      "is_trip": true,
+      "asset_class": "boiler_feed_pump",
+      "message": "Boiler Feed Pump 102: Very low suction pressure - pump trip (3.07 barg, setpoint 3.2)"
+    },
+    "priority_scores": [
+      {
+        "alarm_id": "ALM-000616",
+        "asset_id": "BFP-102",
+        "alarm_code": "BFP-SUCT-P-LL",
+        "severity": "critical",
+        "configured_priority": 1,
+        "priority_score": 90.0,
+        "priority_band": "urgent",
+        "components": [
+          {
+            "factor": "configured_severity",
+            "weight_pct": 40,
+            "points": 40.0,
+            "detail": "severity=critical (priority 1)"
+          },
+          {
+            "factor": "asset_criticality",
+            "weight_pct": 25,
+            "points": 25.0,
+            "detail": "BFP-102 criticality A"
+          },
+          {
+            "factor": "duration_unacknowledged",
+            "weight_pct": 15,
+            "points": 15.0,
+            "detail": "12 min unacknowledged vs 5 min max response time"
+          },
+          {
+            "factor": "recurrence_24h",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 previous occurrence(s) of BFP-SUCT-P-LL on BFP-102 in 24 h"
+          },
+          {
+            "factor": "related_active_alarms",
+            "weight_pct": 10,
+            "points": 10.0,
+            "detail": "4 concurrent alarm(s) on this or connected assets"
+          }
+        ],
+        "rationale": "BFP-SUCT-P-LL on BFP-102 scores 90.0/100: configured_severity 40 pts; asset_criticality 25 pts; duration_unacknowledged 15.0 pts; recurrence_24h 0.0 pts; related_active_alarms 10.0 pts",
+        "meta": {
+          "trace_id": "trace-ca22327f4a854144",
+          "tool": "score_alarm_priority",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/priority-score",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 4.8,
+              "trace_id": "trace-ca22327f4a854144",
+              "api_request_id": "req-34486929c86d"
+            }
+          ],
+          "total_duration_ms": 5.1
+        },
+        "related_active_alarm_ids": [
+          "ALM-000608",
+          "ALM-000613",
+          "ALM-000614",
+          "ALM-000617"
+        ],
+        "scored_at": "2026-09-30T00:00:00Z"
+      }
+    ],
+    "correlation_insights": [],
+    "common_causes": [],
+    "rationalization": [],
+    "trend": null,
+    "kpis": []
+  },
+  "citations": [
+    {
+      "id": "S1",
+      "doc_id": "SOP-BFP-001",
+      "revision": "C",
+      "title": "Boiler Feed Pump Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a75.4",
+      "heading_path": "5. Alarm response > 5.4 BFP-SUCT-P-L / LL \u2014 low suction pressure (LL: priority 1, critical)",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.05868,
+      "similarity": -0.0335,
+      "matched_alarm_codes": [
+        "BFP-SUCT-P-LL"
+      ],
+      "excerpt": "### 5.4 BFP-SUCT-P-L / LL \u2014 low suction pressure (LL: priority 1, critical)\n\n1. Check DA-101 level and pressure immediately. Most low-suction events originate at the\n   deaerator, not the pump.\n2. Check the suction strainer differential pressure.\n3. On LL, the pump trips to prevent cavitation damage. Restore DA-101 conditions before\n   starting any pump. Follow SAF-002 if drum level is falling.",
+      "source_path": "procedures/SOP-BFP-001_boiler_feed_pump_operation.md",
+      "cited": true
+    },
+    {
+      "id": "S2",
+      "doc_id": "SAF-002",
+      "revision": "B",
+      "title": "Emergency Response \u2014 Loss of Boiler Feedwater",
+      "doc_type": "safety",
+      "section": "\u00a74",
+      "heading_path": "4. Deaerator-related loss of suction",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.04387,
+      "similarity": 0.0523,
+      "matched_alarm_codes": [
+        "BFP-SUCT-P-LL"
+      ],
+      "excerpt": "## 4. Deaerator-related loss of suction\n\nIf both pumps trip on `BFP-SUCT-P-LL`, the cause is almost always the deaerator DA-101\n(low level or pressure). Restore DA-101 level and pressure first, then start one pump.",
+      "source_path": "safety/SAF-002_loss_of_boiler_feedwater_emergency.md",
+      "cited": false
+    },
+    {
+      "id": "S3",
+      "doc_id": "SOP-BFP-001",
+      "revision": "C",
+      "title": "Boiler Feed Pump Operating Procedure",
+      "doc_type": "sop",
+      "section": "\u00a73",
+      "heading_path": "3. Normal operating limits",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03975,
+      "similarity": 0.01,
+      "matched_alarm_codes": [
+        "BFP-SUCT-P-LL"
+      ],
+      "excerpt": "## 3. Normal operating limits\n\n| Parameter | Normal | Alarm H / L | Alarm HH / LL (trip) |\n|---|---|---|---|\n| Bearing vibration (velocity, RMS) | < 4.5 mm/s | H: 7.1 mm/s | HH: 11.0 mm/s, pump trips |\n| Bearing temperature | 55\u201375 \u00b0C | H: 85 \u00b0C | HH: 95 \u00b0C, pump trips |\n| Suction pressure | 4.5\u20135.5 barg | L: 3.8 barg | LL: 3.2 barg, pump trips |\n| Discharge pressure | 128\u2013138 barg | L: 120 barg | \u2014 |\n| Flow | 80\u2013220 t/h | Min-flow L: 60 t/h | \u2014 |\n| Mechanical seal leakage | < 10 drops/min | H: leak detection switch | \u2014 |",
+      "source_path": "procedures/SOP-BFP-001_boiler_feed_pump_operation.md",
+      "cited": false
+    },
+    {
+      "id": "S4",
+      "doc_id": "TSG-BFP-002",
+      "revision": "B",
+      "title": "Boiler Feed Pump Troubleshooting Guide",
+      "doc_type": "troubleshooting",
+      "section": "\u00a72",
+      "heading_path": "2. Recurring high-severity alarms: first questions",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.0395,
+      "similarity": 0.0537,
+      "matched_alarm_codes": [
+        "BFP-SUCT-P-LL"
+      ],
+      "excerpt": "## 2. Recurring high-severity alarms: first questions\n\nWhen a BFP raises repeated high or critical alarms over weeks or months, answer these before\nreplacing parts:\n\n1. **Do the alarms cluster in time with deaerator alarms?** Repeated DA-101 level or pressure\n   excursions cause repeated low suction pressure and cavitation on the running pump.\n2. **Do they follow load changes?** Rapid boiler load reductions push the pump toward minimum\n   flow. If the recirculation valve responds slowly, vibration alarms follow.\n3. **Do they occur only on one pump?** A pump-specific pattern points to wear, misalignment,\n   or a bearing fault on that pump. A pattern on both pumps points to system causes\n   (deaerator, suction strainer, control tuning).\n4. **Did the pattern start after maintenance?** Post-maintenance misalignment and soft foot\n   are common causes of new vibration alarms.",
+      "source_path": "troubleshooting/TSG-BFP-002_boiler_feed_pump_troubleshooting.md",
+      "cited": true
+    },
+    {
+      "id": "S5",
+      "doc_id": "SAF-002",
+      "revision": "B",
+      "title": "Emergency Response \u2014 Loss of Boiler Feedwater",
+      "doc_type": "safety",
+      "section": "\u00a71",
+      "heading_path": "1. When this applies",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03902,
+      "similarity": 0.0122,
+      "matched_alarm_codes": [
+        "BFP-SUCT-P-LL"
+      ],
+      "excerpt": "## 1. When this applies\n\nUse this procedure when boiler feedwater flow is lost or insufficient, indicated by:\n\n- both boiler feed pumps stopped or tripped, **or**\n- the running pump tripped and the standby pump failed to start, **or**\n- boiler drum level low alarm (`BLR-DRUM-LVL-L`) with feedwater flow below demand.\n\nLow drum level exposes boiler tubes to overheating and can cause tube rupture. This is a\n**priority 1** situation.",
+      "source_path": "safety/SAF-002_loss_of_boiler_feedwater_emergency.md",
+      "cited": false
+    },
+    {
+      "id": "S6",
+      "doc_id": "TSG-BFP-002",
+      "revision": "B",
+      "title": "Boiler Feed Pump Troubleshooting Guide",
+      "doc_type": "troubleshooting",
+      "section": "\u00a74",
+      "heading_path": "4. Cavitation: the most common cause of recurring BFP alarms",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03788,
+      "similarity": 0.0375,
+      "matched_alarm_codes": [
+        "BFP-SUCT-P-LL"
+      ],
+      "excerpt": "## 4. Cavitation: the most common cause of recurring BFP alarms\n\nCavitation happens when suction pressure falls near the vapour pressure of the hot feed water.\nVapour bubbles collapse on the impeller, causing noise, vibration, and erosion.\n\nTypical sequence seen in alarm history: `DA-LVL-L` or `DA-P-L` \u2192 `BFP-SUCT-P-L` \u2192\n`BFP-VIB-H` \u2192 possibly `BFP-VIB-HH` trip.\n\nCorrective actions:\n\n1. Stabilise deaerator level control (check DA-101 level control valve tuning).\n2. Clean the suction strainer if \u0394P exceeds 0.5 bar.\n3. Review deaerator pressure control during load changes.",
+      "source_path": "troubleshooting/TSG-BFP-002_boiler_feed_pump_troubleshooting.md",
+      "cited": false
+    },
+    {
+      "id": "S7",
+      "doc_id": "TSG-BFP-002",
+      "revision": "B",
+      "title": "Boiler Feed Pump Troubleshooting Guide",
+      "doc_type": "troubleshooting",
+      "section": "\u00a71",
+      "heading_path": "1. How to use this guide",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03776,
+      "similarity": 0.0401,
+      "matched_alarm_codes": [
+        "BFP-SUCT-P-LL"
+      ],
+      "excerpt": "## 1. How to use this guide\n\nStart from the alarm code, then work through likely causes in order of probability. Always\ncorrelate with related alarms: a vibration alarm that follows a suction pressure alarm is\nalmost always cavitation, not a mechanical fault.",
+      "source_path": "troubleshooting/TSG-BFP-002_boiler_feed_pump_troubleshooting.md",
+      "cited": false
+    },
+    {
+      "id": "S8",
+      "doc_id": "TSG-BFP-002",
+      "revision": "B",
+      "title": "Boiler Feed Pump Troubleshooting Guide",
+      "doc_type": "troubleshooting",
+      "section": "\u00a76",
+      "heading_path": "6. BFP-SEAL-LEAK-H \u2014 seal leakage",
+      "trust_level": "controlled",
+      "status": "active",
+      "score": 0.03747,
+      "similarity": 0.0313,
+      "matched_alarm_codes": [
+        "BFP-SUCT-P-LL"
+      ],
+      "excerpt": "## 6. BFP-SEAL-LEAK-H \u2014 seal leakage\n\nSeal leakage that follows a cavitation event suggests the seal faces were damaged by dry\nrunning or vibration. Replace the seal and investigate the cavitation root cause, otherwise\nthe leak will recur.",
+      "source_path": "troubleshooting/TSG-BFP-002_boiler_feed_pump_troubleshooting.md",
+      "cited": false
+    }
+  ],
+  "quarantined_sources": [],
+  "tools_discovered": [
+    "search_assets",
+    "get_asset_metadata",
+    "get_alarms",
+    "get_alarm_details",
+    "summarize_alarms",
+    "get_alarm_trends",
+    "correlate_alarms",
+    "analyze_alarm_floods",
+    "find_rationalization_candidates",
+    "score_alarm_priority",
+    "get_operator_recommendations",
+    "calculate_alarm_kpi",
+    "list_kpi_definitions"
+  ],
+  "tool_trace": [
+    {
+      "step": 1,
+      "tool": "tools/list",
+      "server": "alarm-management",
+      "purpose": "Discover available MCP tools",
+      "status": "success",
+      "arguments": {},
+      "started_at": "2026-09-28T20:05:31.344314+00:00",
+      "duration_ms": 265.2,
+      "attempts": 0,
+      "retries": [],
+      "api_calls": [],
+      "error": null,
+      "result": {
+        "tools": [
+          "search_assets",
+          "get_asset_metadata",
+          "get_alarms",
+          "get_alarm_details",
+          "summarize_alarms",
+          "get_alarm_trends",
+          "correlate_alarms",
+          "analyze_alarm_floods",
+          "find_rationalization_candidates",
+          "score_alarm_priority",
+          "get_operator_recommendations",
+          "calculate_alarm_kpi",
+          "list_kpi_definitions"
+        ]
+      },
+      "trace_id": "trace-ca22327f4a854144"
+    },
+    {
+      "step": 2,
+      "tool": "search_assets",
+      "server": "alarm-management",
+      "purpose": "Resolve 'Boiler Feed Pump 102' to an asset identifier",
+      "status": "success",
+      "arguments": {
+        "query": "Boiler Feed Pump 102",
+        "limit": 5
+      },
+      "started_at": "2026-09-28T20:05:31.344314+00:00",
+      "duration_ms": 208.9,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /assets/search",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 3.7,
+          "trace_id": "trace-ca22327f4a854144",
+          "api_request_id": "req-8d85933b2cc6"
+        }
+      ],
+      "error": null,
+      "result": {
+        "query": "Boiler Feed Pump 102",
+        "results": [
+          {
+            "asset_id": "BFP-102",
+            "asset_name": "Boiler Feed Pump 102",
+            "asset_class": "boiler_feed_pump",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "criticality": "A",
+            "match_score": 1.0,
+            "exact_match": true
+          },
+          {
+            "asset_id": "BFP-101",
+            "asset_name": "Boiler Feed Pump 101",
+            "asset_class": "boiler_feed_pump",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "criticality": "A",
+            "match_score": 0.75,
+            "exact_match": false
+          },
+          {
+            "asset_id": "P-402",
+            "asset_name": "Heater Feed Pump P-402",
+            "asset_class": "pump",
+            "site": "EastRefinery",
+            "unit": "Unit 4",
+            "criticality": "B",
+            "match_score": 0.5,
+            "exact_match": false
+          }
+        ],
+        "total": 3,
+        "meta": {
+          "trace_id": "trace-ca22327f4a854144",
+          "tool": "search_assets",
+          "api_calls": [
+            {
+              "api_endpoint": "GET /assets/search",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 3.7,
+              "trace_id": "trace-ca22327f4a854144",
+              "api_request_id": "req-8d85933b2cc6"
+            }
+          ],
+          "total_duration_ms": 3.8
+        }
+      },
+      "trace_id": "trace-ca22327f4a854144"
+    },
+    {
+      "step": 3,
+      "tool": "get_asset_metadata",
+      "server": "alarm-management",
+      "purpose": "Asset context and related assets for BFP-102",
+      "status": "success",
+      "arguments": {
+        "asset_id": "BFP-102"
+      },
+      "started_at": "2026-09-28T20:05:31.551325+00:00",
+      "duration_ms": 206.5,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /assets/BFP-102/metadata",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 3.5,
+          "trace_id": "trace-ca22327f4a854144",
+          "api_request_id": "req-520cd6e0c736"
+        }
+      ],
+      "error": null,
+      "result": {
+        "asset_id": "BFP-102",
+        "asset_name": "Boiler Feed Pump 102",
+        "asset_class": "boiler_feed_pump",
+        "site": "NorthPlant",
+        "unit": "Unit 1",
+        "criticality": "A",
+        "description": "Multistage barrel-type centrifugal boiler feed pump, standby (auto-start)",
+        "related_assets": [
+          {
+            "asset_id": "M-102",
+            "asset_name": "BFP-102 Drive Motor M-102",
+            "asset_class": "motor",
+            "relationship": "driver",
+            "criticality": "A"
+          },
+          {
+            "asset_id": "DA-101",
+            "asset_name": "Deaerator 101",
+            "asset_class": "deaerator",
+            "relationship": "suction_source",
+            "criticality": "A"
+          },
+          {
+            "asset_id": "FCV-102",
+            "asset_name": "Min-Flow Recirculation Valve FCV-102",
+            "asset_class": "valve",
+            "relationship": "min_flow_valve",
+            "criticality": "B"
+          },
+          {
+            "asset_id": "BFP-101",
+            "asset_name": "Boiler Feed Pump 101",
+            "asset_class": "boiler_feed_pump",
+            "relationship": "duty_pump",
+            "criticality": "A"
+          },
+          {
+            "asset_id": "BLR-101",
+            "asset_name": "Boiler 101",
+            "asset_class": "boiler",
+            "relationship": "discharge_destination",
+            "criticality": "A"
+          }
+        ],
+        "attributes": {
+          "rated_flow_tph": "220",
+          "rated_head_barg": "140",
+          "speed_rpm": "2980"
+        },
+        "alarm_statistics": {
+          "active_alarms": 3,
+          "alarms_last_30_days": 4,
+          "last_alarm_time": "2026-09-29T23:50:00Z"
+        },
+        "maintenance": {
+          "last_preventive_maintenance": "2026-08-23T00:00:00Z",
+          "running_hours": 35096
+        },
+        "meta": {
+          "trace_id": "trace-ca22327f4a854144",
+          "tool": "get_asset_metadata",
+          "api_calls": [
+            {
+              "api_endpoint": "GET /assets/BFP-102/metadata",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 3.5,
+              "trace_id": "trace-ca22327f4a854144",
+              "api_request_id": "req-520cd6e0c736"
+            }
+          ],
+          "total_duration_ms": 3.7
+        },
+        "manufacturer": "Sulzer-like (synthetic)",
+        "model": "MC-8/6",
+        "install_date": "2014-03-12",
+        "parent_asset_id": "BLR-101"
+      },
+      "trace_id": "trace-ca22327f4a854144"
+    },
+    {
+      "step": 4,
+      "tool": "get_alarms",
+      "server": "alarm-management",
+      "purpose": "Retrieve currently active alarms",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "BFP-102"
+        ],
+        "status": "active",
+        "page_size": 100,
+        "sort_by": "priority",
+        "sort_order": "asc",
+        "severities": [
+          "critical"
+        ]
+      },
+      "started_at": "2026-09-28T20:05:31.750462+00:00",
+      "duration_ms": 222.2,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "GET /alarms",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 5.5,
+          "trace_id": "trace-ca22327f4a854144",
+          "api_request_id": "req-ebbe2c714b21"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarms": [
+          {
+            "alarm_id": "ALM-000616",
+            "asset_id": "BFP-102",
+            "asset_name": "Boiler Feed Pump 102",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "alarm_code": "BFP-SUCT-P-LL",
+            "alarm_name": "Very low suction pressure - pump trip",
+            "alarm_type": "safety",
+            "severity": "critical",
+            "priority": 1,
+            "status": "active",
+            "acknowledged": false,
+            "start_time": "2026-09-29T23:48:00Z",
+            "end_time": null,
+            "ack_time": null,
+            "duration_minutes": 12.0,
+            "ack_delay_seconds": null,
+            "value": 3.07,
+            "setpoint": 3.2,
+            "uom": "barg",
+            "is_trip": true,
+            "asset_class": "boiler_feed_pump",
+            "message": "Boiler Feed Pump 102: Very low suction pressure - pump trip (3.07 barg, setpoint 3.2)"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "page_size": 100,
+          "total_items": 1,
+          "total_pages": 1,
+          "has_next": false
+        },
+        "pages_fetched": 1,
+        "truncated": false,
+        "meta": {
+          "trace_id": "trace-ca22327f4a854144",
+          "tool": "get_alarms",
+          "api_calls": [
+            {
+              "api_endpoint": "GET /alarms",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 5.5,
+              "trace_id": "trace-ca22327f4a854144",
+              "api_request_id": "req-ebbe2c714b21"
+            }
+          ],
+          "total_duration_ms": 5.6
+        }
+      },
+      "trace_id": "trace-ca22327f4a854144"
+    },
+    {
+      "step": 5,
+      "tool": "correlate_alarms",
+      "server": "alarm-management",
+      "purpose": "Correlate alarms with related assets (sequences, common causes)",
+      "status": "success",
+      "arguments": {
+        "asset_ids": [
+          "BFP-102"
+        ],
+        "start_time": "2026-07-02T00:00:00Z",
+        "end_time": "2026-09-30T00:00:00Z",
+        "lag_window_minutes": 15,
+        "severity_threshold": "medium",
+        "min_support": 2,
+        "include_related": true
+      },
+      "started_at": "2026-09-28T20:05:31.985093+00:00",
+      "duration_ms": 236.3,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/correlation",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 4.5,
+          "trace_id": "trace-ca22327f4a854144",
+          "api_request_id": "req-13a3fb416546"
+        }
+      ],
+      "error": null,
+      "result": {
+        "assets_analyzed": [
+          "BFP-101",
+          "BFP-102",
+          "BLR-101",
+          "DA-101",
+          "FCV-102",
+          "M-102"
+        ],
+        "alarms_analyzed": 84,
+        "pairs": [],
+        "common_cause_candidates": [],
+        "insights": [],
+        "meta": {
+          "trace_id": "trace-ca22327f4a854144",
+          "tool": "correlate_alarms",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/correlation",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 4.5,
+              "trace_id": "trace-ca22327f4a854144",
+              "api_request_id": "req-13a3fb416546"
+            }
+          ],
+          "total_duration_ms": 4.6
+        },
+        "request": {
+          "asset_ids": [
+            "BFP-102"
+          ],
+          "time_range": {
+            "start_time": "2026-07-02T00:00:00Z",
+            "end_time": "2026-09-30T00:00:00Z"
+          },
+          "correlation_method": "cooccurrence",
+          "lag_window_minutes": 15,
+          "severity_threshold": "medium",
+          "min_support": 2,
+          "include_related": true
+        },
+        "correlation_method": "cooccurrence",
+        "lag_window_minutes": 15
+      },
+      "trace_id": "trace-ca22327f4a854144"
+    },
+    {
+      "step": 6,
+      "tool": "score_alarm_priority",
+      "server": "alarm-management",
+      "purpose": "Dynamic priority score for BFP-SUCT-P-LL on BFP-102",
+      "status": "success",
+      "arguments": {
+        "alarm_id": "ALM-000616"
+      },
+      "started_at": "2026-09-28T20:05:32.216746+00:00",
+      "duration_ms": 231.1,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /alarms/priority-score",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 4.8,
+          "trace_id": "trace-ca22327f4a854144",
+          "api_request_id": "req-34486929c86d"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarm_id": "ALM-000616",
+        "asset_id": "BFP-102",
+        "alarm_code": "BFP-SUCT-P-LL",
+        "severity": "critical",
+        "configured_priority": 1,
+        "priority_score": 90.0,
+        "priority_band": "urgent",
+        "components": [
+          {
+            "factor": "configured_severity",
+            "weight_pct": 40,
+            "points": 40.0,
+            "detail": "severity=critical (priority 1)"
+          },
+          {
+            "factor": "asset_criticality",
+            "weight_pct": 25,
+            "points": 25.0,
+            "detail": "BFP-102 criticality A"
+          },
+          {
+            "factor": "duration_unacknowledged",
+            "weight_pct": 15,
+            "points": 15.0,
+            "detail": "12 min unacknowledged vs 5 min max response time"
+          },
+          {
+            "factor": "recurrence_24h",
+            "weight_pct": 10,
+            "points": 0.0,
+            "detail": "0 previous occurrence(s) of BFP-SUCT-P-LL on BFP-102 in 24 h"
+          },
+          {
+            "factor": "related_active_alarms",
+            "weight_pct": 10,
+            "points": 10.0,
+            "detail": "4 concurrent alarm(s) on this or connected assets"
+          }
+        ],
+        "rationale": "BFP-SUCT-P-LL on BFP-102 scores 90.0/100: configured_severity 40 pts; asset_criticality 25 pts; duration_unacknowledged 15.0 pts; recurrence_24h 0.0 pts; related_active_alarms 10.0 pts",
+        "meta": {
+          "trace_id": "trace-ca22327f4a854144",
+          "tool": "score_alarm_priority",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /alarms/priority-score",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 4.8,
+              "trace_id": "trace-ca22327f4a854144",
+              "api_request_id": "req-34486929c86d"
+            }
+          ],
+          "total_duration_ms": 5.1
+        },
+        "related_active_alarm_ids": [
+          "ALM-000608",
+          "ALM-000613",
+          "ALM-000614",
+          "ALM-000617"
+        ],
+        "scored_at": "2026-09-30T00:00:00Z"
+      },
+      "trace_id": "trace-ca22327f4a854144"
+    },
+    {
+      "step": 7,
+      "tool": "get_operator_recommendations",
+      "server": "alarm-management",
+      "purpose": "API recommendations for BFP-SUCT-P-LL on BFP-102 (ALM-000616)",
+      "status": "success",
+      "arguments": {
+        "alarm_id": "ALM-000616",
+        "include_related": true,
+        "include_asset_context": false,
+        "include_historical_pattern": true
+      },
+      "started_at": "2026-09-28T20:05:32.450993+00:00",
+      "duration_ms": 252.6,
+      "attempts": 1,
+      "retries": [],
+      "api_calls": [
+        {
+          "api_endpoint": "POST /recommendations/operator-actions",
+          "api_status": 200,
+          "attempts": 1,
+          "retries": [],
+          "duration_ms": 6.9,
+          "trace_id": "trace-ca22327f4a854144",
+          "api_request_id": "req-ff5bfd35f6d0"
+        }
+      ],
+      "error": null,
+      "result": {
+        "alarm_id": "ALM-000616",
+        "asset_id": "BFP-102",
+        "alarm_code": "BFP-SUCT-P-LL",
+        "recommendations": [
+          {
+            "rank": 1,
+            "action": "Check DA-101 deaerator level and pressure immediately",
+            "rationale": "Most low-suction events originate at the deaerator",
+            "confidence": 0.94,
+            "source": "rule_engine"
+          },
+          {
+            "rank": 2,
+            "action": "Check the suction strainer differential pressure",
+            "rationale": "A blocked strainer restricts suction",
+            "confidence": 0.72,
+            "source": "rule_engine"
+          },
+          {
+            "rank": 3,
+            "action": "Restore DA-101 conditions before starting any boiler feed pump",
+            "rationale": "Starting into low suction pressure repeats the cavitation damage",
+            "confidence": 0.85,
+            "source": "rule_engine"
+          },
+          {
+            "rank": 4,
+            "action": "If boiler drum level is falling, apply the loss-of-feedwater emergency response",
+            "rationale": "Both feed pumps may be affected by the same suction problem",
+            "confidence": 0.8,
+            "source": "rule_engine"
+          }
+        ],
+        "related_alarms": [
+          {
+            "alarm_id": "ALM-000608",
+            "asset_id": "BFP-101",
+            "asset_name": "Boiler Feed Pump 101",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "alarm_code": "BFP-VIB-H",
+            "alarm_name": "High bearing vibration",
+            "alarm_type": "device",
+            "severity": "medium",
+            "priority": 3,
+            "status": "active",
+            "acknowledged": true,
+            "start_time": "2026-09-29T23:18:00Z",
+            "end_time": null,
+            "ack_time": "2026-09-29T23:19:35Z",
+            "duration_minutes": 42.0,
+            "ack_delay_seconds": 95.0,
+            "value": 7.66,
+            "setpoint": 7.1,
+            "uom": "mm/s",
+            "is_trip": false,
+            "asset_class": "boiler_feed_pump",
+            "message": "Boiler Feed Pump 101: High bearing vibration (7.66 mm/s, setpoint 7.1)"
+          },
+          {
+            "alarm_id": "ALM-000613",
+            "asset_id": "DA-101",
+            "asset_name": "Deaerator 101",
+            "site": "NorthPlant",
+            "unit": "Unit 1",
+            "alarm_code": "DA-LVL-L",
+            "alarm_name": "Deaerator low level",
+            "alarm_type": "process",
+            "severity": "medium",
+            "priority": 3,
+            "status": "active",
+            "acknowledged": true,
+            "start_time": "2026-09-29T23:42:00Z",
+            "end_time": null,
+            "ack_time": "2026-09-29T23:43:10Z",
+            "duration_minutes": 18.0,
+            "ack_delay_seconds": 70.0,
+            "value": 42.08,
+            "setpoint": 45.0,
+            "uom": "%",
+            "is_trip": false,
+            "asset_class": "deaerator",
+            "message": "Deaerator 101: Deaerator low level (42.08 %, setpoint 45)"
+          }
+        ],
+        "asset_context": null,
+        "historical_pattern": {
+          "occurrences_last_90_days": 1,
+          "last_previous_occurrence": null,
+          "typical_duration_minutes": null,
+          "repeat_within_7_days": false
+        },
+        "disclaimer": "System-generated recommendations. Verify against site procedures before acting.",
+        "meta": {
+          "trace_id": "trace-ca22327f4a854144",
+          "tool": "get_operator_recommendations",
+          "api_calls": [
+            {
+              "api_endpoint": "POST /recommendations/operator-actions",
+              "api_status": 200,
+              "attempts": 1,
+              "retries": [],
+              "duration_ms": 6.9,
+              "trace_id": "trace-ca22327f4a854144",
+              "api_request_id": "req-ff5bfd35f6d0"
+            }
+          ],
+          "total_duration_ms": 7.0
+        },
+        "alarm_name": "Very low suction pressure - pump trip",
+        "severity": "critical",
+        "engine_version": "reco-sim-1.4"
+      },
+      "trace_id": "trace-ca22327f4a854144"
+    }
+  ],
+  "retrieval": {
+    "low_confidence": false,
+    "reason": null,
+    "queries": [
+      {
+        "purpose": "question",
+        "query": "Show active critical alarms for Boiler Feed Pump 102 and recommend immediate actions.",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "sites": [
+            "NorthPlant"
+          ],
+          "asset_classes": [
+            "boiler_feed_pump",
+            "deaerator",
+            "motor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0848,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "BFP-SUCT-P-LL"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SAF-002::revB::003",
+          "SOP-BFP-001::revC::007",
+          "TSG-BFP-002::revB::001",
+          "TSG-BFP-002::revB::000",
+          "SOP-BFP-001::revC::003"
+        ]
+      },
+      {
+        "purpose": "alarm_response",
+        "query": "BFP-SUCT-P-LL Very low suction pressure - pump trip alarm response operator actions",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "sop"
+          ],
+          "sites": [
+            "NorthPlant"
+          ],
+          "asset_classes": [
+            "boiler_feed_pump",
+            "deaerator",
+            "motor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0201,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "BFP-SUCT-P-LL"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SOP-BFP-001::revC::007",
+          "SOP-BFP-001::revC::002"
+        ]
+      },
+      {
+        "purpose": "troubleshooting",
+        "query": "likely causes and diagnostic checks for recurring BFP-SUCT-P-LL Very low suction pressure - pump trip",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "troubleshooting",
+            "maintenance_manual"
+          ],
+          "sites": [
+            "NorthPlant"
+          ],
+          "asset_classes": [
+            "boiler_feed_pump",
+            "deaerator",
+            "motor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0513,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "BFP-SUCT-P-LL"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "TSG-BFP-002::revB::000",
+          "TSG-BFP-002::revB::005",
+          "TSG-BFP-002::revB::001"
+        ]
+      },
+      {
+        "purpose": "verify_recommendations",
+        "query": "Check DA-101 deaerator level and pressure immediately ; Check the suction strainer differential pressure ; Restore DA-101 conditions before starting any boiler feed pump ; If boiler drum level is falling, apply the loss-of-feedwater emergency response",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "maintenance_manual",
+            "sop",
+            "safety",
+            "troubleshooting"
+          ],
+          "sites": [
+            "NorthPlant"
+          ],
+          "asset_classes": [
+            "boiler_feed_pump",
+            "deaerator",
+            "motor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0662,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "BFP-SUCT-P-LL"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SAF-002::revB::003",
+          "SOP-BFP-001::revC::007",
+          "TSG-BFP-002::revB::001",
+          "TSG-BFP-002::revB::003"
+        ]
+      },
+      {
+        "purpose": "priority_policy",
+        "query": "alarm priority levels response time dynamic priority scoring asset criticality",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "alarm_philosophy"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0196,
+        "low_confidence": true,
+        "reason": "best similarity 0.02 below threshold 0.62 and no exact alarm-code match",
+        "alarm_codes": [],
+        "asset_ids": [],
+        "chunks": [
+          "ALM-PHIL-001::revD::002",
+          "ALM-PHIL-001::revD::007"
+        ]
+      },
+      {
+        "purpose": "safety",
+        "query": "safety rules trips interlocks isolation boiler_feed_pump deaerator motor BFP-SUCT-P-LL",
+        "filters": {
+          "statuses": [
+            "active"
+          ],
+          "doc_types": [
+            "safety"
+          ],
+          "sites": [
+            "NorthPlant"
+          ],
+          "asset_classes": [
+            "boiler_feed_pump",
+            "deaerator",
+            "motor"
+          ],
+          "exclude_untrusted": false
+        },
+        "top_similarity": 0.0519,
+        "low_confidence": false,
+        "reason": null,
+        "alarm_codes": [
+          "BFP-SUCT-P-LL"
+        ],
+        "asset_ids": [],
+        "chunks": [
+          "SAF-002::revB::003",
+          "SAF-002::revB::000"
+        ]
+      }
+    ]
+  },
+  "warnings": [],
+  "errors": [],
+  "degraded": false,
+  "llm": {
+    "provider": "none",
+    "model": "none",
+    "used": false
+  },
+  "timings_ms": {
+    "total": 2614.2
+  }
+}

@@ -1,0 +1,17 @@
+.git
+.venv
+.env
+.env.*
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.coverage
+htmlcov
+docs
+tests
+test-data
+agent_api_and_complete_flow
+test.ipynb
+*.log

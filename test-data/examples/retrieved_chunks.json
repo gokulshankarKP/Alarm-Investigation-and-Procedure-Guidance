@@ -1,0 +1,276 @@
+{
+  "procedure_for_BFP-VIB-HH": {
+    "query": "Which operating procedure applies to BFP-VIB-HH?",
+    "filters": {
+      "statuses": [
+        "active"
+      ],
+      "exclude_untrusted": false
+    },
+    "top_similarity": 0.0521,
+    "low_confidence": false,
+    "reason": null,
+    "alarm_codes": [
+      "BFP-VIB-HH"
+    ],
+    "asset_ids": [],
+    "chunks": [
+      {
+        "chunk_id": "TSG-BFP-002::revB::002",
+        "doc_id": "TSG-BFP-002",
+        "revision": "B",
+        "title": "Boiler Feed Pump Troubleshooting Guide",
+        "doc_type": "troubleshooting",
+        "status": "active",
+        "trust_level": "controlled",
+        "section_number": "3",
+        "section_title": "BFP-VIB-H / BFP-VIB-HH \u2014 high vibration",
+        "heading_path": "3. BFP-VIB-H / BFP-VIB-HH \u2014 high vibration",
+        "source_path": "troubleshooting/TSG-BFP-002_boiler_feed_pump_troubleshooting.md",
+        "effective_date": "2025-11-10",
+        "suspected_injection": false,
+        "injection_signals": [],
+        "similarity": 0.0074,
+        "keyword_score": 1.1,
+        "score": 0.04439,
+        "matched_alarm_codes": [
+          "BFP-VIB-HH"
+        ],
+        "matched_asset_ids": [],
+        "citation_label": "TSG-BFP-002 rev B \u00a73",
+        "content": "## 3. BFP-VIB-H / BFP-VIB-HH \u2014 high vibration\n\n| Likely cause | Evidence | Check |\n|---|---|---|\n| Cavitation (low NPSH) | Suction pressure alarm before or with vibration; broadband noise; crackling sound | DA-101 level/pressure, suction strainer \u0394P |\n| Operation below minimum flow | Flow < 60 t/h; recirculation valve closed | Recirc valve position vs. demand |\n| Misalignment | 2\u00d7 running-speed component; high axial vibration; recent maintenance | Laser alignment check |\n| Bearing wear | Rising trend over weeks; high-frequency bearing defect peaks | Vibration spectrum, oil analysis |\n| Impelle"
+      },
+      {
+        "chunk_id": "TSG-BFP-002::revB::003",
+        "doc_id": "TSG-BFP-002",
+        "revision": "B",
+        "title": "Boiler Feed Pump Troubleshooting Guide",
+        "doc_type": "troubleshooting",
+        "status": "active",
+        "trust_level": "controlled",
+        "section_number": "4",
+        "section_title": "Cavitation: the most common cause of recurring BFP alarms",
+        "heading_path": "4. Cavitation: the most common cause of recurring BFP alarms",
+        "source_path": "troubleshooting/TSG-BFP-002_boiler_feed_pump_troubleshooting.md",
+        "effective_date": "2025-11-10",
+        "suspected_injection": false,
+        "injection_signals": [],
+        "similarity": 0.0057,
+        "keyword_score": 0.8,
+        "score": 0.04413,
+        "matched_alarm_codes": [
+          "BFP-VIB-HH"
+        ],
+        "matched_asset_ids": [],
+        "citation_label": "TSG-BFP-002 rev B \u00a74",
+        "content": "## 4. Cavitation: the most common cause of recurring BFP alarms\n\nCavitation happens when suction pressure falls near the vapour pressure of the hot feed water.\nVapour bubbles collapse on the impeller, causing noise, vibration, and erosion.\n\nTypical sequence seen in alarm history: `DA-LVL-L` or `DA-P-L` \u2192 `BFP-SUCT-P-L` \u2192\n`BFP-VIB-H` \u2192 possibly `BFP-VIB-HH` trip.\n\nCorrective actions:\n\n1. Stabilise deaerator level control (check DA-101 level control valve tuning).\n2. Clean the suction strainer if \u0394P exceeds 0.5 bar.\n3. Review deaerator pressure control during load changes."
+      },
+      {
+        "chunk_id": "MM-BFP-003::revA::005",
+        "doc_id": "MM-BFP-003",
+        "revision": "A",
+        "title": "Boiler Feed Pump Maintenance Manual",
+        "doc_type": "maintenance_manual",
+        "status": "active",
+        "trust_level": "controlled",
+        "section_number": "6",
+        "section_title": "Return to service after a vibration trip (BFP-VIB-HH)",
+        "heading_path": "6. Return to service after a vibration trip (BFP-VIB-HH)",
+        "source_path": "maintenance/MM-BFP-003_boiler_feed_pump_maintenance_manual.md",
+        "effective_date": "2025-09-01",
+        "suspected_injection": false,
+        "injection_signals": [],
+        "similarity": -0.0174,
+        "keyword_score": 0.7,
+        "score": 0.04387,
+        "matched_alarm_codes": [
+          "BFP-VIB-HH"
+        ],
+        "matched_asset_ids": [],
+        "citation_label": "MM-BFP-003 rev A \u00a76",
+        "content": "## 6. Return to service after a vibration trip (BFP-VIB-HH)\n\nA pump that tripped on very high vibration **must not be restarted by operations alone**.\nBefore release:\n\n1. The reliability engineer reviews the vibration trend and spectrum from the trip event.\n2. If the root cause was a process condition (cavitation, low flow) that has been corrected,\n   the engineer may release the pump for a supervised test run of 30 minutes with a portable\n   analyser attached.\n3. If the spectrum shows a mechanical fault (bearing defect, misalignment, imbalance), the pump\n   stays out of service until repaired"
+      }
+    ]
+  },
+  "compressor_recurrence_troubleshooting": {
+    "query": "Why are compressor discharge pressure alarms repeatedly occurring?",
+    "filters": {
+      "statuses": [
+        "active"
+      ],
+      "doc_types": [
+        "troubleshooting"
+      ],
+      "exclude_untrusted": false
+    },
+    "top_similarity": 0.065,
+    "low_confidence": false,
+    "reason": null,
+    "alarm_codes": [
+      "CMP-DISCH-P-H"
+    ],
+    "asset_ids": [],
+    "chunks": [
+      {
+        "chunk_id": "TSG-CMP-002::revA::000",
+        "doc_id": "TSG-CMP-002",
+        "revision": "A",
+        "title": "Compressor Discharge Pressure Alarm Troubleshooting",
+        "doc_type": "troubleshooting",
+        "status": "active",
+        "trust_level": "controlled",
+        "section_number": "1",
+        "section_title": "Why discharge pressure alarms recur",
+        "heading_path": "1. Why discharge pressure alarms recur",
+        "source_path": "troubleshooting/TSG-CMP-002_compressor_discharge_pressure_troubleshooting.md",
+        "effective_date": "2026-04-05",
+        "suspected_injection": false,
+        "injection_signals": [],
+        "similarity": 0.0054,
+        "keyword_score": 2.6,
+        "score": 0.06002,
+        "matched_alarm_codes": [
+          "CMP-DISCH-P-H"
+        ],
+        "matched_asset_ids": [],
+        "citation_label": "TSG-CMP-002 rev A \u00a71",
+        "content": "## 1. Why discharge pressure alarms recur\n\nRepeated `CMP-DISCH-P-H` alarms usually have one of five causes. Work through them in this\norder, because the first two explain most recurring cases.\n\n| # | Cause | Typical alarm pattern | Key evidence |\n|---|---|---|---|\n| 1 | Downstream restriction (PCV-210 sticking, fouled downstream exchanger, partially closed block valve) | Alarm on all running compressors at the same time | Header pressure high while flow falls; PCV-210 position not matching output |\n| 2 | Alarm setpoint too close to normal operation | Many short alarms (< 2 min), chattering, no"
+      },
+      {
+        "chunk_id": "TSG-CMP-002::revA::001",
+        "doc_id": "TSG-CMP-002",
+        "revision": "A",
+        "title": "Compressor Discharge Pressure Alarm Troubleshooting",
+        "doc_type": "troubleshooting",
+        "status": "active",
+        "trust_level": "controlled",
+        "section_number": "2",
+        "section_title": "Diagnostic steps",
+        "heading_path": "2. Diagnostic steps",
+        "source_path": "troubleshooting/TSG-CMP-002_compressor_discharge_pressure_troubleshooting.md",
+        "effective_date": "2026-04-05",
+        "suspected_injection": false,
+        "injection_signals": [],
+        "similarity": -0.0358,
+        "keyword_score": 0.6,
+        "score": 0.03771,
+        "matched_alarm_codes": [
+          "CMP-DISCH-P-H"
+        ],
+        "matched_asset_ids": [],
+        "citation_label": "TSG-CMP-002 rev A \u00a72",
+        "content": "## 2. Diagnostic steps\n\n1. **Correlate across compressors.** If K-201 and K-202 alarm within the same 15 minutes, suspect\n   a common downstream cause (1). If only one alarms, suspect causes 4 or 5.\n2. **Check alarm duration and count.** Many alarms shorter than 2 minutes that clear without\n   action indicate a chattering or badly placed setpoint (2). Raise a rationalization request per\n   ALM-PHIL-001 Section 8 instead of repeatedly acknowledging.\n3. **Trend intercooler temperatures** for 90 days. A steady rise indicates fouling (3). Schedule\n   intercooler cleaning at the next opportunity.\n4"
+      },
+      {
+        "chunk_id": "TSG-CMP-002::revA::003",
+        "doc_id": "TSG-CMP-002",
+        "revision": "A",
+        "title": "Compressor Discharge Pressure Alarm Troubleshooting",
+        "doc_type": "troubleshooting",
+        "status": "active",
+        "trust_level": "controlled",
+        "section_number": "4",
+        "section_title": "What not to do",
+        "heading_path": "4. What not to do",
+        "source_path": "troubleshooting/TSG-CMP-002_compressor_discharge_pressure_troubleshooting.md",
+        "effective_date": "2026-04-05",
+        "suspected_injection": false,
+        "injection_signals": [],
+        "similarity": -0.0179,
+        "keyword_score": 0.2,
+        "score": 0.03764,
+        "matched_alarm_codes": [
+          "CMP-DISCH-P-H"
+        ],
+        "matched_asset_ids": [],
+        "citation_label": "TSG-CMP-002 rev A \u00a74",
+        "content": "## 4. What not to do\n\n- Do not raise the HH trip setpoint to stop nuisance alarms. Trip setpoints are part of the\n  safety design and only change through Management of Change.\n- Do not start the spare compressor into an uncleared downstream restriction."
+      }
+    ]
+  },
+  "off_topic_low_confidence": {
+    "query": "What is the capital of France?",
+    "filters": {
+      "statuses": [
+        "active"
+      ],
+      "exclude_untrusted": false
+    },
+    "top_similarity": 0.0705,
+    "low_confidence": true,
+    "reason": "best similarity 0.07 below threshold 0.62 and no exact alarm-code match",
+    "alarm_codes": [],
+    "asset_ids": [],
+    "chunks": [
+      {
+        "chunk_id": "SAF-001::revE::004",
+        "doc_id": "SAF-001",
+        "revision": "E",
+        "title": "Rotating Equipment Safety, Isolation and Lockout-Tagout",
+        "doc_type": "safety",
+        "status": "active",
+        "trust_level": "controlled",
+        "section_number": "4",
+        "section_title": "Field inspection of running equipment",
+        "heading_path": "4. Field inspection of running equipment",
+        "source_path": "safety/SAF-001_rotating_equipment_isolation_and_loto.md",
+        "effective_date": "2025-12-01",
+        "suspected_injection": false,
+        "injection_signals": [],
+        "similarity": 0.0705,
+        "keyword_score": 0.0,
+        "score": 0.01639,
+        "matched_alarm_codes": [],
+        "matched_asset_ids": [],
+        "citation_label": "SAF-001 rev E \u00a74",
+        "content": "## 4. Field inspection of running equipment\n\n- Never approach a leaking boiler feed pump seal closer than the barrier line; flashing water\n  can cause severe burns.\n- Wear hearing protection near compressors.\n- Keep loose clothing and hair away from couplings and shafts."
+      },
+      {
+        "chunk_id": "SAF-001::revE::001",
+        "doc_id": "SAF-001",
+        "revision": "E",
+        "title": "Rotating Equipment Safety, Isolation and Lockout-Tagout",
+        "doc_type": "safety",
+        "status": "active",
+        "trust_level": "controlled",
+        "section_number": "1",
+        "section_title": "Scope",
+        "heading_path": "1. Scope",
+        "source_path": "safety/SAF-001_rotating_equipment_isolation_and_loto.md",
+        "effective_date": "2025-12-01",
+        "suspected_injection": false,
+        "injection_signals": [],
+        "similarity": 0.0703,
+        "keyword_score": 0.0,
+        "score": 0.01613,
+        "matched_alarm_codes": [],
+        "matched_asset_ids": [],
+        "citation_label": "SAF-001 rev E \u00a71",
+        "content": "## 1. Scope\n\nApplies to all work on pumps, compressors, fans, and motors, including inspection with guards\nremoved, seal or bearing replacement, and alignment."
+      },
+      {
+        "chunk_id": "SOP-BFP-001::revC::000",
+        "doc_id": "SOP-BFP-001",
+        "revision": "C",
+        "title": "Boiler Feed Pump Operating Procedure",
+        "doc_type": "sop",
+        "status": "active",
+        "trust_level": "controlled",
+        "section_number": "1",
+        "section_title": "Scope",
+        "heading_path": "1. Scope",
+        "source_path": "procedures/SOP-BFP-001_boiler_feed_pump_operation.md",
+        "effective_date": "2026-03-01",
+        "suspected_injection": false,
+        "injection_signals": [],
+        "similarity": 0.0687,
+        "keyword_score": 0.0,
+        "score": 0.01587,
+        "matched_alarm_codes": [],
+        "matched_asset_ids": [],
+        "citation_label": "SOP-BFP-001 rev C \u00a71",
+        "content": "## 1. Scope\n\nThis procedure covers the two multistage centrifugal boiler feed pumps in NorthPlant Unit 1:\n\n| Tag | Role | Driver | Suction source | Discharge |\n|---|---|---|---|---|\n| BFP-101 | Duty | Motor M-101 (1.2 MW, 6.6 kV) | Deaerator DA-101 | Economiser inlet header |\n| BFP-102 | Standby (auto-start) | Motor M-102 (1.2 MW, 6.6 kV) | Deaerator DA-101 | Economiser inlet header |\n\nEach pump has a minimum-flow recirculation valve (FCV-101 / FCV-102) that returns flow to\nDA-101 to protect the pump at low boiler demand.\n\n**Related assets for any BFP alarm investigation:** the driving motor ("
+      }
+    ]
+  }
+}
