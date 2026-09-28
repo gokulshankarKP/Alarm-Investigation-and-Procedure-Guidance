@@ -18,6 +18,7 @@ COPY rag/ rag/
 COPY apps/ apps/
 COPY mcp-servers/ mcp-servers/
 COPY pyproject.toml README.md ./
+COPY .streamlit/ .streamlit/
 
 RUN useradd --create-home --uid 10001 app && chown -R app:app /app
 USER app

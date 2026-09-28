@@ -5,7 +5,7 @@ export PYTHONPATH := .:apps/alarm-api-simulator:apps/backend:apps/frontend:mcp-s
 SRC := apps mcp-servers connectors rag shared tests scripts
 
 .PHONY: install lint format typecheck test test-unit test-integration test-e2e coverage audit ingest \
-        run-api run-mcp run-mcp-stdio run-backend run-ui run-all postman diagram up down logs
+        run-api run-mcp run-mcp-stdio run-backend run-ui run-all postman screenshots diagram up down logs
 
 install:            ## install runtime + dev dependencies
 	$(PY) -m pip install -r requirements-dev.txt
@@ -63,6 +63,9 @@ run-all:            ## all services locally (Ctrl+C stops everything)
 postman:            ## run the Postman contract collections against a running simulator (needs Node.js)
 	npx --yes newman run test-data/postman/Alarm-API-Simulator.postman_collection.json
 	npx --yes newman run test-data/postman/Alarm-API-Chaining.postman_collection.json
+
+screenshots:        ## GUI screenshots into docs/screenshots (stack must be running)
+	$(PY) scripts/capture_screenshots.py
 
 diagram:
 	$(PY) scripts/render_architecture_diagram.py

@@ -84,3 +84,22 @@ def test_prompt_injection_document_is_never_followed(backend):
     for c in resp["citations"]:
         if c["doc_id"] == "VB-CMP-099":
             assert c["trust_level"] == "untrusted" and "IGNORE ALL PREVIOUS" not in c["excerpt"]
+
+
+def test_streaming_endpoint_emits_progress_then_result(backend):
+    import json
+
+    with backend.stream("POST", "/api/chat/stream", json={"message": "Show active critical alarms for Boiler Feed Pump 102"}) as r:
+        assert r.status_code == 200 and r.headers["content-type"].startswith("application/x-ndjson")
+        events = [json.loads(line) for line in r.iter_lines() if line]
+    kinds = [e["type"] for e in events]
+    assert kinds[-1] == "result" and "discovery" in kinds and "intent" in kinds and "retrieval" in kinds
+    starts = [e for e in events if e["type"] == "tool_start"]
+    ends = {e["step"]: e for e in events if e["type"] == "tool_end"}
+    assert starts and all(s["step"] in ends for s in starts)  # every started tool reports completion
+    assert starts[0]["tool"] == "search_assets" and starts[0]["arguments"]["query"]
+    assert kinds.index("tool_start") < kinds.index("retrieval") < kinds.index("result")
+    stages = [e["stage"] for e in events if e["type"] == "stage"]
+    assert stages[0] == "understand" and stages[-1] == "synthesize"
+    result = events[-1]["response"]
+    assert len([t for t in result["tool_trace"] if t["tool"] != "tools/list"]) == len(starts)

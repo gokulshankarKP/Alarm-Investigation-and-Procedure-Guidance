@@ -8,8 +8,8 @@ _Regenerate with `python scripts/render_architecture_diagram.py`._
 
 | Layer | Location | Responsibility |
 |---|---|---|
-| User interface | `apps/frontend/copilot_ui` (Streamlit) | Chat, alarm summary panel, causes and actions, document citations with trust badges, expandable MCP trace with raw request and response, retries and errors, tool discovery, health. Talks **only** to the backend API. |
-| Copilot API | `apps/backend/copilot/api.py` (FastAPI) | `POST /api/chat`, `GET /api/tools`, `GET /health`. Request validation, error envelope. |
+| User interface | `apps/frontend/copilot_ui` (Streamlit) | Live Claude-style tool activity while answering, concise answer (summary, immediate actions, conflicts), then Overview / Causes & actions / Sources / Trace tabs: alarm summary panel, causes and actions, document citations with trust badges, expandable MCP trace with raw request and response, retries and errors, tool discovery, health. Talks **only** to the backend API. |
+| Copilot API | `apps/backend/copilot/api.py` (FastAPI) | `POST /api/chat`, `POST /api/chat/stream` (NDJSON progress events: stage, intent, tool_start/tool_end, retrieval, then the result), `GET /api/tools`, `GET /health`. Request validation, error envelope. |
 | Copilot orchestration | `apps/backend/copilot/graph.py` (LangGraph) | Intent-driven, data-dependent workflow (see below). Per-conversation memory via the LangGraph checkpointer. |
 | MCP client / tool registry | `apps/backend/copilot/mcp_gateway.py` | `langchain-mcp-adapters` session over streamable HTTP; tool discovery; JSON-schema validation of arguments before calling; per-call timeout; `ToolCallRecord` trace; never raises on tool failures (partial-failure handling). |
 | Candidate-developed MCP server | `mcp-servers/alarm-management/alarm_mcp` (FastMCP) | 13 typed read-only tools, input and output validation, error mapping, trace propagation, bearer auth, stdio or HTTP transport. |

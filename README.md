@@ -9,11 +9,21 @@ An AI copilot for industrial alarm investigation. A **candidate-developed MCP se
 | | |
 |---|---|
 | Demo video (≤ 10 min) | _add link after recording; see [docs/demo-script.md](docs/demo-script.md)_ |
-| Screenshots | _add to `docs/screenshots/`_ |
-| Test evidence | [docs/test-evidence.md](docs/test-evidence.md): 137 tests, 92% coverage |
+| Screenshots | [docs/screenshots/](docs/screenshots/): home, live tool activity, answer, overview, actions, sources, trace |
+| Test evidence | [docs/test-evidence.md](docs/test-evidence.md): 138 tests, 92% coverage |
 | Example outputs | [test-data/examples/](test-data/examples/): real responses, retrieved chunks, citations |
 
 ---
+
+## GUI
+
+| Live tool activity (streamed while answering) | Answer: summary, immediate actions, conflicts |
+|---|---|
+| ![Live tool activity](docs/screenshots/02-live-tool-activity.png) | ![Answer](docs/screenshots/03-answer.png) |
+| **Sources** (cited ● / supporting ○, trust level, excerpt) | **Trace** (every MCP call, request/response, retries) |
+| ![Sources](docs/screenshots/06-sources.png) | ![Trace](docs/screenshots/07-trace.png) |
+
+The backend streams progress (`POST /api/chat/stream`, NDJSON): workflow stages, intent, and every MCP `tool_start` / `tool_end`. The GUI shows each tool call live, Claude-style, as `tool(args)` → ✓ / ✗ with duration and retries, then keeps a collapsed "Used N tools" log with the answer. The chat shows only the essentials; details live in the **Overview · Causes & actions · Sources · Trace · Raw** tabs. Regenerate the screenshots with `python scripts/capture_screenshots.py`.
 
 ## Main capabilities
 
@@ -204,7 +214,7 @@ The equivalent raw test command is `python -m pytest` (the `pythonpath` is confi
 
 ## Tests
 
-137 automated tests; see [docs/test-evidence.md](docs/test-evidence.md).
+138 automated tests; see [docs/test-evidence.md](docs/test-evidence.md).
 
 | Suite | What it covers |
 |---|---|
@@ -219,8 +229,8 @@ The equivalent raw test command is `python -m pytest` (the `pythonpath` is confi
 | `tests/integration/test_mcp_client_integration.py` | Real HTTP MCP server: connectivity, discovery, invocation, invalid arguments, missing tools, partial failure, timeouts, auth failure, unreachable server |
 | `tests/integration/test_orchestration.py` | Multi-step chains, outputs passed between tools, RAG in the same workflow, partial source failure, conflicting evidence, MCP down, vector store down, memory, LLM validation and fallback |
 | `tests/integration/test_postman_contract.py` | Replays both Postman collections |
-| `tests/e2e/test_acceptance_scenario.py` | **Mandatory acceptance scenario** through the backend HTTP API, plus prompt-injection safety |
-| `tests/e2e/test_gui.py` | Streamlit AppTest: empty, answer and error states; panels, citations, trace |
+| `tests/e2e/test_acceptance_scenario.py` | **Mandatory acceptance scenario** through the backend HTTP API, streaming progress endpoint, prompt-injection safety |
+| `tests/e2e/test_gui.py` | Streamlit AppTest: empty, streamed answer and error states; activity log, panels, citations, trace |
 
 ## Sample interactions
 

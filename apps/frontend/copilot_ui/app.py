@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import json
+import html
 import sys
 import uuid
 from pathlib import Path
@@ -12,26 +12,24 @@ import streamlit as st
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # allow `streamlit run` without install
 
 from copilot_ui import api_client
-from copilot_ui.components import (
-    render_alarm_panel,
-    render_causes_actions,
-    render_citations,
-    render_header,
-    render_trace,
-)
+from copilot_ui.activity import LiveActivity, render_activity_log
+from copilot_ui.components import inject_css, render_answer, render_details
 
 EXAMPLES = [
-    "Investigate recurring high-severity alarms for Boiler Feed Pump 101 over the last 90 days, identify likely "
-    "contributing factors, retrieve the relevant operating procedure, and provide recommended actions with source evidence.",
-    "Show active critical alarms for Boiler Feed Pump 102 and recommend immediate actions.",
-    "Why are compressor discharge pressure alarms repeatedly occurring?",
-    "Which alarm has the highest priority in EastRefinery, and why?",
-    "What related assets should be inspected for the motor trip on M-501?",
-    "Which operating procedure applies to this alarm?",
-    "Are the API recommendations consistent with the maintenance manual?",
+    (
+        "Recurring BFP-101 alarms",
+        "Investigate recurring high-severity alarms for Boiler Feed Pump 101 over the last 90 days, identify likely contributing "
+        "factors, retrieve the relevant operating procedure, and provide recommended actions with source evidence.",
+    ),
+    ("Critical alarms on BFP-102", "Show active critical alarms for Boiler Feed Pump 102 and recommend immediate actions."),
+    ("Compressor pressure alarms", "Why are compressor discharge pressure alarms repeatedly occurring?"),
+    ("Top priority in EastRefinery", "Which alarm has the highest priority in EastRefinery, and why?"),
+    ("Motor trip on M-501", "What related assets should be inspected for the motor trip on M-501?"),
+    ("Check API recommendations", "Are the API recommendations consistent with the maintenance manual?"),
 ]
 
-st.set_page_config(page_title="Alarm Investigation Copilot", page_icon="🚨", layout="wide")
+st.set_page_config(page_title="Alarm Investigation Copilot", page_icon="🛡️", layout="wide")
+inject_css()
 state = st.session_state
 state.setdefault("conversation_id", f"conv-{uuid.uuid4().hex[:12]}")
 state.setdefault("messages", [])
@@ -40,105 +38,105 @@ state.setdefault("pending", None)
 
 # -- sidebar --------------------------------------------------------------------------------
 with st.sidebar:
-    st.header("🚨 Alarm Copilot")
-    st.caption(f"Backend: `{api_client.BACKEND_URL}`  \nConversation: `{state.conversation_id}`")
-    if st.button("New conversation", width="stretch"):
+    st.markdown("### 🛡️ Alarm Copilot")
+    st.caption("Alarm investigation & procedure guidance")
+    if st.button("New conversation", icon="➕", width="stretch"):
         state.conversation_id = f"conv-{uuid.uuid4().hex[:12]}"
         state.messages = []
         st.rerun()
 
-    st.subheader("System health")
+    st.markdown("**Try asking**")
+    for i, (label, question) in enumerate(EXAMPLES):
+        if st.button(label, key=f"ex{i}", width="stretch", help=question):
+            state.pending = question
+
+    st.divider()
+    st.markdown("**System status**")
     try:
         health = api_client.health()
-        st.markdown(f"Overall: **{health['status']}**")
+        names = {"mcp_server": "MCP server", "rag_index": "Knowledge base", "llm": "LLM"}
         for name, comp in health["components"].items():
-            icon = {"ok": "🟢", "disabled": "⚪"}.get(comp["status"], "🔴")
-            detail = ", ".join(f"{k}={v}" for k, v in comp.items() if k not in ("status", "error"))
-            st.caption(f"{icon} **{name}** {detail}" + (f"  \n{comp['error'][:140]}" if comp.get("error") else ""))
+            dot = {"ok": "ok", "disabled": "off"}.get(comp["status"], "bad")
+            if comp["status"] == "unavailable":
+                detail = "unavailable"
+            elif "tools" in comp:
+                detail = f"{comp['tools']} tools"
+            elif "chunks" in comp:
+                detail = f"{comp['chunks']} passages"
+            else:
+                detail = comp.get("model", comp["status"])
+            st.markdown(
+                f'<div class="status-row"><span class="dot {dot}"></span>{names.get(name, name)} '
+                f"<small>· {html.escape(str(detail))}</small></div>",
+                unsafe_allow_html=True,
+            )
     except api_client.BackendError as exc:
         st.error(str(exc))
 
-    st.subheader("MCP tool discovery")
     try:
         tools = api_client.list_tools()
-        st.caption(f"{len(tools)} tools discovered from the Alarm Management MCP server")
-        for tool in tools:
-            with st.expander(f"🔧 {tool['name']}"):
-                st.write(tool["description"])
-                st.markdown("**Input schema**")
-                st.code(json.dumps(tool["input_schema"], indent=2), language="json")
-                if tool.get("output_schema"):
-                    st.markdown("**Output schema**")
-                    st.code(json.dumps(tool["output_schema"], indent=2)[:6000], language="json")
-    except api_client.BackendError as exc:
-        st.warning(f"Tool discovery failed: {exc}")
-
-    st.subheader("Examples")
-    for i, example in enumerate(EXAMPLES):
-        if st.button(example[:70] + ("…" if len(example) > 70 else ""), key=f"ex{i}", width="stretch"):
-            state.pending = example
+        with st.expander(f"MCP tools ({len(tools)})"):
+            for tool in tools:
+                st.markdown(f"**`{tool['name']}`**  \n<small>{html.escape(tool['description'][:160])}</small>", unsafe_allow_html=True)
+                st.json({"input": tool["input_schema"], "output": tool.get("output_schema")}, expanded=False)
+    except api_client.BackendError:
+        pass
+    st.caption(f"Conversation `{state.conversation_id}`")
 
 
 # -- main -----------------------------------------------------------------------------------
-st.title("Alarm Investigation & Procedure Guidance Copilot")
-st.caption(
-    "Alarm data via the Alarm Management **MCP server** · procedures via **document RAG** · every claim cited "
-    "([T#] = MCP tool step, [S#] = document source)"
+st.markdown(
+    '<p class="app-title">Alarm Investigation Copilot</p>'
+    '<p class="app-subtitle">Live alarm data through MCP tools, procedures from plant documents, '
+    "every statement cited: <b>[T#]</b> tool step, <b>[S#]</b> document source.</p>",
+    unsafe_allow_html=True,
 )
 
+typed = st.chat_input("Ask about an alarm, asset or procedure…")
 
-def render_response(resp: dict) -> None:
-    render_header(resp)
-    st.markdown(resp["answer_markdown"])
-    tabs = st.tabs(
-        [
-            "📊 Alarm summary",
-            "🧭 Causes & actions",
-            f"📚 Citations ({len(resp['citations'])})",
-            f"🛠️ MCP trace ({len(resp['tool_trace'])})",
-            "🧾 Raw response",
-        ]
-    )
-    with tabs[0]:
-        render_alarm_panel(resp)
-    with tabs[1]:
-        render_causes_actions(resp)
-    with tabs[2]:
-        render_citations(resp)
-    with tabs[3]:
-        render_trace(resp)
-    with tabs[4]:
-        st.code(json.dumps(resp, indent=2, default=str)[:60000], language="json")
+if not state.messages and not state.pending and not typed:
+    st.info("Ask about an asset, alarm, site or procedure, or start with one of these:")
+    cols = st.columns(3)
+    for i, (label, question) in enumerate(EXAMPLES[:3]):
+        if cols[i].button(label, key=f"start{i}", width="stretch", help=question):
+            state.pending = question
+            st.rerun()
 
-
-if not state.messages and not state.pending:
-    st.info(
-        "Ask about an asset, alarm, site or procedure, or pick an example in the sidebar. "
-        "With a CPU-only local LLM an answer can take a few minutes."
-    )
-
-for message in state.messages:
+last_assistant = max((i for i, m in enumerate(state.messages) if m["role"] == "assistant"), default=-1)
+for index, message in enumerate(state.messages):
     with st.chat_message(message["role"]):
         if message["role"] == "user":
             st.markdown(message["content"])
         elif "error" in message:
             st.error(message["error"])
         else:
-            render_response(message["response"])
+            render_activity_log(message.get("activity", []), message["response"])
+            render_answer(message["response"])
+            if index == last_assistant or st.toggle("Show details", key=f"details-{index}"):
+                render_details(message["response"], key=str(index))
 
-prompt = st.chat_input("e.g. Show active critical alarms for Boiler Feed Pump 102") or state.pending
+prompt = typed or state.pending
 if prompt:
     state.pending = None
     state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
-    with (
-        st.chat_message("assistant"),
-        st.spinner("Investigating: discovering MCP tools → querying alarm data → retrieving procedures → composing answer…"),
-    ):
+    with st.chat_message("assistant"):
+        feed = LiveActivity(st.container(border=True))
         try:
-            response = api_client.chat(prompt, state.conversation_id)
-            state.messages.append({"role": "assistant", "response": response})
+            response = None
+            for event in api_client.chat_stream(prompt, state.conversation_id):
+                if event["type"] == "result":
+                    response = event["response"]
+                elif event["type"] == "error":
+                    raise api_client.BackendError(event["message"])
+                else:
+                    feed.handle(event)
+            if response is None:
+                raise api_client.BackendError("The backend closed the stream without an answer")
+            feed.finish(response)
+            state.messages.append({"role": "assistant", "response": response, "activity": feed.lines})
         except api_client.BackendError as exc:
+            feed.fail(str(exc))
             state.messages.append({"role": "assistant", "error": str(exc)})
     st.rerun()

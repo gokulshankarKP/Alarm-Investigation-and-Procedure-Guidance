@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 import os
+from collections.abc import Iterator
 from typing import Any
 
 import httpx
@@ -45,3 +47,22 @@ def chat(message: str, conversation_id: str | None) -> dict[str, Any]:
     if conversation_id:
         body["conversation_id"] = conversation_id
     return _request("POST", "/api/chat", json=body, timeout=TIMEOUT_S)
+
+
+def chat_stream(message: str, conversation_id: str | None) -> Iterator[dict[str, Any]]:
+    """Yield progress events as they happen, ending with ``{"type": "result", "response": ...}``."""
+    body = {"message": message}
+    if conversation_id:
+        body["conversation_id"] = conversation_id
+    try:
+        with httpx.stream("POST", f"{BACKEND_URL}/api/chat/stream", json=body, timeout=TIMEOUT_S) as response:
+            if response.status_code >= 400:
+                response.read()
+                raise BackendError(f"Backend returned HTTP {response.status_code}: {response.text[:300]}")
+            for line in response.iter_lines():
+                if line.strip():
+                    yield json.loads(line)
+    except httpx.TimeoutException:
+        raise BackendError(f"The copilot backend did not answer within {TIMEOUT_S:.0f}s") from None
+    except httpx.TransportError as exc:
+        raise BackendError(f"Cannot reach the copilot backend at {BACKEND_URL} ({type(exc).__name__})") from None

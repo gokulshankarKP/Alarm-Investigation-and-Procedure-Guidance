@@ -1,17 +1,20 @@
 """FastAPI surface of the copilot backend.
 
 POST /api/chat        run one conversational turn (MCP + RAG workflow)
+POST /api/chat/stream same, streamed as NDJSON progress events + a final {"type": "result"}
 GET  /api/tools       MCP tool discovery (name, description, input/output schema)
 GET  /health          liveness + component status (MCP server, RAG index, LLM)
 """
 
 from __future__ import annotations
 
+import asyncio
+import json
 import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
 from copilot.config import CopilotSettings
 from copilot.mcp_gateway import McpUnavailableError
@@ -60,6 +63,31 @@ def create_app(service: CopilotService | None = None) -> FastAPI:
     @app.post("/api/chat", response_model=ChatResponse)
     async def chat(body: ChatRequest, request: Request) -> ChatResponse:
         return await request.app.state.service.chat(body.message, body.conversation_id)
+
+    @app.post("/api/chat/stream")
+    async def chat_stream(body: ChatRequest, request: Request) -> StreamingResponse:
+        """Progress events (stage, intent, tool_start, tool_end, retrieval), then the full ChatResponse."""
+        service: CopilotService = request.app.state.service
+        queue: asyncio.Queue[dict | None] = asyncio.Queue()
+
+        async def run() -> None:
+            try:
+                response = await service.chat(body.message, body.conversation_id, listener=queue.put_nowait)
+                queue.put_nowait({"type": "result", "response": response.model_dump(mode="json")})
+            except Exception as exc:
+                log_event(logger, "stream_failed", logging.ERROR, error=type(exc).__name__)
+                queue.put_nowait({"type": "error", "message": "The copilot failed to answer this question."})
+            finally:
+                queue.put_nowait(None)
+
+        task = asyncio.create_task(run())
+
+        async def events():
+            while (event := await queue.get()) is not None:
+                yield json.dumps(event, default=str) + "\n"
+            await task
+
+        return StreamingResponse(events(), media_type="application/x-ndjson")
 
     return app
 

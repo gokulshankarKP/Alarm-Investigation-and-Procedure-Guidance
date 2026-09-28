@@ -10,7 +10,7 @@ from typing import Any
 from copilot.config import CopilotSettings
 from copilot.graph import Deps, build_graph
 from copilot.llm import LLMClient, create_llm
-from copilot.mcp_gateway import McpGateway, McpUnavailableError
+from copilot.mcp_gateway import Listener, McpGateway, McpUnavailableError
 from copilot.schemas import (
     Action,
     AlarmPanel,
@@ -45,7 +45,7 @@ class CopilotService:
         self.gateway = gateway or McpGateway(settings)
         self.graph = build_graph()
 
-    async def chat(self, message: str, conversation_id: str | None = None) -> ChatResponse:
+    async def chat(self, message: str, conversation_id: str | None = None, listener: Listener | None = None) -> ChatResponse:
         conversation_id = conversation_id or f"conv-{uuid.uuid4().hex[:12]}"
         trace_id = new_trace_id("trace")
         t_token, c_token = trace_id_var.set(trace_id), conversation_id_var.set(conversation_id)
@@ -71,14 +71,16 @@ class CopilotService:
             }
             config = {"configurable": {"thread_id": conversation_id}}
             try:
-                async with self.gateway.connect(trace_id, conversation_id) as tools:
+                async with self.gateway.connect(trace_id, conversation_id, listener) as tools:
                     tools_discovered = tools.tool_names
-                    state = await self.graph.ainvoke(turn, config=config, context=self._deps(tools, None))
+                    state = await self.graph.ainvoke(turn, config=config, context=self._deps(tools, None, listener))
                     records = sorted(tools.records, key=lambda r: r.step)
             except McpUnavailableError as exc:
                 mcp_error = str(exc)
+                if listener:
+                    listener({"type": "mcp_unavailable", "message": mcp_error[:300]})
                 log_event(logger, "mcp_unavailable", logging.WARNING, error=mcp_error[:300])
-                state = await self.graph.ainvoke(turn, config=config, context=self._deps(None, mcp_error))
+                state = await self.graph.ainvoke(turn, config=config, context=self._deps(None, mcp_error, listener))
             response = self._build_response(state, conversation_id, trace_id, tools_discovered, records, mcp_error)
             response.timings_ms["total"] = round((time.perf_counter() - started) * 1000, 1)
             log_event(
@@ -96,8 +98,8 @@ class CopilotService:
             trace_id_var.reset(t_token)
             conversation_id_var.reset(c_token)
 
-    def _deps(self, tools, mcp_error: str | None) -> Deps:
-        return Deps(settings=self.settings, llm=self.llm, retriever=self.retriever, tools=tools, mcp_error=mcp_error)
+    def _deps(self, tools, mcp_error: str | None, listener: Listener | None = None) -> Deps:
+        return Deps(settings=self.settings, llm=self.llm, retriever=self.retriever, tools=tools, mcp_error=mcp_error, listener=listener)
 
     def _build_response(
         self, state: dict[str, Any], conversation_id: str, trace_id: str, tools_discovered: list[str], records: list, mcp_error: str | None

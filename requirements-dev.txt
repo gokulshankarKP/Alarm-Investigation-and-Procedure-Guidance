@@ -6,3 +6,4 @@ ruff>=0.6
 mypy>=1.10
 pip-audit>=2.7
 matplotlib>=3.8   # scripts/render_architecture_diagram.py
+playwright>=1.45  # scripts/capture_screenshots.py (then: playwright install chromium)
