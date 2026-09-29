@@ -33,7 +33,7 @@ The fields are validated with pydantic, and invalid documents are reported witho
    * `referenced_doc_ids`, e.g. "See MM-BFP-003".
    * `injection_signals`: heuristics for "ignore previous instructions", role reassignment, text addressed to AI, secret exfiltration and citation suppression.
 4. **Embed** (`embedder.py`) uses Ollama `nomic-embed-text` (768-dim) with the `search_document:` / `search_query:` task prefixes. Calls are batched (16), with timeout and retry. The embedded text is `"{title} ({doc_id} rev {rev}, {doc_type})\nSection: {heading path}\n\n{content}"`, so document context is part of the vector. `EMBEDDING_PROVIDER=hash` is a deterministic offline embedder used in CI.
-5. **Store** (`store.py`) upserts one row per document and replaces that document's chunks in a single transaction. SQL uses bound parameters only.
+5. **Store** (`store.py`) upserts one row per document and replaces that document's chunks in a single transaction, using the SQLAlchemy ORM models in `rag/db.py` (which also define the tables and indexes). All statements use bound parameters.
 
 ### Chunking strategy
 

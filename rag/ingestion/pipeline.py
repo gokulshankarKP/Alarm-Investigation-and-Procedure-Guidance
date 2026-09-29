@@ -10,9 +10,8 @@ import logging
 import time
 from dataclasses import dataclass, field
 
-import psycopg
-
 from rag.config import RagSettings
+from rag.db import create_db_engine
 from rag.ingestion.chunker import build_embedding_text, chunk_document
 from rag.ingestion.embedder import Embedder, create_embedder
 from rag.ingestion.loader import load_corpus
@@ -96,50 +95,51 @@ def run_ingestion(
         embedder.model,
         embedder.dimension,
     )
+    engine = create_db_engine(settings.database.connection_kwargs())
     try:
-        with psycopg.connect(**settings.database.connection_kwargs(), autocommit=True) as conn:
-            store = PgVectorStore(conn, embedder.dimension)
-            if rebuild:
-                store.drop_schema()
-            store.ensure_schema()
+        store = PgVectorStore(engine, embedder.dimension)
+        if rebuild:
+            store.drop_schema()
+        store.ensure_schema()
 
-            for document, chunks in chunked:
-                label = _label(document)
-                if store.is_current(document, embedder.model):
-                    logger.info("unchanged doc=%s", label)
-                    report.unchanged.append(label)
-                    continue
-                try:
-                    t0 = time.perf_counter()
-                    texts = [build_embedding_text(document, c) for c in chunks]
-                    embeddings = embedder.embed_documents(texts)
-                    store.replace_document(document, chunks, embeddings, embedder.model)
-                except Exception as exc:
-                    logger.error("ingest_failed doc=%s error=%s", label, exc)
-                    report.failed.append((document.source_path, str(exc)))
-                    continue
-                report.ingested.append(label)
-                report.chunks_written += len(chunks)
-                logger.info(
-                    "ingested doc=%s chunks=%d duration_ms=%d",
-                    label,
-                    len(chunks),
-                    (time.perf_counter() - t0) * 1000,
-                )
+        for document, chunks in chunked:
+            label = _label(document)
+            if store.is_current(document, embedder.model):
+                logger.info("unchanged doc=%s", label)
+                report.unchanged.append(label)
+                continue
+            try:
+                t0 = time.perf_counter()
+                texts = [build_embedding_text(document, c) for c in chunks]
+                embeddings = embedder.embed_documents(texts)
+                store.replace_document(document, chunks, embeddings, embedder.model)
+            except Exception as exc:
+                logger.error("ingest_failed doc=%s error=%s", label, exc)
+                report.failed.append((document.source_path, str(exc)))
+                continue
+            report.ingested.append(label)
+            report.chunks_written += len(chunks)
+            logger.info(
+                "ingested doc=%s chunks=%d duration_ms=%d",
+                label,
+                len(chunks),
+                (time.perf_counter() - t0) * 1000,
+            )
 
-            if prune:
-                # Only prune when the whole corpus loaded; otherwise a parse error would
-                # delete a document that is still present on disk.
-                if loaded.failures:
-                    logger.warning("prune_skipped reason=corpus_has_invalid_documents")
-                else:
-                    keep = {document.key for document in loaded.documents}
-                    report.pruned = [f"{d} rev {r}" for d, r in store.prune(keep)]
-                    for label in report.pruned:
-                        logger.info("pruned doc=%s", label)
+        if prune:
+            # Only prune when the whole corpus loaded; otherwise a parse error would
+            # delete a document that is still present on disk.
+            if loaded.failures:
+                logger.warning("prune_skipped reason=corpus_has_invalid_documents")
+            else:
+                keep = {document.key for document in loaded.documents}
+                report.pruned = [f"{d} rev {r}" for d, r in store.prune(keep)]
+                for label in report.pruned:
+                    logger.info("pruned doc=%s", label)
 
-            logger.info("index_stats %s", " ".join(f"{k}={v}" for k, v in store.stats().items()))
+        logger.info("index_stats %s", " ".join(f"{k}={v}" for k, v in store.stats().items()))
     finally:
+        engine.dispose()
         if owns_embedder and hasattr(embedder, "close"):
             embedder.close()
 

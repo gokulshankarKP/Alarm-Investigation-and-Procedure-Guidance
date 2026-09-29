@@ -26,7 +26,11 @@ from pathlib import Path
 from typing import Protocol
 
 import numpy as np
+from sqlalchemy import ColumnElement, Text, cast, distinct, func, or_, select
+from sqlalchemy.dialects.postgresql import ARRAY
+from sqlalchemy.orm import sessionmaker
 
+from rag.db import RagChunk, create_db_engine
 from rag.ingestion.chunker import build_embedding_text, chunk_document
 from rag.ingestion.embedder import Embedder
 from rag.ingestion.loader import load_corpus
@@ -183,72 +187,85 @@ def _fuse(
 
 # -- PostgreSQL / pgvector ------------------------------------------------------------------
 
-_FILTER_SQL = """
-    status = ANY(%(statuses)s)
-    AND (%(doc_types)s::text[] IS NULL OR doc_type = ANY(%(doc_types)s))
-    AND (%(sites)s::text[] IS NULL OR sites && %(sites)s OR cardinality(sites) = 0)
-    AND (%(asset_classes)s::text[] IS NULL OR asset_classes && %(asset_classes)s OR 'all' = ANY(asset_classes))
-    AND (NOT %(exclude_untrusted)s OR trust_level <> 'untrusted')
-"""
 
-_COLUMNS = """
-    chunk_id, doc_id, revision, title, doc_type, status, trust_level, section_number, section_title,
-    heading_path, content, source_path, effective_date, suspected_injection, injection_signals,
-    alarm_codes, asset_ids, mentioned_alarm_codes
-"""
+def _filter_clauses(filters: RetrievalFilters) -> list[ColumnElement[bool]]:
+    clauses: list[ColumnElement[bool]] = [RagChunk.status.in_(list(filters.statuses))]
+    if filters.doc_types:
+        clauses.append(RagChunk.doc_type.in_(list(filters.doc_types)))
+    if filters.sites:
+        clauses.append(or_(RagChunk.sites.overlap(list(filters.sites)), func.cardinality(RagChunk.sites) == 0))
+    if filters.asset_classes:
+        clauses.append(or_(RagChunk.asset_classes.overlap(list(filters.asset_classes)), RagChunk.asset_classes.any_() == "all"))
+    if filters.exclude_untrusted:
+        clauses.append(RagChunk.trust_level != "untrusted")
+    return clauses
+
+
+_COLUMNS = (
+    RagChunk.chunk_id,
+    RagChunk.doc_id,
+    RagChunk.revision,
+    RagChunk.title,
+    RagChunk.doc_type,
+    RagChunk.status,
+    RagChunk.trust_level,
+    RagChunk.section_number,
+    RagChunk.section_title,
+    RagChunk.heading_path,
+    RagChunk.content,
+    RagChunk.source_path,
+    RagChunk.effective_date,
+    RagChunk.suspected_injection,
+    RagChunk.injection_signals,
+    RagChunk.alarm_codes,
+    RagChunk.asset_ids,
+    RagChunk.mentioned_alarm_codes,
+)
 
 
 class PgVectorRetriever:
     def __init__(self, connection_kwargs: dict, embedder: Embedder, *, min_similarity: float = 0.62, candidates: int = 20) -> None:
-        self._conninfo = connection_kwargs
+        self._engine = create_db_engine(connection_kwargs)
+        self._session = sessionmaker(self._engine)
         self._embedder = embedder
         self._min_similarity = min_similarity
         self._candidates = candidates
 
-    def _connect(self):
-        import psycopg
-        from pgvector.psycopg import register_vector
-
-        conn = psycopg.connect(**self._conninfo, autocommit=True)
-        register_vector(conn)
-        return conn
+    def close(self) -> None:
+        self._engine.dispose()
 
     def ping(self) -> dict:
-        with self._connect() as conn:
-            docs, chunks = conn.execute("SELECT count(DISTINCT doc_id), count(*) FROM rag_chunks").fetchone()
+        with self._session() as session:
+            docs, chunks = session.execute(select(func.count(distinct(RagChunk.doc_id)), func.count()).select_from(RagChunk)).one()
         return {"documents": docs, "chunks": chunks}
 
     def search(self, query, *, filters=None, top_k=6, alarm_codes=(), asset_ids=()) -> RetrievalResult:
         filters = filters or RetrievalFilters()
         vector = np.asarray(self._embedder.embed_query(query), dtype=np.float32)
-        params = {
-            "statuses": list(filters.statuses),
-            "doc_types": list(filters.doc_types) if filters.doc_types else None,
-            "sites": list(filters.sites) if filters.sites else None,
-            "asset_classes": list(filters.asset_classes) if filters.asset_classes else None,
-            "exclude_untrusted": filters.exclude_untrusted,
-            "vec": vector,
-            "limit": self._candidates,
-            # Alphanumeric terms only, OR-ed: safe to_tsquery syntax. Codes match via mentioned_alarm_codes.
-            "tsquery": " | ".join(dict.fromkeys(query_terms(query))),
-            "codes": list(alarm_codes),
-        }
+        where = _filter_clauses(filters)
+        distance = RagChunk.embedding.cosine_distance(vector)
+        similarity = (1 - distance).label("sim")
+        # Alphanumeric terms only, OR-ed: safe to_tsquery syntax. Codes match via mentioned_alarm_codes.
+        tsquery_text = " | ".join(dict.fromkeys(query_terms(query)))
         candidates: dict[str, _Candidate] = {}
-        with self._connect() as conn:
-            vec_rows = conn.execute(
-                f"SELECT {_COLUMNS}, 1 - (embedding <=> %(vec)s) AS sim FROM rag_chunks "
-                f"WHERE {_FILTER_SQL} ORDER BY embedding <=> %(vec)s LIMIT %(limit)s",
-                params,
-            ).fetchall()
+        with self._session() as session:
+            vec_rows = session.execute(select(*_COLUMNS, similarity).where(*where).order_by(distance).limit(self._candidates)).all()
             kw_rows = []
-            if params["tsquery"]:
-                kw_rows = conn.execute(
-                    f"SELECT {_COLUMNS}, 1 - (embedding <=> %(vec)s) AS sim, "
-                    f"ts_rank_cd(content_tsv, to_tsquery('english', %(tsquery)s)) AS kw FROM rag_chunks "
-                    f"WHERE {_FILTER_SQL} AND (content_tsv @@ to_tsquery('english', %(tsquery)s) "
-                    f"OR mentioned_alarm_codes && %(codes)s::text[]) ORDER BY kw DESC LIMIT %(limit)s",
-                    params,
-                ).fetchall()
+            if tsquery_text:
+                tsquery = func.to_tsquery("english", tsquery_text)
+                keyword = func.ts_rank_cd(RagChunk.content_tsv, tsquery).label("kw")
+                kw_rows = session.execute(
+                    select(*_COLUMNS, similarity, keyword)
+                    .where(
+                        *where,
+                        or_(
+                            RagChunk.content_tsv.bool_op("@@")(tsquery),
+                            RagChunk.mentioned_alarm_codes.overlap(cast(list(alarm_codes), ARRAY(Text))),
+                        ),
+                    )
+                    .order_by(keyword.desc())
+                    .limit(self._candidates)
+                ).all()
 
         for rank, row in enumerate(vec_rows, start=1):
             cand = candidates.setdefault(row[0], self._candidate(row))
